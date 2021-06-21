@@ -1,0 +1,2 @@
+rootProject.name = "PedometerPixelDungeon"
+include ':app'
