@@ -21,7 +21,8 @@ import com.example.pedometerpixeldungeon.input.Keys;
 import com.example.pedometerpixeldungeon.utils.Signal;
 
 public class Scene extends Group {
-	
+
+	public static final String TAG = "gagip_scene";
 	private Signal.Listener<Keys.Key> keyListener;
 	
 	public void create() {
