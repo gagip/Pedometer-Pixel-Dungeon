@@ -1,4 +1,4 @@
-package com.bigdata.pedemoter_sqlite;
+package com.example.pedometerpixeldungeon.mainsrc.pedometer;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

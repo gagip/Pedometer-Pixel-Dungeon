@@ -1,4 +1,4 @@
-package com.bigdata.pedemoter_sqlite;
+package com.example.pedometerpixeldungeon.mainsrc.pedometer;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,10 +20,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-import static com.bigdata.pedemoter_sqlite.DBOpenHelper.TABLE_NAME;
-import static com.bigdata.pedemoter_sqlite.DBOpenHelper.TITLE;
-import static com.bigdata.pedemoter_sqlite.DBOpenHelper.TIME;
-import static com.bigdata.pedemoter_sqlite.DBOpenHelper._ID;
+
+import com.example.pedometerpixeldungeon.R;
+
+import static com.example.pedometerpixeldungeon.mainsrc.pedometer.DBOpenHelper.TABLE_NAME;
+import static com.example.pedometerpixeldungeon.mainsrc.pedometer.DBOpenHelper.TITLE;
+import static com.example.pedometerpixeldungeon.mainsrc.pedometer.DBOpenHelper.TIME;
+import static com.example.pedometerpixeldungeon.mainsrc.pedometer.DBOpenHelper._ID;
 
 /**
  * 메인 액티비티 클래스입니다.
