@@ -126,14 +126,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     @Override
     public void onSensorChanged(SensorEvent event) {
         // 걸음 센서 이벤트 발생시
-        if(event.sensor.getType() == Sensor.TYPE_STEP_DETECTOR){
-
-            if(event.values[0]==1.0f){
-                // 센서 이벤트가 발생할때 마다 걸음수 증가
-                currentSteps++;
-                stepCountView.setText(String.valueOf(currentSteps));
-            }
-
+        if (event.sensor.getType() == Sensor.TYPE_STEP_COUNTER) {
+            stepCountView.setText(String.valueOf(event.values[0]));
         }
 
     }
