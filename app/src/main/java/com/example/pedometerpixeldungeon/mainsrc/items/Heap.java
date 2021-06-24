@@ -1,4 +1,4 @@
-package com.example.pedometerpixeldungeon.mainsrc.levels.items;
+package com.example.pedometerpixeldungeon.mainsrc.items;
 
 import com.example.pedometerpixeldungeon.utils.Bundlable;
 import com.example.pedometerpixeldungeon.utils.Bundle;

@@ -2,7 +2,7 @@ package com.example.pedometerpixeldungeon.mainsrc.actors.hero;
 
 import com.example.pedometerpixeldungeon.mainsrc.actors.Char;
 import com.example.pedometerpixeldungeon.mainsrc.actors.mobs.Mob;
-import com.example.pedometerpixeldungeon.mainsrc.levels.items.Item;
+import com.example.pedometerpixeldungeon.mainsrc.items.Item;
 
 import java.util.ArrayList;
 

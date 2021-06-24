@@ -10,6 +10,8 @@ import com.example.pedometerpixeldungeon.mainsrc.ui.Archs;
 import com.example.pedometerpixeldungeon.mainsrc.ui.ExitButton;
 import com.example.pedometerpixeldungeon.mainsrc.ui.RedButton;
 import com.example.pedometerpixeldungeon.mainsrc.utils.Utils;
+import com.example.pedometerpixeldungeon.mainsrc.windows.WndClass;
+import com.example.pedometerpixeldungeon.mainsrc.windows.WndOptions;
 import com.example.pedometerpixeldungeon.noosa.BitmapText;
 import com.example.pedometerpixeldungeon.noosa.Camera;
 import com.example.pedometerpixeldungeon.noosa.Game;
@@ -103,19 +105,18 @@ public class StartScene extends PixelScene {
             @Override
             protected void onClick() {
                 if (GamesInProgress.check( curClass ) != null) {
-//                    StartScene.this.add( new WndOptions( TXT_REALLY, TXT_WARNING, TXT_YES, TXT_NO ) {
-//                        @Override
-//                        protected void onSelect( int index ) {
-//                            if (index == 0) {
-//                                startNewGame();
-//                            }
-//                        }
-//                    } );
+                    StartScene.this.add( new WndOptions( TXT_REALLY, TXT_WARNING, TXT_YES, TXT_NO ) {
+                        @Override
+                        protected void onSelect( int index ) {
+                            if (index == 0) {
+                                startNewGame();
+                            }
+                        }
+                    } );
 
                 } else {
                     startNewGame();
                 }
-                startNewGame();
             }
         };
         add( btnNewGame );
@@ -148,11 +149,11 @@ public class StartScene extends PixelScene {
                 shield.setRect( left + i * shieldW, top, shieldW, shieldH );
             }
 
-            ChallengeButton challenge = new ChallengeButton();
-            challenge.setPos(
-                    w / 2 - challenge.width() / 2,
-                    top + shieldH - challenge.height() / 2 );
-            add( challenge );
+//            ChallengeButton challenge = new ChallengeButton();
+//            challenge.setPos(
+//                    w / 2 - challenge.width() / 2,
+//                    top + shieldH - challenge.height() / 2 );
+//            add( challenge );
 
         } else {
             float shieldW = width / 2;
@@ -166,11 +167,11 @@ public class StartScene extends PixelScene {
                         shieldW, shieldH );
             }
 
-            ChallengeButton challenge = new ChallengeButton();
-            challenge.setPos(
-                    w / 2 - challenge.width() / 2,
-                    top + shieldH - challenge.height() / 2 );
-            add( challenge );
+//            ChallengeButton challenge = new ChallengeButton();
+//            challenge.setPos(
+//                    w / 2 - challenge.width() / 2,
+//                    top + shieldH - challenge.height() / 2 );
+//            add( challenge );
         }
 
 //        unlock = new Group();
@@ -215,7 +216,7 @@ public class StartScene extends PixelScene {
 
     @Override
     public void destroy() {
-//
+
 //        Badges.saveGlobal();
 //        Badges.loadingListener = null;
 
@@ -225,7 +226,7 @@ public class StartScene extends PixelScene {
     private void updateClass( HeroClass cl ) {
 
         if (curClass == cl) {
-//            add( new WndClass( cl ) );
+            add( new WndClass( cl ) );
             return;
         }
 

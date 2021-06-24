@@ -4,7 +4,7 @@ import com.example.pedometerpixeldungeon.mainsrc.levels.Level;
 import com.example.pedometerpixeldungeon.mainsrc.levels.Painter;
 import com.example.pedometerpixeldungeon.mainsrc.levels.Room;
 import com.example.pedometerpixeldungeon.mainsrc.levels.Terrain;
-import com.example.pedometerpixeldungeon.mainsrc.levels.items.Item;
+import com.example.pedometerpixeldungeon.mainsrc.items.Item;
 import com.example.pedometerpixeldungeon.utils.Point;
 import com.example.pedometerpixeldungeon.utils.Random;
 

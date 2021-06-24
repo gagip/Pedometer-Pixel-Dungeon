@@ -73,7 +73,7 @@ public class PixelScene extends Scene {
         minZoom = 1;
         maxZoom = defaultZoom * 2;
 
-//        Camera.reset( new PixelCamera( defaultZoom ) );
+        Camera.reset( new PixelCamera( defaultZoom ) );
 
         float uiZoom = defaultZoom;
         uiCamera = Camera.createFullscreen( uiZoom );
