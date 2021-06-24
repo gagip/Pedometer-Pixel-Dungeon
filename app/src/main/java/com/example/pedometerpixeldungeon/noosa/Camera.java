@@ -61,11 +61,12 @@ public class Camera extends Gizmo {
 	}
 	
 	public static Camera reset( Camera newCamera ) {
-		
+
 		invW2 = 2f / Game.width;
-		invH2 = 2f / Game.height;
-		
-		int length = all.size();
+		invH2 = 2f / Game.height ;
+
+
+		int length = all.size(); ;
 		for (int i=0; i < length; i++) {
 			all.get( i ).destroy();
 		}
@@ -98,8 +99,8 @@ public class Camera extends Gizmo {
 		int w = (int)Math.ceil( Game.width / zoom );
 		int h = (int)Math.ceil( Game.height / zoom );
 		return new Camera( 
-			(int)(Game.width - w * zoom) / 2, 
-			(int)(Game.height - h * zoom) / 2, 
+			(int)(Game.width - w * zoom) / 2,
+			(int)(Game.height - h * zoom) / 2,
 			w, h, zoom );
 	}
 	
@@ -113,6 +114,9 @@ public class Camera extends Gizmo {
 		
 		screenWidth = (int)(width * zoom);
 		screenHeight = (int)(height * zoom);
+
+
+
 		
 		scroll = new PointF();
 		
@@ -128,10 +132,13 @@ public class Camera extends Gizmo {
 	
 	public void zoom( float value ) {
 		zoom( value, 
-			scroll.x + width / 2, 
+			scroll.x + width / 2,
 			scroll.y + height / 2 );
+
+
 	}
-	
+
+
 	public void zoom( float value, float fx, float fy ) {
 		
 		zoom = value;
@@ -190,7 +197,7 @@ public class Camera extends Gizmo {
 	
 	public PointF screenToCamera( int x, int y ) {
 		return new PointF( 
-			(x - this.x) / zoom + scroll.x, 
+			(x - this.x) / zoom + scroll.x,
 			(y - this.y) / zoom + scroll.y );
 	}
 	
@@ -201,11 +208,11 @@ public class Camera extends Gizmo {
 	}
 	
 	public float screenWidth() {
-		return width * zoom; 
+		return width * zoom;
 	}
 	
 	public float screenHeight() {
-		return height * zoom; 
+		return height * zoom;
 	}
 	
 	protected void updateMatrix() {
@@ -228,5 +235,8 @@ public class Camera extends Gizmo {
 	public void shake( float magnitude, float duration ) {
 		shakeMagX = shakeMagY = magnitude;
 		shakeTime = shakeDuration = duration;
+
 	}
+
+
 }
