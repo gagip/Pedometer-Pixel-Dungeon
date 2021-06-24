@@ -185,7 +185,7 @@ public class PedometerPixelDungeon extends Game {
     }
 
     public static void switchNoFade( Class<? extends PixelScene> c ) {
-//        PixelScene.noFade = true;
+        PixelScene.noFade = true;
         switchScene( c );
     }
 

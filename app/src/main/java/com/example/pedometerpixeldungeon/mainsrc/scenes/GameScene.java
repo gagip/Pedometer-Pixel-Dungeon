@@ -4,7 +4,10 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.example.pedometerpixeldungeon.mainsrc.Assets;
+import com.example.pedometerpixeldungeon.mainsrc.Dungeon;
+import com.example.pedometerpixeldungeon.mainsrc.DungeonTilemap;
 import com.example.pedometerpixeldungeon.mainsrc.PedometerPixelDungeon;
+import com.example.pedometerpixeldungeon.mainsrc.actors.mobs.Mob;
 import com.example.pedometerpixeldungeon.noosa.Camera;
 import com.example.pedometerpixeldungeon.noosa.Group;
 import com.example.pedometerpixeldungeon.noosa.SkinnedBlock;
@@ -23,7 +26,7 @@ public class GameScene extends PixelScene {
     static GameScene scene;
 
     private SkinnedBlock water;
-//    private DungeonTilemap tiles;
+    private DungeonTilemap tiles;
 //    private FogOfWar fog;
 //    private HeroSprite hero;
 //
@@ -478,15 +481,15 @@ public class GameScene extends PixelScene {
 ////        scene.add( wnd );
 //    }
 
-//    public static void afterObserve() {
-//        if (scene != null) {
+    public static void afterObserve() {
+        if (scene != null) {
 //            scene.fog.updateVisibility( Dungeon.visible, Dungeon.level.visited, Dungeon.level.mapped );
-//
-//            for (Mob mob : Dungeon.level.mobs) {
-//                mob.sprite.visible = Dungeon.visible[mob.pos];
-//            }
-//        }
-//    }
+
+            for (Mob mob : Dungeon.level.mobs) {
+                mob.sprite.visible = Dungeon.visible[mob.pos];
+            }
+        }
+    }
 
 //    public static void flash( int color ) {
 //        scene.fadeIn( 0xFF000000 | color, true );

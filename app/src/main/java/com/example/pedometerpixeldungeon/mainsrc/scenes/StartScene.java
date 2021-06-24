@@ -1,10 +1,15 @@
 package com.example.pedometerpixeldungeon.mainsrc.scenes;
 
 import com.example.pedometerpixeldungeon.mainsrc.Assets;
+import com.example.pedometerpixeldungeon.mainsrc.Dungeon;
+import com.example.pedometerpixeldungeon.mainsrc.GamesInProgress;
 import com.example.pedometerpixeldungeon.mainsrc.PedometerPixelDungeon;
+import com.example.pedometerpixeldungeon.mainsrc.actors.hero.HeroClass;
 import com.example.pedometerpixeldungeon.mainsrc.effects.BannerSprites;
 import com.example.pedometerpixeldungeon.mainsrc.ui.Archs;
+import com.example.pedometerpixeldungeon.mainsrc.ui.ExitButton;
 import com.example.pedometerpixeldungeon.mainsrc.ui.RedButton;
+import com.example.pedometerpixeldungeon.mainsrc.utils.Utils;
 import com.example.pedometerpixeldungeon.noosa.BitmapText;
 import com.example.pedometerpixeldungeon.noosa.Camera;
 import com.example.pedometerpixeldungeon.noosa.Game;
@@ -14,6 +19,8 @@ import com.example.pedometerpixeldungeon.noosa.audio.Sample;
 import com.example.pedometerpixeldungeon.noosa.particles.BitmaskEmitter;
 import com.example.pedometerpixeldungeon.noosa.particles.Emitter;
 import com.example.pedometerpixeldungeon.noosa.ui.Button;
+
+import java.util.HashMap;
 
 public class StartScene extends PixelScene {
 
@@ -42,7 +49,7 @@ public class StartScene extends PixelScene {
     private static final float WIDTH_L	= 224;
     private static final float HEIGHT_L	= 124;
 
-//    private static HashMap<HeroClass, ClassShield> shields = new HashMap<HeroClass, ClassShield>();
+    private static HashMap<HeroClass, ClassShield> shields = new HashMap<HeroClass, ClassShield>();
 
     private float buttonX;
     private float buttonY;
@@ -53,7 +60,7 @@ public class StartScene extends PixelScene {
     private boolean huntressUnlocked;
     private Group unlock;
 
-//    public static HeroClass curClass;
+    public static HeroClass curClass;
 
     @Override
     public void create() {
@@ -92,10 +99,10 @@ public class StartScene extends PixelScene {
         buttonX = left;
         buttonY = bottom - BUTTON_HEIGHT;
 
-//        btnNewGame = new GameButton( TXT_NEW ) {
-//            @Override
-//            protected void onClick() {
-//                if (GamesInProgress.check( curClass ) != null) {
+        btnNewGame = new GameButton( TXT_NEW ) {
+            @Override
+            protected void onClick() {
+                if (GamesInProgress.check( curClass ) != null) {
 //                    StartScene.this.add( new WndOptions( TXT_REALLY, TXT_WARNING, TXT_YES, TXT_NO ) {
 //                        @Override
 //                        protected void onSelect( int index ) {
@@ -104,67 +111,68 @@ public class StartScene extends PixelScene {
 //                            }
 //                        }
 //                    } );
-//
-//                } else {
-//                    startNewGame();
-//                }
-//            }
-//        };
-//        add( btnNewGame );
 
-//        btnLoad = new GameButton( TXT_LOAD ) {
-//            @Override
-//            protected void onClick() {
-//                InterlevelScene.mode = InterlevelScene.Mode.CONTINUE;
-//                Game.switchScene( InterlevelScene.class );
-//            }
-//        };
-//        add( btnLoad );
+                } else {
+                    startNewGame();
+                }
+                startNewGame();
+            }
+        };
+        add( btnNewGame );
+
+        btnLoad = new GameButton( TXT_LOAD ) {
+            @Override
+            protected void onClick() {
+                InterlevelScene.mode = InterlevelScene.Mode.CONTINUE;
+                Game.switchScene( InterlevelScene.class );
+            }
+        };
+        add( btnLoad );
 
         float centralHeight = buttonY - title.y - title.height();
 
-//        HeroClass[] classes = {
-//                HeroClass.WARRIOR, HeroClass.MAGE, HeroClass.ROGUE, HeroClass.HUNTRESS
-//        };
-//        for (HeroClass cl : classes) {
-//            ClassShield shield = new ClassShield( cl );
-//            shields.put( cl, shield );
-//            add( shield );
-//        }
-//        if (PixelDungeon.landscape()) {
-//            float shieldW = width / 4;
-//            float shieldH = Math.min( centralHeight, shieldW );
-//            top = title.y + title.height + (centralHeight - shieldH) / 2;
-//            for (int i=0; i < classes.length; i++) {
-//                ClassShield shield = shields.get( classes[i] );
-//                shield.setRect( left + i * shieldW, top, shieldW, shieldH );
-//            }
-//
-//            ChallengeButton challenge = new ChallengeButton();
-//            challenge.setPos(
-//                    w / 2 - challenge.width() / 2,
-//                    top + shieldH - challenge.height() / 2 );
-//            add( challenge );
-//
-//        } else {
-//            float shieldW = width / 2;
-//            float shieldH = Math.min( centralHeight / 2, shieldW * 1.2f );
-//            top = title.y + title.height() + centralHeight / 2 - shieldH;
-//            for (int i=0; i < classes.length; i++) {
-//                ClassShield shield = shields.get( classes[i] );
-//                shield.setRect(
-//                        left + (i % 2) * shieldW,
-//                        top + (i / 2) * shieldH,
-//                        shieldW, shieldH );
-//            }
-//
-//            ChallengeButton challenge = new ChallengeButton();
-//            challenge.setPos(
-//                    w / 2 - challenge.width() / 2,
-//                    top + shieldH - challenge.height() / 2 );
-//            add( challenge );
-//        }
-//
+        HeroClass[] classes = {
+                HeroClass.WARRIOR, HeroClass.MAGE, HeroClass.ROGUE, HeroClass.HUNTRESS
+        };
+        for (HeroClass cl : classes) {
+            ClassShield shield = new ClassShield( cl );
+            shields.put( cl, shield );
+            add( shield );
+        }
+        if (PedometerPixelDungeon.landscape()) {
+            float shieldW = width / 4;
+            float shieldH = Math.min( centralHeight, shieldW );
+            top = title.y + title.height + (centralHeight - shieldH) / 2;
+            for (int i=0; i < classes.length; i++) {
+                ClassShield shield = shields.get( classes[i] );
+                shield.setRect( left + i * shieldW, top, shieldW, shieldH );
+            }
+
+            ChallengeButton challenge = new ChallengeButton();
+            challenge.setPos(
+                    w / 2 - challenge.width() / 2,
+                    top + shieldH - challenge.height() / 2 );
+            add( challenge );
+
+        } else {
+            float shieldW = width / 2;
+            float shieldH = Math.min( centralHeight / 2, shieldW * 1.2f );
+            top = title.y + title.height() + centralHeight / 2 - shieldH;
+            for (int i=0; i < classes.length; i++) {
+                ClassShield shield = shields.get( classes[i] );
+                shield.setRect(
+                        left + (i % 2) * shieldW,
+                        top + (i / 2) * shieldH,
+                        shieldW, shieldH );
+            }
+
+            ChallengeButton challenge = new ChallengeButton();
+            challenge.setPos(
+                    w / 2 - challenge.width() / 2,
+                    top + shieldH - challenge.height() / 2 );
+            add( challenge );
+        }
+
 //        unlock = new Group();
 //        add( unlock );
 
@@ -186,20 +194,20 @@ public class StartScene extends PixelScene {
 //            }
 //        }
 //
-//        ExitButton btnExit = new ExitButton();
-//        btnExit.setPos( Camera.main.width - btnExit.width(), 0 );
-//        add( btnExit );
-//
-//        curClass = null;
-//        updateClass( HeroClass.values()[PixelDungeon.lastClass()] );
-//
-//        fadeIn();
-//
+        ExitButton btnExit = new ExitButton();
+        btnExit.setPos( Camera.main.width - btnExit.width(), 0 );
+        add( btnExit );
+
+        curClass = null;
+        updateClass( HeroClass.values()[PedometerPixelDungeon.lastClass()] );
+
+        fadeIn();
+
 //        Badges.loadingListener = new Callback() {
 //            @Override
 //            public void call() {
 //                if (Game.scene() == StartScene.this) {
-//                    PixelDungeon.switchNoFade( StartScene.class );
+//                    PedometerPixelDungeon.switchNoFade( StartScene.class );
 //                }
 //            }
 //        };
@@ -214,66 +222,66 @@ public class StartScene extends PixelScene {
         super.destroy();
     }
 
-//    private void updateClass( HeroClass cl ) {
-//
-//        if (curClass == cl) {
+    private void updateClass( HeroClass cl ) {
+
+        if (curClass == cl) {
 //            add( new WndClass( cl ) );
-//            return;
-//        }
-//
-//        if (curClass != null) {
-//            shields.get( curClass ).highlight( false );
-//        }
-//        shields.get( curClass = cl ).highlight( true );
-//
-//        if (cl != HeroClass.HUNTRESS || huntressUnlocked) {
-//
+            return;
+        }
+
+        if (curClass != null) {
+            shields.get( curClass ).highlight( false );
+        }
+        shields.get( curClass = cl ).highlight( true );
+
+        if (cl != HeroClass.HUNTRESS || huntressUnlocked) {
+
 //            unlock.visible = false;
-//
-//            GamesInProgress.Info info = GamesInProgress.check( curClass );
-//            if (info != null) {
-//
-//                btnLoad.visible = true;
-//                btnLoad.secondary( Utils.format( TXT_DPTH_LVL, info.depth, info.level ), info.challenges );
-//
-//                btnNewGame.visible = true;
-//                btnNewGame.secondary( TXT_ERASE, false );
-//
-//                float w = (Camera.main.width - GAP) / 2 - buttonX;
-//
-//                btnLoad.setRect(
-//                        buttonX, buttonY, w, BUTTON_HEIGHT );
-//                btnNewGame.setRect(
-//                        btnLoad.right() + GAP, buttonY, w, BUTTON_HEIGHT );
-//
-//            } else {
-//                btnLoad.visible = false;
-//
-//                btnNewGame.visible = true;
-//                btnNewGame.secondary( null, false );
-//                btnNewGame.setRect( buttonX, buttonY, Camera.main.width - buttonX * 2, BUTTON_HEIGHT );
-//            }
-//
-//        } else {
-//
-//            unlock.visible = true;
-//            btnLoad.visible = false;
-//            btnNewGame.visible = false;
-//
-//        }
-//    }
+
+            GamesInProgress.Info info = GamesInProgress.check( curClass );
+            if (info != null) {
+
+                btnLoad.visible = true;
+                btnLoad.secondary( Utils.format( TXT_DPTH_LVL, info.depth, info.level ), info.challenges );
+
+                btnNewGame.visible = true;
+                btnNewGame.secondary( TXT_ERASE, false );
+
+                float w = (Camera.main.width - GAP) / 2 - buttonX;
+
+                btnLoad.setRect(
+                        buttonX, buttonY, w, BUTTON_HEIGHT );
+                btnNewGame.setRect(
+                        btnLoad.right() + GAP, buttonY, w, BUTTON_HEIGHT );
+
+            } else {
+                btnLoad.visible = false;
+
+                btnNewGame.visible = true;
+                btnNewGame.secondary( null, false );
+                btnNewGame.setRect( buttonX, buttonY, Camera.main.width - buttonX * 2, BUTTON_HEIGHT );
+            }
+
+        } else {
+
+            unlock.visible = true;
+            btnLoad.visible = false;
+            btnNewGame.visible = false;
+
+        }
+    }
 
     private void startNewGame() {
 
-//        Dungeon.hero = null;
-//        InterlevelScene.mode = InterlevelScene.Mode.DESCEND;
-//
-//        if (PixelDungeon.intro()) {
-//            PixelDungeon.intro( false );
-//            Game.switchScene( IntroScene.class );
-//        } else {
-//            Game.switchScene( InterlevelScene.class );
-//        }
+        Dungeon.hero = null;
+        InterlevelScene.mode = InterlevelScene.Mode.DESCEND;
+
+        if (PedometerPixelDungeon.intro()) {
+            PedometerPixelDungeon.intro( false );
+            Game.switchScene( IntroScene.class );
+        } else {
+            Game.switchScene( InterlevelScene.class );
+        }
     }
 
     @Override
@@ -338,7 +346,7 @@ public class StartScene extends PixelScene {
         private static final int HEIGHT	= 28;
         private static final int SCALE	= 2;
 
-//        private HeroClass cl;
+        private HeroClass cl;
 
         private Image avatar;
         private BitmapText name;
@@ -349,29 +357,29 @@ public class StartScene extends PixelScene {
         private int normal;
         private int highlighted;
 
-//        public ClassShield( HeroClass cl ) {
-//            super();
-//
-//            this.cl = cl;
-//
-//            avatar.frame( cl.ordinal() * WIDTH, 0, WIDTH, HEIGHT );
-//            avatar.scale.set( SCALE );
-//
-////            if (Badges.isUnlocked( cl.masteryBadge() )) {
-////                normal = MASTERY_NORMAL;
-////                highlighted = MASTERY_HIGHLIGHTED;
-////            } else {
-////                normal = BASIC_NORMAL;
-////                highlighted = BASIC_HIGHLIGHTED;
-////            }
-//
-////            name.text( cl.name() );
-//            name.measure();
-//            name.hardlight( normal );
-//
-//            brightness = MIN_BRIGHTNESS;
-//            updateBrightness();
-//        }
+        public ClassShield( HeroClass cl ) {
+            super();
+
+            this.cl = cl;
+
+            avatar.frame( cl.ordinal() * WIDTH, 0, WIDTH, HEIGHT );
+            avatar.scale.set( SCALE );
+
+//            if (Badges.isUnlocked( cl.masteryBadge() )) {
+//                normal = MASTERY_NORMAL;
+//                highlighted = MASTERY_HIGHLIGHTED;
+//            } else {
+//                normal = BASIC_NORMAL;
+//                highlighted = BASIC_HIGHLIGHTED;
+//            }
+
+            name.text( cl.name() );
+            name.measure();
+            name.hardlight( normal );
+
+            brightness = MIN_BRIGHTNESS;
+            updateBrightness();
+        }
 
         @Override
         protected void createChildren() {
@@ -405,9 +413,9 @@ public class StartScene extends PixelScene {
 
             emitter.revive();
 //            emitter.start( Speck.factory( Speck.LIGHT ), 0.05f, 7 );
-
+//
             Sample.INSTANCE.play( Assets.SND_CLICK, 1, 1, 1.2f );
-//            updateClass( cl );
+            updateClass( cl );
         }
 
         @Override
