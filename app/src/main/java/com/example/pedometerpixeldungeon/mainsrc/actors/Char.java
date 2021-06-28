@@ -195,21 +195,21 @@ public abstract class Char extends Actor {
 //        return buff( Cripple.class ) == null ? baseSpeed : baseSpeed * 0.5f;
 //    }
 
-//    public void damage( int dmg, Object src ) {
-//
-//        if (HP <= 0) {
-//            return;
-//        }
-//
+    public void damage( int dmg, Object src ) {
+
+        if (HP <= 0) {
+            return;
+        }
+
 //        Buff.detach( this, Frost.class );
-//
-//        Class<?> srcClass = src.getClass();
-//        if (immunities().contains( srcClass )) {
-//            dmg = 0;
-//        } else if (resistances().contains( srcClass )) {
-//            dmg = Random.IntRange( 0, dmg );
-//        }
-//
+
+        Class<?> srcClass = src.getClass();
+        if (immunities().contains( srcClass )) {
+            dmg = 0;
+        } else if (resistances().contains( srcClass )) {
+            dmg = Random.IntRange( 0, dmg );
+        }
+
 //        if (buff( Paralysis.class ) != null) {
 //            if (Random.Int( dmg ) >= Random.Int( HP )) {
 //                Buff.detach( this, Paralysis.class );
@@ -218,18 +218,18 @@ public abstract class Char extends Actor {
 //                }
 //            }
 //        }
-//
-//        HP -= dmg;
-//        if (dmg > 0 || src instanceof Char) {
-//            sprite.showStatus( HP > HT / 2 ?
-//                            CharSprite.WARNING :
-//                            CharSprite.NEGATIVE,
-//                    Integer.toString( dmg ) );
-//        }
-//        if (HP <= 0) {
-//            die( src );
-//        }
-//    }
+
+        HP -= dmg;
+        if (dmg > 0 || src instanceof Char) {
+            sprite.showStatus( HP > HT / 2 ?
+                            CharSprite.WARNING :
+                            CharSprite.NEGATIVE,
+                    Integer.toString( dmg ) );
+        }
+        if (HP <= 0) {
+            die( src );
+        }
+    }
 
     public void destroy() {
         HP = 0;
@@ -237,11 +237,11 @@ public abstract class Char extends Actor {
         Actor.freeCell( pos );
     }
 
-//    public void die( Object src ) {
-//        destroy();
-//        sprite.die();
-//    }
-//
+    public void die( Object src ) {
+        destroy();
+        sprite.die();
+    }
+
     public boolean isAlive() {
         return HP > 0;
     }

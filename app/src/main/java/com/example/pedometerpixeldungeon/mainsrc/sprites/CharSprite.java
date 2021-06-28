@@ -3,6 +3,7 @@ package com.example.pedometerpixeldungeon.mainsrc.sprites;
 import com.example.pedometerpixeldungeon.mainsrc.DungeonTilemap;
 import com.example.pedometerpixeldungeon.mainsrc.actors.Char;
 import com.example.pedometerpixeldungeon.mainsrc.levels.Level;
+import com.example.pedometerpixeldungeon.mainsrc.scenes.GameScene;
 import com.example.pedometerpixeldungeon.mainsrc.utils.Utils;
 import com.example.pedometerpixeldungeon.noosa.Game;
 import com.example.pedometerpixeldungeon.noosa.MovieClip;
@@ -180,23 +181,23 @@ public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip
 //        }
     }
 
-//    public Emitter emitter() {
-//        Emitter emitter = GameScene.emitter();
-//        emitter.pos( this );
-//        return emitter;
-//    }
-//
-//    public Emitter centerEmitter() {
-//        Emitter emitter = GameScene.emitter();
-//        emitter.pos( center() );
-//        return emitter;
-//    }
-//
-//    public Emitter bottomEmitter() {
-//        Emitter emitter = GameScene.emitter();
-//        emitter.pos( x, y + height, width, 0 );
-//        return emitter;
-//    }
+    public Emitter emitter() {
+        Emitter emitter = GameScene.emitter();
+        emitter.pos( this );
+        return emitter;
+    }
+
+    public Emitter centerEmitter() {
+        Emitter emitter = GameScene.emitter();
+        emitter.pos( center() );
+        return emitter;
+    }
+
+    public Emitter bottomEmitter() {
+        Emitter emitter = GameScene.emitter();
+        emitter.pos( x, y + height, width, 0 );
+        return emitter;
+    }
 
     public void burst( final int color, int n ) {
 //        if (visible) {

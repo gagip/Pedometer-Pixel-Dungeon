@@ -2,8 +2,10 @@ package com.example.pedometerpixeldungeon.mainsrc.scenes;
 
 import com.example.pedometerpixeldungeon.mainsrc.Assets;
 import com.example.pedometerpixeldungeon.mainsrc.Dungeon;
+import com.example.pedometerpixeldungeon.mainsrc.Statistics;
 import com.example.pedometerpixeldungeon.mainsrc.actors.Actor;
 import com.example.pedometerpixeldungeon.mainsrc.levels.Level;
+import com.example.pedometerpixeldungeon.mainsrc.ui.GameLog;
 import com.example.pedometerpixeldungeon.mainsrc.windows.WndStory;
 import com.example.pedometerpixeldungeon.noosa.BitmapText;
 import com.example.pedometerpixeldungeon.noosa.Camera;
@@ -192,19 +194,19 @@ public class InterlevelScene extends PixelScene {
                 Dungeon.chapters.add( WndStory.ID_SEWERS );
                 noStory = false;
             }
-//            GameLog.wipe();
+            GameLog.wipe();
         } else {
             Dungeon.saveLevel();
         }
 
         Level level;
-//        if (Dungeon.depth >= Statistics.deepestFloor) {
-//            level = Dungeon.newLevel();
-//        } else {
-//            Dungeon.depth++;
-//            level = Dungeon.loadLevel( Dungeon.hero.heroClass );
-//        }
-//        Dungeon.switchLevel( level, level.entrance );
+        if (Dungeon.depth >= Statistics.deepestFloor) {
+            level = Dungeon.newLevel();
+        } else {
+            Dungeon.depth++;
+            level = Dungeon.loadLevel( Dungeon.hero.heroClass );
+        }
+        Dungeon.switchLevel( level, level.entrance );
     }
 
     private void fall() throws Exception {

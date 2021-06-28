@@ -2,10 +2,13 @@ package com.example.pedometerpixeldungeon.mainsrc.items;
 
 import com.example.pedometerpixeldungeon.mainsrc.actors.hero.Hero;
 import com.example.pedometerpixeldungeon.mainsrc.utils.Utils;
+import com.example.pedometerpixeldungeon.utils.Bundlable;
+import com.example.pedometerpixeldungeon.utils.Bundle;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
-public class Item {
+public class Item implements Bundlable {
 
     private static final String TXT_PACK_FULL	= "Your pack is too full for the %s";
 
@@ -44,12 +47,12 @@ public class Item {
 
     public boolean unique = false;
 
-//    private static Comparator<Item> itemComparator = new Comparator<Item>() {
-//        @Override
-//        public int compare( Item lhs, Item rhs ) {
-//            return Generator.Category.order( lhs ) - Generator.Category.order( rhs );
-//        }
-//    };
+    private static Comparator<Item> itemComparator = new Comparator<Item>() {
+        @Override
+        public int compare( Item lhs, Item rhs ) {
+            return Generator.Category.order( lhs ) - Generator.Category.order( rhs );
+        }
+    };
 
     public ArrayList<String> actions(Hero hero ) {
         ArrayList<String> actions = new ArrayList<String>();
@@ -101,12 +104,12 @@ public class Item {
         execute( hero, defaultAction );
     }
 
-//    protected void onThrow( int cell ) {
+    protected void onThrow( int cell ) {
 //        Heap heap = Dungeon.level.drop( this, cell );
 //        if (!heap.isEmpty()) {
 //            heap.sprite.drop( cell );
 //        }
-//    }
+    }
 
 //    public boolean collect( Bag container ) {
 //
@@ -460,40 +463,40 @@ public class Item {
     private static final String CURSED_KNOWN	= "cursedKnown";
     private static final String DURABILITY		= "durability";
 
-//    @Override
-//    public void storeInBundle( Bundle bundle ) {
-////        bundle.put( QUANTITY, quantity );
-////        bundle.put( LEVEL, level );
-////        bundle.put( LEVEL_KNOWN, levelKnown );
-////        bundle.put( CURSED, cursed );
-////        bundle.put( CURSED_KNOWN, cursedKnown );
-////        if (isUpgradable()) {
-////            bundle.put( DURABILITY, durability );
-////        }
-////        QuickSlot.save( bundle, this );
-//    }
+    @Override
+    public void storeInBundle( Bundle bundle ) {
+//        bundle.put( QUANTITY, quantity );
+//        bundle.put( LEVEL, level );
+//        bundle.put( LEVEL_KNOWN, levelKnown );
+//        bundle.put( CURSED, cursed );
+//        bundle.put( CURSED_KNOWN, cursedKnown );
+//        if (isUpgradable()) {
+//            bundle.put( DURABILITY, durability );
+//        }
+//        QuickSlot.save( bundle, this );
+    }
 
-//    @Override
-//    public void restoreFromBundle( Bundle bundle ) {
-////        quantity	= bundle.getInt( QUANTITY );
-////        levelKnown	= bundle.getBoolean( LEVEL_KNOWN );
-////        cursedKnown	= bundle.getBoolean( CURSED_KNOWN );
-////
-////        int level = bundle.getInt( LEVEL );
-////        if (level > 0) {
-////            upgrade( level );
-////        } else if (level < 0) {
-////            degrade( -level );
-////        }
-////
-////        cursed	= bundle.getBoolean( CURSED );
-////
-////        if (isUpgradable()) {
-////            durability = bundle.getInt( DURABILITY );
-////        }
-////
-////        QuickSlot.restore( bundle, this );
-//    }
+    @Override
+    public void restoreFromBundle( Bundle bundle ) {
+//        quantity	= bundle.getInt( QUANTITY );
+//        levelKnown	= bundle.getBoolean( LEVEL_KNOWN );
+//        cursedKnown	= bundle.getBoolean( CURSED_KNOWN );
+//
+//        int level = bundle.getInt( LEVEL );
+//        if (level > 0) {
+//            upgrade( level );
+//        } else if (level < 0) {
+//            degrade( -level );
+//        }
+//
+//        cursed	= bundle.getBoolean( CURSED );
+//
+//        if (isUpgradable()) {
+//            durability = bundle.getInt( DURABILITY );
+//        }
+//
+//        QuickSlot.restore( bundle, this );
+    }
 
     public void cast( final Hero user, int dst ) {
 

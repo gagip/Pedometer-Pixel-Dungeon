@@ -2,6 +2,22 @@ package com.example.pedometerpixeldungeon.mainsrc.levels;
 
 import com.example.pedometerpixeldungeon.mainsrc.PedometerPixelDungeon;
 import com.example.pedometerpixeldungeon.mainsrc.levels.painters.ArmoryPainter;
+import com.example.pedometerpixeldungeon.mainsrc.levels.painters.BlacksmithPainter;
+import com.example.pedometerpixeldungeon.mainsrc.levels.painters.BossExitPainter;
+import com.example.pedometerpixeldungeon.mainsrc.levels.painters.CryptPainter;
+import com.example.pedometerpixeldungeon.mainsrc.levels.painters.EntrancePainter;
+import com.example.pedometerpixeldungeon.mainsrc.levels.painters.ExitPainter;
+import com.example.pedometerpixeldungeon.mainsrc.levels.painters.LaboratoryPainter;
+import com.example.pedometerpixeldungeon.mainsrc.levels.painters.LibraryPainter;
+import com.example.pedometerpixeldungeon.mainsrc.levels.painters.PassagePainter;
+import com.example.pedometerpixeldungeon.mainsrc.levels.painters.PitPainter;
+import com.example.pedometerpixeldungeon.mainsrc.levels.painters.ShopPainter;
+import com.example.pedometerpixeldungeon.mainsrc.levels.painters.StandardPainter;
+import com.example.pedometerpixeldungeon.mainsrc.levels.painters.StatuePainter;
+import com.example.pedometerpixeldungeon.mainsrc.levels.painters.TreasuryPainter;
+import com.example.pedometerpixeldungeon.mainsrc.levels.painters.TunnelPainter;
+import com.example.pedometerpixeldungeon.mainsrc.levels.painters.VaultPainter;
+import com.example.pedometerpixeldungeon.mainsrc.levels.painters.WeakFloorPainter;
 import com.example.pedometerpixeldungeon.utils.Bundlable;
 import com.example.pedometerpixeldungeon.utils.Bundle;
 import com.example.pedometerpixeldungeon.utils.Graph;
@@ -26,29 +42,29 @@ public class Room extends Rect implements Graph.Node, Bundlable {
 
     public static enum Type {
         NULL( null ),
-//        STANDARD	( StandardPainter.class ),
-//        ENTRANCE	( EntrancePainter.class ),
-//        EXIT		( ExitPainter.class ),
-//        BOSS_EXIT	( BossExitPainter.class ),
-//        TUNNEL		( TunnelPainter.class ),
-//        PASSAGE		( PassagePainter.class ),
-//        SHOP		( ShopPainter.class ),
-//        BLACKSMITH	( BlacksmithPainter.class ),
-//        TREASURY	( TreasuryPainter.class ),
-        ARMORY		( ArmoryPainter.class );
-//        LIBRARY		( LibraryPainter.class ),
-//        LABORATORY	( LaboratoryPainter.class ),
-//        VAULT		( VaultPainter.class ),
+        STANDARD	( StandardPainter.class ),
+        ENTRANCE	( EntrancePainter.class ),
+        EXIT		( ExitPainter.class ),
+        BOSS_EXIT	( BossExitPainter.class ),
+        TUNNEL		( TunnelPainter.class ),
+        PASSAGE		( PassagePainter.class ),
+        SHOP		( ShopPainter.class ),
+        BLACKSMITH	( BlacksmithPainter.class ),
+        TREASURY	( TreasuryPainter.class ),
+        ARMORY		( ArmoryPainter.class ),
+        LIBRARY		( LibraryPainter.class ),
+        LABORATORY	( LaboratoryPainter.class ),
+        VAULT		( VaultPainter.class ),
 //        TRAPS		( TrapsPainter.class ),
 //        STORAGE		( StoragePainter.class ),
 //        MAGIC_WELL	( MagicWellPainter.class ),
 //        GARDEN		( GardenPainter.class ),
-//        CRYPT		( CryptPainter.class ),
-//        STATUE		( StatuePainter.class ),
+        CRYPT		( CryptPainter.class ),
+        STATUE		( StatuePainter.class ),
 //        POOL		( PoolPainter.class ),
 //        RAT_KING	( RatKingPainter.class ),
-//        WEAK_FLOOR	( WeakFloorPainter.class ),
-//        PIT			( PitPainter.class ),
+        WEAK_FLOOR	(WeakFloorPainter.class),
+        PIT			( PitPainter.class );
 //        ALTAR		( AltarPainter.class );
 
         private Method paint;
@@ -180,15 +196,15 @@ public class Room extends Rect implements Graph.Node, Bundlable {
             }
         }
     }
-//
-//    public static void useType( Type type ) {
-//        if (SPECIALS.remove( type )) {
-//            SPECIALS.add( type );
-//        }
-//    }
-//
-//    private static final String ROOMS	= "rooms";
-//
+
+    public static void useType( Type type ) {
+        if (SPECIALS.remove( type )) {
+            SPECIALS.add( type );
+        }
+    }
+
+    private static final String ROOMS	= "rooms";
+
 //    public static void restoreRoomsFromBundle( Bundle bundle ) {
 //        if (bundle.contains( ROOMS )) {
 //            SPECIALS.clear();

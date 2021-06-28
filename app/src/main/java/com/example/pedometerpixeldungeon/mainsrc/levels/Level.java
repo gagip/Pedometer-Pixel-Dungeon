@@ -1,20 +1,27 @@
 package com.example.pedometerpixeldungeon.mainsrc.levels;
 
 import com.example.pedometerpixeldungeon.mainsrc.Dungeon;
+import com.example.pedometerpixeldungeon.mainsrc.ShadowCaster;
+import com.example.pedometerpixeldungeon.mainsrc.Statistics;
 import com.example.pedometerpixeldungeon.mainsrc.actors.Actor;
 import com.example.pedometerpixeldungeon.mainsrc.actors.Char;
+import com.example.pedometerpixeldungeon.mainsrc.actors.mobs.Bestiary;
 import com.example.pedometerpixeldungeon.mainsrc.actors.mobs.Mob;
 import com.example.pedometerpixeldungeon.mainsrc.items.Heap;
 import com.example.pedometerpixeldungeon.mainsrc.items.Item;
+import com.example.pedometerpixeldungeon.mainsrc.plants.Plant;
+import com.example.pedometerpixeldungeon.mainsrc.scenes.GameScene;
 import com.example.pedometerpixeldungeon.noosa.Scene;
 import com.example.pedometerpixeldungeon.utils.Bundlable;
 import com.example.pedometerpixeldungeon.utils.Bundle;
 import com.example.pedometerpixeldungeon.utils.Random;
 import com.example.pedometerpixeldungeon.utils.SparseArray;
 
+import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 
 public abstract class Level implements Bundlable {
@@ -67,8 +74,8 @@ public abstract class Level implements Bundlable {
 
     public HashSet<Mob> mobs;
     public SparseArray<Heap> heaps;
-//    public HashMap<Class<? extends Blob>,Blob> blobs;
-//    public SparseArray<Plant> plants;
+    public HashMap<Class<? extends Blob>,Blob> blobs;
+    public SparseArray<Plant> plants;
 
     protected ArrayList<Item> itemsToSpawn = new ArrayList<Item>();
 
@@ -100,9 +107,9 @@ public abstract class Level implements Bundlable {
         Arrays.fill( mapped, false );
 
         mobs = new HashSet<Mob>();
-//        heaps = new SparseArray<Heap>();
-//        blobs = new HashMap<Class<? extends Blob>,Blob>();
-//        plants = new SparseArray<Plant>();
+        heaps = new SparseArray<Heap>();
+        blobs = new HashMap<Class<? extends Blob>,Blob>();
+        plants = new SparseArray<Plant>();
 //
 //        if (!Dungeon.bossLevel()) {
 //            addItemToSpawn( Generator.random( Generator.Category.FOOD ) );
@@ -150,7 +157,7 @@ public abstract class Level implements Bundlable {
         buildFlagMaps();
         cleanWalls();
 
-//        createMobs();
+        createMobs();
 //        createItems();
     }
 
@@ -311,19 +318,19 @@ public abstract class Level implements Bundlable {
         return new Actor() {
             @Override
             protected boolean act() {
-//                if (mobs.size() < nMobs()) {
-//
-//                    Mob mob = Bestiary.mutable( Dungeon.depth );
-//                    mob.state = mob.WANDERING;
-//                    mob.pos = randomRespawnCell();
-//                    if (Dungeon.hero.isAlive() && mob.pos != -1) {
-//                        GameScene.add( mob );
-//                        if (Statistics.amuletObtained) {
-//                            mob.beckon( Dungeon.hero.pos );
-//                        }
-//                    }
-//                }
-//                spend( Dungeon.nightMode || Statistics.amuletObtained ? TIME_TO_RESPAWN / 2 : TIME_TO_RESPAWN );
+                if (mobs.size() < nMobs()) {
+
+                    Mob mob = Bestiary.mutable( Dungeon.depth );
+                    mob.state = mob.WANDERING;
+                    mob.pos = randomRespawnCell();
+                    if (Dungeon.hero.isAlive() && mob.pos != -1) {
+                        GameScene.add( mob );
+                        if (Statistics.amuletObtained) {
+                            mob.beckon( Dungeon.hero.pos );
+                        }
+                    }
+                }
+                spend( Dungeon.nightMode || Statistics.amuletObtained ? TIME_TO_RESPAWN / 2 : TIME_TO_RESPAWN );
                 return true;
             }
         };
@@ -350,17 +357,17 @@ public abstract class Level implements Bundlable {
             itemsToSpawn.add( item );
         }
     }
-//
-//    public Item itemToSpanAsPrize() {
-//        if (Random.Int( itemsToSpawn.size() + 1 ) > 0) {
-//            Item item = Random.element( itemsToSpawn );
-//            itemsToSpawn.remove( item );
-//            return item;
-//        } else {
-//            return null;
-//        }
-//    }
-//
+
+    public Item itemToSpanAsPrize() {
+        if (Random.Int( itemsToSpawn.size() + 1 ) > 0) {
+            Item item = Random.element( itemsToSpawn );
+            itemsToSpawn.remove( item );
+            return item;
+        } else {
+            return null;
+        }
+    }
+
     private void buildFlagMaps() {
 
         for (int i=0; i < LENGTH; i++) {
@@ -542,28 +549,28 @@ public abstract class Level implements Bundlable {
 
         return heap;
     }
-//
-//    public Plant plant( Plant.Seed seed, int pos ) {
-//        Plant plant = plants.get( pos );
-//        if (plant != null) {
-//            plant.wither();
-//        }
-//
-//        plant = seed.couch( pos );
-//        plants.put( pos, plant );
-//
-//        GameScene.add( plant );
-//
-//        return plant;
-//    }
-//
-//    public void uproot( int pos ) {
-//        plants.delete( pos );
-//    }
 
-//    public int pitCell() {
-//        return randomRespawnCell();
-//    }
+    public Plant plant( Plant.Seed seed, int pos ) {
+        Plant plant = plants.get( pos );
+        if (plant != null) {
+            plant.wither();
+        }
+
+        plant = seed.couch( pos );
+        plants.put( pos, plant );
+
+        GameScene.add( plant );
+
+        return plant;
+    }
+
+    public void uproot( int pos ) {
+        plants.delete( pos );
+    }
+
+    public int pitCell() {
+        return randomRespawnCell();
+    }
 
     public void press( int cell, Char ch ) {
 
@@ -666,15 +673,15 @@ public abstract class Level implements Bundlable {
 //        }
     }
 //
-//    public void mobPress( Mob mob ) {
-//
-//        int cell = mob.pos;
-//
+    public void mobPress( Mob mob ) {
+
+        int cell = mob.pos;
+
 //        if (pit[cell] && !mob.flying) {
 //            Chasm.mobFall( mob );
 //            return;
 //        }
-//
+
 //        boolean trap = true;
 //        switch (map[cell]) {
 //
@@ -716,7 +723,7 @@ public abstract class Level implements Bundlable {
 //            default:
 //                trap = false;
 //        }
-//
+
 //        if (trap) {
 //            if (Dungeon.visible[cell]) {
 //                Sample.INSTANCE.play( Assets.SND_TRAP );
@@ -729,20 +736,23 @@ public abstract class Level implements Bundlable {
 //        if (plant != null) {
 //            plant.activate( mob );
 //        }
-//    }
-//
+    }
+
     public boolean[] updateFieldOfView( Char c ) {
 
         int cx = c.pos % WIDTH;
         int cy = c.pos / WIDTH;
 
 //        boolean sighted = c.buff( Blindness.class ) == null && c.buff( Shadows.class ) == null && c.isAlive();
+        boolean sighted = false;
+
 //        if (sighted) {
 ////            ShadowCaster.castShadow( cx, cy, fieldOfView, c.viewDistance );
 //        } else {
 //            Arrays.fill( fieldOfView, false );
 //        }
-        Arrays.fill( fieldOfView, false );
+        ShadowCaster.castShadow( cx, cy, fieldOfView, c.viewDistance );
+//        Arrays.fill( fieldOfView, false );
 
         int sense = 1;
         if (c.isAlive()) {
@@ -751,23 +761,28 @@ public abstract class Level implements Bundlable {
 //            }
         }
 
-//        if ((sighted && sense > 1) || !sighted) {
-//
-//            int ax = Math.max( 0, cx - sense );
-//            int bx = Math.min( cx + sense, WIDTH - 1 );
-//            int ay = Math.max( 0, cy - sense );
-//            int by = Math.min( cy + sense, HEIGHT - 1 );
-//
-//            int len = bx - ax + 1;
-//            int pos = ax + ay * WIDTH;
-//            for (int y = ay; y <= by; y++, pos+=WIDTH) {
-//                Arrays.fill( fieldOfView, pos, pos + len, true );
-//            }
-//
-//            for (int i=0; i < LENGTH; i++) {
-//                fieldOfView[i] &= discoverable[i];
-//            }
-//        }
+        if ((sighted && sense > 1) || !sighted) {
+
+            int ax = Math.max( 0, cx - sense );
+            int bx = Math.min( cx + sense, WIDTH - 1 );
+            int ay = Math.max( 0, cy - sense );
+            int by = Math.min( cy + sense, HEIGHT - 1 );
+
+            int len = bx - ax + 1;
+            int pos = ax + ay * WIDTH;
+            for (int y = ay; y <= by; y++, pos+=WIDTH) {
+                Arrays.fill( fieldOfView, pos, pos + len, true );
+            }
+
+            for (int i=0; i < LENGTH; i++) {
+                fieldOfView[i] &= discoverable[i];
+            }
+        }
+
+        // 맵핵
+        for (int i=0; i<LENGTH; i++){
+            fieldOfView[i] = true;
+        }
 
 //        if (c.isAlive()) {
 //            if (c.buff( MindVision.class ) != null) {

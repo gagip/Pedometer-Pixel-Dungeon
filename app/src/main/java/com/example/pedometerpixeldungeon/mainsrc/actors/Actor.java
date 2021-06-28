@@ -2,6 +2,8 @@ package com.example.pedometerpixeldungeon.mainsrc.actors;
 
 import android.util.SparseArray;
 
+import com.example.pedometerpixeldungeon.mainsrc.Dungeon;
+import com.example.pedometerpixeldungeon.mainsrc.actors.mobs.Mob;
 import com.example.pedometerpixeldungeon.mainsrc.levels.Level;
 import com.example.pedometerpixeldungeon.utils.Bundlable;
 import com.example.pedometerpixeldungeon.utils.Bundle;
@@ -112,17 +114,17 @@ public abstract class Actor implements Bundlable {
 
     public static void init() {
 
-//        addDelayed( Dungeon.hero, -Float.MIN_VALUE );
-//
-//        for (Mob mob : Dungeon.level.mobs) {
-//            add( mob );
-//        }
-//
+        addDelayed( Dungeon.hero, -Float.MIN_VALUE );
+
+        for (Mob mob : Dungeon.level.mobs) {
+            add( mob );
+        }
+
 //        for (Blob blob : Dungeon.level.blobs.values()) {
 //            add( blob );
 //        }
-//
-//        current = null;
+
+        current = null;
     }
 
     public static void occupyCell( Char ch ) {

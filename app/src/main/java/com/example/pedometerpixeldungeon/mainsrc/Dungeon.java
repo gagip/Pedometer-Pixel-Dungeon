@@ -92,7 +92,7 @@ public class Dungeon {
 //        QuickSlot.secondaryValue = null;
 //
         hero = new Hero();
-        hero.live();
+//        hero.live();
 //
 //        Badges.reset();
 //
@@ -109,16 +109,16 @@ public class Dungeon {
         Actor.clear();
 
         depth++;
-//        if (depth > Statistics.deepestFloor) {
-//            Statistics.deepestFloor = depth;
-//
-//            if (Statistics.qualifiedForNoKilling) {
-//                Statistics.completedWithNoKilling = true;
-//            } else {
-//                Statistics.completedWithNoKilling = false;
-//            }
-//        }
-//
+        if (depth > Statistics.deepestFloor) {
+            Statistics.deepestFloor = depth;
+
+            if (Statistics.qualifiedForNoKilling) {
+                Statistics.completedWithNoKilling = true;
+            } else {
+                Statistics.completedWithNoKilling = false;
+            }
+        }
+
         Arrays.fill( visible, false );
 
         Level level;
@@ -598,26 +598,26 @@ public class Dungeon {
 
     }
 
-//    public static int flee( Char ch, int cur, int from, boolean pass[], boolean[] visible ) {
-//
-//        if (ch.flying) {
-//            BArray.or( pass, Level.avoid, passable );
-//        } else {
-//            System.arraycopy( pass, 0, passable, 0, Level.LENGTH );
-//        }
-//
-//        for (Actor actor : Actor.all()) {
-//            if (actor instanceof Char) {
-//                int pos = ((Char)actor).pos;
-//                if (visible[pos]) {
-//                    passable[pos] = false;
-//                }
-//            }
-//        }
-//        passable[cur] = true;
-//
-//        return PathFinder.getStepBack( cur, from, passable );
-//
-//    }
+    public static int flee( Char ch, int cur, int from, boolean pass[], boolean[] visible ) {
+
+        if (ch.flying) {
+            BArray.or( pass, Level.avoid, passable );
+        } else {
+            System.arraycopy( pass, 0, passable, 0, Level.LENGTH );
+        }
+
+        for (Actor actor : Actor.all()) {
+            if (actor instanceof Char) {
+                int pos = ((Char)actor).pos;
+                if (visible[pos]) {
+                    passable[pos] = false;
+                }
+            }
+        }
+        passable[cur] = true;
+
+        return PathFinder.getStepBack( cur, from, passable );
+
+    }
 
 }
