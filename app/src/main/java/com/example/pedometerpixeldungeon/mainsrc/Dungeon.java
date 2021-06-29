@@ -2,18 +2,24 @@ package com.example.pedometerpixeldungeon.mainsrc;
 
 import com.example.pedometerpixeldungeon.mainsrc.actors.Actor;
 import com.example.pedometerpixeldungeon.mainsrc.actors.Char;
+import com.example.pedometerpixeldungeon.mainsrc.actors.buffs.Light;
 import com.example.pedometerpixeldungeon.mainsrc.actors.hero.Hero;
 import com.example.pedometerpixeldungeon.mainsrc.actors.hero.HeroClass;
+import com.example.pedometerpixeldungeon.mainsrc.items.Item;
+import com.example.pedometerpixeldungeon.mainsrc.items.potions.Potion;
+import com.example.pedometerpixeldungeon.mainsrc.items.scrolls.Scroll;
+import com.example.pedometerpixeldungeon.mainsrc.items.wands.Wand;
 import com.example.pedometerpixeldungeon.mainsrc.levels.DeadEndLevel;
 import com.example.pedometerpixeldungeon.mainsrc.levels.Level;
 import com.example.pedometerpixeldungeon.mainsrc.levels.Room;
 import com.example.pedometerpixeldungeon.mainsrc.levels.SewerLevel;
-import com.example.pedometerpixeldungeon.mainsrc.items.Item;
 import com.example.pedometerpixeldungeon.mainsrc.scenes.GameScene;
 import com.example.pedometerpixeldungeon.mainsrc.scenes.StartScene;
+import com.example.pedometerpixeldungeon.mainsrc.ui.QuickSlot;
 import com.example.pedometerpixeldungeon.mainsrc.utils.BArray;
 import com.example.pedometerpixeldungeon.mainsrc.utils.Utils;
 import com.example.pedometerpixeldungeon.noosa.Game;
+import com.example.pedometerpixeldungeon.utils.Bundlable;
 import com.example.pedometerpixeldungeon.utils.Bundle;
 import com.example.pedometerpixeldungeon.utils.PathFinder;
 import com.example.pedometerpixeldungeon.utils.Random;
@@ -61,12 +67,12 @@ public class Dungeon {
 
         PathFinder.setMapSize( Level.WIDTH, Level.HEIGHT );
 
-//        Scroll.initLabels();
-//        Potion.initColors();
-//        Wand.initWoods();
+        Scroll.initLabels();
+        Potion.initColors();
+        Wand.initWoods();
 //        Ring.initGems();
 
-//        Statistics.reset();
+        Statistics.reset();
 //        Journal.reset();
 
         depth = 0;
@@ -87,13 +93,13 @@ public class Dungeon {
 //        Imp.Quest.reset();
 //
         Room.shuffleTypes();
-//
-//        QuickSlot.primaryValue = null;
-//        QuickSlot.secondaryValue = null;
-//
+
+        QuickSlot.primaryValue = null;
+        QuickSlot.secondaryValue = null;
+
         hero = new Hero();
-//        hero.live();
-//
+        hero.live();
+
 //        Badges.reset();
 //
         StartScene.curClass.initHero( hero );
@@ -180,8 +186,8 @@ public class Dungeon {
 
         level.create();
 
-//        Statistics.qualifiedForNoKilling = !bossLevel();
-//
+        Statistics.qualifiedForNoKilling = !bossLevel();
+
         return level;
     }
 
@@ -222,9 +228,9 @@ public class Dungeon {
 
         hero.pos = pos != -1 ? pos : level.exit;
 
-//        Light light = hero.buff( Light.class );
-//        hero.viewDistance = light == null ? level.viewDistance : Math.max( Light.DISTANCE, level.viewDistance );
-//
+        Light light = hero.buff( Light.class );
+        hero.viewDistance = light == null ? level.viewDistance : Math.max( Light.DISTANCE, level.viewDistance );
+
         observe();
     }
 
@@ -323,12 +329,12 @@ public class Dungeon {
 
             bundle.put( VERSION, Game.version );
             bundle.put( CHALLENGES, challenges );
-//            bundle.put( HERO, hero );
+            bundle.put( HERO, hero );
             bundle.put( GOLD, gold );
             bundle.put( DEPTH, depth );
 
             for (int d : droppedItems.keyArray()) {
-//                bundle.put( String.format( DROPPED, d ), droppedItems.get( d ) );
+                bundle.put( String.format( DROPPED, d ), droppedItems.get( d ) );
             }
 
             bundle.put( POS, potionOfStrength );
@@ -350,16 +356,16 @@ public class Dungeon {
 //            Imp			.Quest.storeInBundle( quests );
             bundle.put( QUESTS, quests );
 
-//            Room.storeRoomsInBundle( bundle );
-//
-//            Statistics.storeInBundle( bundle );
+            Room.storeRoomsInBundle( bundle );
+
+            Statistics.storeInBundle( bundle );
 //            Journal.storeInBundle( bundle );
-//
-//            QuickSlot.save( bundle );
-//
-//            Scroll.save( bundle );
-//            Potion.save( bundle );
-//            Wand.save( bundle );
+
+            QuickSlot.save( bundle );
+
+            Scroll.save( bundle );
+            Potion.save( bundle );
+            Wand.save( bundle );
 //            Ring.save( bundle );
 
             Bundle badges = new Bundle();
@@ -372,7 +378,7 @@ public class Dungeon {
 
         } catch (Exception e) {
 
-//            GamesInProgress.setUnknown( hero.heroClass );
+            GamesInProgress.setUnknown( hero.heroClass );
         }
     }
 
@@ -386,15 +392,16 @@ public class Dungeon {
     }
 
     public static void saveAll() throws IOException {
-//        if (hero.isAlive()) {
-//
-//            Actor.fixTime();
-//            saveGame( gameFile( hero.heroClass ) );
-//            saveLevel();
-//
-//            GamesInProgress.set( hero.heroClass, depth, hero.lvl, challenges != 0 );
-//
-//        } else if (WndResurrect.instance != null) {
+        if (hero.isAlive()) {
+
+            Actor.fixTime();
+            saveGame( gameFile( hero.heroClass ) );
+            saveLevel();
+
+            GamesInProgress.set( hero.heroClass, depth, hero.lvl, challenges != 0 );
+
+        }
+//        else if (WndResurrect.instance != null) {
 //
 //            WndResurrect.instance.hide();
 //            Hero.reallyDie( WndResurrect.causeOfDeath );
@@ -422,17 +429,17 @@ public class Dungeon {
         if (fullLoad) {
             PathFinder.setMapSize( Level.WIDTH, Level.HEIGHT );
         }
-//
-//        Scroll.restore( bundle );
-//        Potion.restore( bundle );
-//        Wand.restore( bundle );
+
+        Scroll.restore( bundle );
+        Potion.restore( bundle );
+        Wand.restore( bundle );
 //        Ring.restore( bundle );
 
-//        potionOfStrength = bundle.getInt( POS );
-//        scrollsOfUpgrade = bundle.getInt( SOU );
-//        scrollsOfEnchantment = bundle.getInt( SOE );
-//        dewVial = bundle.getBoolean( DV );
-//
+        potionOfStrength = bundle.getInt( POS );
+        scrollsOfUpgrade = bundle.getInt( SOU );
+        scrollsOfEnchantment = bundle.getInt( SOE );
+        dewVial = bundle.getBoolean( DV );
+
         if (fullLoad) {
             chapters = new HashSet<Integer>();
             int ids[] = bundle.getIntArray( CHAPTERS );
@@ -464,33 +471,33 @@ public class Dungeon {
 //        } else {
 //            Badges.reset();
 //        }
-//
-//        QuickSlot.restore( bundle );
-//
+
+        QuickSlot.restore( bundle );
+
         @SuppressWarnings("unused")
         String version = bundle.getString( VERSION );
 
         hero = null;
         hero = (Hero)bundle.get( HERO );
 
-//        QuickSlot.compress();
+        QuickSlot.compress();
 
         gold = bundle.getInt( GOLD );
         depth = bundle.getInt( DEPTH );
 
-//        Statistics.restoreFromBundle( bundle );
+        Statistics.restoreFromBundle( bundle );
 //        Journal.restoreFromBundle( bundle );
 //
         droppedItems = new SparseArray<ArrayList<Item>>();
-//        for (int i=2; i <= Statistics.deepestFloor + 1; i++) {
-//            ArrayList<Item> dropped = new ArrayList<Item>();
-//            for (Bundlable b : bundle.getCollection( String.format( DROPPED, i ) ) ) {
-//                dropped.add( (Item)b );
-//            }
-//            if (!dropped.isEmpty()) {
-//                droppedItems.put( i, dropped );
-//            }
-//        }
+        for (int i=2; i <= Statistics.deepestFloor + 1; i++) {
+            ArrayList<Item> dropped = new ArrayList<Item>();
+            for (Bundlable b : bundle.getCollection( String.format( DROPPED, i ) ) ) {
+                dropped.add( (Item)b );
+            }
+            if (!dropped.isEmpty()) {
+                droppedItems.put( i, dropped );
+            }
+        }
     }
 
     public static Level loadLevel( HeroClass cl ) throws IOException {
@@ -505,19 +512,19 @@ public class Dungeon {
         return (Level)bundle.get( "level" );
     }
 
-//    public static void deleteGame( HeroClass cl, boolean deleteLevels ) {
-//
-//        Game.instance.deleteFile( gameFile( cl ) );
-//
-//        if (deleteLevels) {
-//            int depth = 1;
-//            while (Game.instance.deleteFile( Utils.format( depthFile( cl ), depth ) )) {
-//                depth++;
-//            }
-//        }
-//
-//        GamesInProgress.delete( cl );
-//    }
+    public static void deleteGame( HeroClass cl, boolean deleteLevels ) {
+
+        Game.instance.deleteFile( gameFile( cl ) );
+
+        if (deleteLevels) {
+            int depth = 1;
+            while (Game.instance.deleteFile( Utils.format( depthFile( cl ), depth ) )) {
+                depth++;
+            }
+        }
+
+        GamesInProgress.delete( cl );
+    }
 
     public static Bundle gameBundle( String fileName ) throws IOException {
 
@@ -534,11 +541,11 @@ public class Dungeon {
         if (info.depth == -1) {
             info.depth = bundle.getInt( "maxDepth" );	// FIXME
         }
-//        Hero.preview( info, bundle.getBundle( HERO ) );
+        Hero.preview( info, bundle.getBundle( HERO ) );
     }
 
     public static void fail( String desc ) {
-//        resultDescription = desc;
+        resultDescription = desc;
 //        if (hero.belongings.getItem( Ankh.class ) == null) {
 //            Rankings.INSTANCE.submit( false );
 //        }
@@ -555,7 +562,7 @@ public class Dungeon {
 //        resultDescription = desc;
 //        Rankings.INSTANCE.submit( true );
 //    }
-//
+
     public static void observe() {
 
         if (level == null) {

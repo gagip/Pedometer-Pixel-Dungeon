@@ -1,7 +1,10 @@
 package com.example.pedometerpixeldungeon.mainsrc.actors;
 
+import com.example.pedometerpixeldungeon.mainsrc.Dungeon;
+import com.example.pedometerpixeldungeon.mainsrc.actors.buffs.Buff;
 import com.example.pedometerpixeldungeon.mainsrc.levels.Level;
 import com.example.pedometerpixeldungeon.mainsrc.sprites.CharSprite;
+import com.example.pedometerpixeldungeon.utils.Bundlable;
 import com.example.pedometerpixeldungeon.utils.Bundle;
 import com.example.pedometerpixeldungeon.utils.Random;
 
@@ -36,11 +39,11 @@ public abstract class Char extends Actor {
 
     public int viewDistance	= 8;
 
-//    private HashSet<Buff> buffs = new HashSet<Buff>();
+    private HashSet<Buff> buffs = new HashSet<Buff>();
 
     @Override
     protected boolean act() {
-//        Dungeon.level.updateFieldOfView( this );
+        Dungeon.level.updateFieldOfView( this );
         return false;
     }
 
@@ -57,7 +60,7 @@ public abstract class Char extends Actor {
         bundle.put( POS, pos );
         bundle.put( TAG_HP, HP );
         bundle.put( TAG_HT, HT );
-//        bundle.put( BUFFS, buffs );
+        bundle.put( BUFFS, buffs );
     }
 
     @Override
@@ -69,11 +72,11 @@ public abstract class Char extends Actor {
         HP = bundle.getInt( TAG_HP );
         HT = bundle.getInt( TAG_HT );
 
-//        for (Bundlable b : bundle.getCollection( BUFFS )) {
-//            if (b != null) {
-//                ((Buff)b).attachTo( this );
-//            }
-//        }
+        for (Bundlable b : bundle.getCollection( BUFFS )) {
+            if (b != null) {
+                ((Buff)b).attachTo( this );
+            }
+        }
     }
 
     public boolean attack( Char enemy ) {
@@ -191,9 +194,10 @@ public abstract class Char extends Actor {
         return damage;
     }
 
-//    public float speed() {
+    public float speed() {
 //        return buff( Cripple.class ) == null ? baseSpeed : baseSpeed * 0.5f;
-//    }
+        return 1;
+    }
 
     public void damage( int dmg, Object src ) {
 
@@ -259,31 +263,31 @@ public abstract class Char extends Actor {
 //
 //        super.spend( time / timeScale );
 //    }
-//
-//    public HashSet<Buff> buffs() {
-//        return buffs;
-//    }
-//
-//    @SuppressWarnings("unchecked")
-//    public <T extends Buff> HashSet<T> buffs( Class<T> c ) {
-//        HashSet<T> filtered = new HashSet<T>();
-//        for (Buff b : buffs) {
-//            if (c.isInstance( b )) {
-//                filtered.add( (T)b );
-//            }
-//        }
-//        return filtered;
-//    }
 
-//    @SuppressWarnings("unchecked")
-//    public <T extends Buff> T buff( Class<T> c ) {
-//        for (Buff b : buffs) {
-//            if (c.isInstance( b )) {
-//                return (T)b;
-//            }
-//        }
-//        return null;
-//    }
+    public HashSet<Buff> buffs() {
+        return buffs;
+    }
+
+    @SuppressWarnings("unchecked")
+    public <T extends Buff> HashSet<T> buffs( Class<T> c ) {
+        HashSet<T> filtered = new HashSet<T>();
+        for (Buff b : buffs) {
+            if (c.isInstance( b )) {
+                filtered.add( (T)b );
+            }
+        }
+        return filtered;
+    }
+
+    @SuppressWarnings("unchecked")
+    public <T extends Buff> T buff( Class<T> c ) {
+        for (Buff b : buffs) {
+            if (c.isInstance( b )) {
+                return (T)b;
+            }
+        }
+        return null;
+    }
 
 //    public boolean isCharmedBy( Char ch ) {
 //        int chID = ch.id();
@@ -389,12 +393,12 @@ public abstract class Char extends Actor {
 
 
 
-//    @Override
-//    protected void onRemove() {
-//        for (Buff buff : buffs.toArray( new Buff[0] )) {
-//            buff.detach();
-//        }
-//    }
+    @Override
+    protected void onRemove() {
+        for (Buff buff : buffs.toArray( new Buff[0] )) {
+            buff.detach();
+        }
+    }
 
 //    public void updateSpriteState() {
 //        for (Buff buff:buffs) {

@@ -1,7 +1,6 @@
 package com.example.pedometerpixeldungeon.mainsrc.scenes;
 
 import android.util.Log;
-import android.widget.Toast;
 
 import com.example.pedometerpixeldungeon.mainsrc.Assets;
 import com.example.pedometerpixeldungeon.mainsrc.Dungeon;
@@ -10,17 +9,31 @@ import com.example.pedometerpixeldungeon.mainsrc.FogOfWar;
 import com.example.pedometerpixeldungeon.mainsrc.PedometerPixelDungeon;
 import com.example.pedometerpixeldungeon.mainsrc.Statistics;
 import com.example.pedometerpixeldungeon.mainsrc.actors.Actor;
+import com.example.pedometerpixeldungeon.mainsrc.actors.Blobs.Blob;
 import com.example.pedometerpixeldungeon.mainsrc.actors.mobs.Mob;
+import com.example.pedometerpixeldungeon.mainsrc.effects.BlobEmitter;
+import com.example.pedometerpixeldungeon.mainsrc.items.Heap;
 import com.example.pedometerpixeldungeon.mainsrc.items.Item;
+import com.example.pedometerpixeldungeon.mainsrc.items.potions.Potion;
 import com.example.pedometerpixeldungeon.mainsrc.levels.Level;
 import com.example.pedometerpixeldungeon.mainsrc.levels.RegularLevel;
 import com.example.pedometerpixeldungeon.mainsrc.plants.Plant;
 import com.example.pedometerpixeldungeon.mainsrc.sprites.CharSprite;
+import com.example.pedometerpixeldungeon.mainsrc.sprites.DiscardedItemSprite;
 import com.example.pedometerpixeldungeon.mainsrc.sprites.HeroSprite;
+import com.example.pedometerpixeldungeon.mainsrc.sprites.ItemSprite;
 import com.example.pedometerpixeldungeon.mainsrc.sprites.PlantSprite;
+import com.example.pedometerpixeldungeon.mainsrc.ui.AttackIndicator;
+import com.example.pedometerpixeldungeon.mainsrc.ui.BusyIndicator;
 import com.example.pedometerpixeldungeon.mainsrc.ui.GameLog;
+import com.example.pedometerpixeldungeon.mainsrc.ui.HealthIndicator;
+import com.example.pedometerpixeldungeon.mainsrc.ui.QuickSlot;
+import com.example.pedometerpixeldungeon.mainsrc.ui.StatusPane;
+import com.example.pedometerpixeldungeon.mainsrc.ui.Toast;
+import com.example.pedometerpixeldungeon.mainsrc.ui.Toolbar;
 import com.example.pedometerpixeldungeon.mainsrc.ui.Window;
 import com.example.pedometerpixeldungeon.mainsrc.utils.GLog;
+import com.example.pedometerpixeldungeon.mainsrc.windows.WndBag;
 import com.example.pedometerpixeldungeon.mainsrc.windows.WndStory;
 import com.example.pedometerpixeldungeon.noosa.Camera;
 import com.example.pedometerpixeldungeon.noosa.Group;
@@ -51,7 +64,7 @@ public class GameScene extends PixelScene {
 
     private GameLog log;
 
-//    private BusyIndicator busy;
+    private BusyIndicator busy;
 
     private static CellSelector cellSelector;
 
@@ -67,7 +80,7 @@ public class GameScene extends PixelScene {
     private Group statuses;
     private Group emoicons;
 
-//    private Toolbar toolbar;
+    private Toolbar toolbar;
     private Toast prompt;
 
     @Override
@@ -111,10 +124,10 @@ public class GameScene extends PixelScene {
         heaps = new Group();
         add( heaps );
 
-//        size = Dungeon.level.heaps.size();
-//        for (int i=0; i < size; i++) {
-//            addHeapSprite( Dungeon.level.heaps.valueAt( i ) );
-//        }
+        size = Dungeon.level.heaps.size();
+        for (int i=0; i < size; i++) {
+            addHeapSprite( Dungeon.level.heaps.valueAt( i ) );
+        }
 
         emitters = new Group();
         effects = new Group();
@@ -136,10 +149,10 @@ public class GameScene extends PixelScene {
         gases = new Group();
         add( gases );
 
-//        for (Blob blob : Dungeon.level.blobs.values()) {
-//            blob.emitter = null;
-//            addBlobSprite( blob );
-//        }
+        for (Blob blob : Dungeon.level.blobs.values()) {
+            blob.emitter = null;
+            addBlobSprite( blob );
+        }
 
         fog = new FogOfWar( Level.WIDTH, Level.HEIGHT );
         fog.updateVisibility( Dungeon.visible, Dungeon.level.visited, Dungeon.level.mapped );
@@ -160,37 +173,37 @@ public class GameScene extends PixelScene {
         hero.updateArmor();
         mobs.add( hero );
 
-//        add( new HealthIndicator() );
-//
-//        add( cellSelector = new CellSelector( tiles ) );
-//
-//        StatusPane sb = new StatusPane();
-//        sb.camera = uiCamera;
-//        sb.setSize( uiCamera.width, 0 );
-//        add( sb );
-//
-//        toolbar = new Toolbar();
-//        toolbar.camera = uiCamera;
-//        toolbar.setRect( 0,uiCamera.height - toolbar.height(), uiCamera.width, toolbar.height() );
-//        add( toolbar );
-//
-//        AttackIndicator attack = new AttackIndicator();
-//        attack.camera = uiCamera;
-//        attack.setPos(
-//                uiCamera.width - attack.width(),
-//                toolbar.top() - attack.height() );
-//        add( attack );
-//
-//        log = new GameLog();
-//        log.camera = uiCamera;
-//        log.setRect( 0, toolbar.top(), attack.left(),  0 );
-//        add( log );
-//
-//        busy = new BusyIndicator();
-//        busy.camera = uiCamera;
-//        busy.x = 1;
-//        busy.y = sb.bottom() + 1;
-//        add( busy );
+        add( new HealthIndicator() );
+
+        add( cellSelector = new CellSelector( tiles ) );
+
+        StatusPane sb = new StatusPane();
+        sb.camera = uiCamera;
+        sb.setSize( uiCamera.width, 0 );
+        add( sb );
+
+        toolbar = new Toolbar();
+        toolbar.camera = uiCamera;
+        toolbar.setRect( 0,uiCamera.height - toolbar.height(), uiCamera.width, toolbar.height() );
+        add( toolbar );
+
+        AttackIndicator attack = new AttackIndicator();
+        attack.camera = uiCamera;
+        attack.setPos(
+                uiCamera.width - attack.width(),
+                toolbar.top() - attack.height() );
+        add( attack );
+
+        log = new GameLog();
+        log.camera = uiCamera;
+        log.setRect( 0, toolbar.top(), attack.left(),  0 );
+        add( log );
+
+        busy = new BusyIndicator();
+        busy.camera = uiCamera;
+        busy.x = 1;
+        busy.y = sb.bottom() + 1;
+        add( busy );
 
         switch (InterlevelScene.mode) {
 //            case RESURRECT:
@@ -229,19 +242,19 @@ public class GameScene extends PixelScene {
         }
 
         ArrayList<Item> dropped = Dungeon.droppedItems.get( Dungeon.depth );
-//        if (dropped != null) {
-//            for (Item item : dropped) {
-//                int pos = Dungeon.level.randomRespawnCell();
-//                if (item instanceof Potion) {
-//                    ((Potion)item).shatter( pos );
-//                } else if (item instanceof Plant.Seed) {
-//                    Dungeon.level.plant( (Plant.Seed)item, pos );
-//                } else {
-//                    Dungeon.level.drop( item, pos );
-//                }
-//            }
-//            Dungeon.droppedItems.remove( Dungeon.depth );
-//        }
+        if (dropped != null) {
+            for (Item item : dropped) {
+                int pos = Dungeon.level.randomRespawnCell();
+                if (item instanceof Potion) {
+                    ((Potion)item).shatter( pos );
+                } else if (item instanceof Plant.Seed) {
+                    Dungeon.level.plant( (Plant.Seed)item, pos );
+                } else {
+                    Dungeon.level.drop( item, pos );
+                }
+            }
+            Dungeon.droppedItems.remove( Dungeon.depth );
+        }
 
         Camera.main.target = hero;
 
@@ -341,30 +354,30 @@ public class GameScene extends PixelScene {
             fog.aa =  0f;
         }
     }
-//
-//    private void addHeapSprite( Heap heap ) {
-//        ItemSprite sprite = heap.sprite = (ItemSprite)heaps.recycle( ItemSprite.class );
-//        sprite.revive();
-//        sprite.link( heap );
-//        heaps.add( sprite );
-//    }
-//
-//    private void addDiscardedSprite( Heap heap ) {
-//        heap.sprite = (DiscardedItemSprite)heaps.recycle( DiscardedItemSprite.class );
-//        heap.sprite.revive();
-//        heap.sprite.link( heap );
-//        heaps.add( heap.sprite );
-//    }
+
+    private void addHeapSprite( Heap heap ) {
+        ItemSprite sprite = heap.sprite = (ItemSprite)heaps.recycle( ItemSprite.class );
+        sprite.revive();
+        sprite.link( heap );
+        heaps.add( sprite );
+    }
+
+    private void addDiscardedSprite( Heap heap ) {
+        heap.sprite = (DiscardedItemSprite)heaps.recycle( DiscardedItemSprite.class );
+        heap.sprite.revive();
+        heap.sprite.link( heap );
+        heaps.add( heap.sprite );
+    }
 
     private void addPlantSprite( Plant plant ) {
         (plant.sprite = (PlantSprite)plants.recycle( PlantSprite.class )).reset( plant );
     }
 
-//    private void addBlobSprite( final Blob gas ) {
-//        if (gas.emitter == null) {
-//            gases.add( new BlobEmitter( gas ) );
-//        }
-//    }
+    private void addBlobSprite( final Blob gas ) {
+        if (gas.emitter == null) {
+            gases.add( new BlobEmitter( gas ) );
+        }
+    }
 
     private void addMobSprite( Mob mob ) {
         CharSprite sprite = mob.sprite();
@@ -373,25 +386,25 @@ public class GameScene extends PixelScene {
         sprite.link( mob );
     }
 
-//    private void prompt( String text ) {
-//
-//        if (prompt != null) {
-//            prompt.killAndErase();
-//            prompt = null;
-//        }
-//
-//        if (text != null) {
-//            prompt = new Toast( text ) {
-//                @Override
-//                protected void onClose() {
-//                    cancel();
-//                }
-//            };
-//            prompt.camera = uiCamera;
-//            prompt.setPos( (uiCamera.width - prompt.width()) / 2, uiCamera.height - 60 );
-//            add( prompt );
-//        }
-//    }
+    private void prompt( String text ) {
+
+        if (prompt != null) {
+            prompt.killAndErase();
+            prompt = null;
+        }
+
+        if (text != null) {
+            prompt = new Toast( text ) {
+                @Override
+                protected void onClose() {
+                    cancel();
+                }
+            };
+            prompt.camera = uiCamera;
+            prompt.setPos( (uiCamera.width - prompt.width()) / 2, uiCamera.height - 60 );
+            add( prompt );
+        }
+    }
 
 //    private void showBanner( Banner banner ) {
 //        banner.camera = uiCamera;
@@ -408,24 +421,24 @@ public class GameScene extends PixelScene {
         }
     }
 
-//    public static void add( Blob gas ) {
-//        Actor.add( gas );
-//        if (scene != null) {
-//            scene.addBlobSprite( gas );
-//        }
-//    }
-//
-//    public static void add( Heap heap ) {
-//        if (scene != null) {
-//            scene.addHeapSprite( heap );
-//        }
-//    }
-//
-//    public static void discard( Heap heap ) {
-//        if (scene != null) {
-//            scene.addDiscardedSprite( heap );
-//        }
-//    }
+    public static void add( Blob gas ) {
+        Actor.add( gas );
+        if (scene != null) {
+            scene.addBlobSprite( gas );
+        }
+    }
+
+    public static void add( Heap heap ) {
+        if (scene != null) {
+            scene.addHeapSprite( heap );
+        }
+    }
+
+    public static void discard( Heap heap ) {
+        if (scene != null) {
+            scene.addDiscardedSprite( heap );
+        }
+    }
 
     public static void add( Mob mob ) {
         Dungeon.level.mobs.add( mob );
@@ -532,9 +545,9 @@ public class GameScene extends PixelScene {
 //        }
 //    }
 
-//    public static void handleCell( int cell ) {
-//        cellSelector.select( cell );
-//    }
+    public static void handleCell( int cell ) {
+        cellSelector.select( cell );
+    }
 
     public static void selectCell( CellSelector.Listener listener ) {
         cellSelector.listener = listener;
@@ -550,16 +563,16 @@ public class GameScene extends PixelScene {
         }
     }
 
-//    public static WndBag selectItem(WndBag.Listener listener, WndBag.Mode mode, String title ) {
-//        cancelCellSelector();
-//
-//        WndBag wnd = mode == Mode.SEED ?
-//                WndBag.seedPouch( listener, mode, title ) :
-//                WndBag.lastBag( listener, mode, title );
-//        scene.add( wnd );
-//
-//        return wnd;
-//    }
+    public static WndBag selectItem(WndBag.Listener listener, WndBag.Mode mode, String title ) {
+        cancelCellSelector();
+
+        WndBag wnd = mode == WndBag.Mode.SEED ?
+                WndBag.seedPouch( listener, mode, title ) :
+                WndBag.lastBag( listener, mode, title );
+        scene.add( wnd );
+
+        return wnd;
+    }
 
     static boolean cancel() {
 //        if (Dungeon.hero.curAction != null || Dungeon.hero.restoreHealth) {
@@ -578,7 +591,7 @@ public class GameScene extends PixelScene {
 
     public static void ready() {
         selectCell( defaultCellListener );
-//        QuickSlot.cancel();
+        QuickSlot.cancel();
     }
 
     private static final CellSelector.Listener defaultCellListener = new CellSelector.Listener() {

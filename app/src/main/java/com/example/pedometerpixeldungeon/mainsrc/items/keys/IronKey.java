@@ -1,6 +1,8 @@
 package com.example.pedometerpixeldungeon.mainsrc.items.keys;
 
 import com.example.pedometerpixeldungeon.mainsrc.Dungeon;
+import com.example.pedometerpixeldungeon.mainsrc.items.bags.Bag;
+import com.example.pedometerpixeldungeon.mainsrc.sprites.ItemSpriteSheet;
 import com.example.pedometerpixeldungeon.mainsrc.utils.Utils;
 
 public class IronKey extends Key {
@@ -10,22 +12,22 @@ public class IronKey extends Key {
 
     {
         name = "iron key";
-//        image = ItemSpriteSheet.IRON_KEY;
+        image = ItemSpriteSheet.IRON_KEY;
     }
 
-//    @Override
-//    public boolean collect( Bag bag ) {
-//        boolean result = super.collect( bag );
-//        if (result && depth == Dungeon.depth && Dungeon.hero != null) {
-//            Dungeon.hero.belongings.countIronKeys();
-//        }
-//        return result;
-//    }
+    @Override
+    public boolean collect( Bag bag ) {
+        boolean result = super.collect( bag );
+        if (result && depth == Dungeon.depth && Dungeon.hero != null) {
+            Dungeon.hero.belongings.countIronKeys();
+        }
+        return result;
+    }
 
     @Override
     public void onDetach() {
         if (depth == Dungeon.depth) {
-//            Dungeon.hero.belongings.countIronKeys();
+            Dungeon.hero.belongings.countIronKeys();
         }
     }
 
