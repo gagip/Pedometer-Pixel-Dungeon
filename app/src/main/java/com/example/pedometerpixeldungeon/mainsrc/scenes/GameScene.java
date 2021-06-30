@@ -586,18 +586,17 @@ public class GameScene extends PixelScene {
     }
 
     static boolean cancel() {
-//        if (Dungeon.hero.curAction != null || Dungeon.hero.restoreHealth) {
-//
-//            Dungeon.hero.curAction = null;
-//            Dungeon.hero.restoreHealth = false;
-//            return true;
-//
-//        } else {
-//
-//            return cancelCellSelector();
-//
-//        }
-        return false;
+        if (Dungeon.hero.curAction != null || Dungeon.hero.restoreHealth) {
+
+            Dungeon.hero.curAction = null;
+            Dungeon.hero.restoreHealth = false;
+            return true;
+
+        } else {
+
+            return cancelCellSelector();
+
+        }
     }
 
     public static void ready() {

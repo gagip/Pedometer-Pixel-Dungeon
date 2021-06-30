@@ -4,6 +4,8 @@ import android.util.SparseArray;
 
 import com.example.pedometerpixeldungeon.mainsrc.Dungeon;
 import com.example.pedometerpixeldungeon.mainsrc.Statistics;
+import com.example.pedometerpixeldungeon.mainsrc.actors.Blobs.Blob;
+import com.example.pedometerpixeldungeon.mainsrc.actors.buffs.Buff;
 import com.example.pedometerpixeldungeon.mainsrc.actors.mobs.Mob;
 import com.example.pedometerpixeldungeon.mainsrc.levels.Level;
 import com.example.pedometerpixeldungeon.utils.Bundlable;
@@ -121,9 +123,9 @@ public abstract class Actor implements Bundlable {
             add( mob );
         }
 
-//        for (Blob blob : Dungeon.level.blobs.values()) {
-//            add( blob );
-//        }
+        for (Blob blob : Dungeon.level.blobs.values()) {
+            add( blob );
+        }
 
         current = null;
     }
@@ -214,10 +216,10 @@ public abstract class Actor implements Bundlable {
         if (actor instanceof Char) {
             Char ch = (Char)actor;
             chars[ch.pos] = ch;
-//            for (Buff buff : ch.buffs()) {
-//                all.add( buff );
-//                buff.onAdd();
-//            }
+            for (Buff buff : ch.buffs()) {
+                all.add( buff );
+                buff.onAdd();
+            }
         }
     }
 

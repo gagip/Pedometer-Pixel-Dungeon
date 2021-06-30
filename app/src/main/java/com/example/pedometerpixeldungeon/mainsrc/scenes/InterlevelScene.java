@@ -7,6 +7,7 @@ import com.example.pedometerpixeldungeon.mainsrc.actors.Actor;
 import com.example.pedometerpixeldungeon.mainsrc.items.Generator;
 import com.example.pedometerpixeldungeon.mainsrc.levels.Level;
 import com.example.pedometerpixeldungeon.mainsrc.ui.GameLog;
+import com.example.pedometerpixeldungeon.mainsrc.windows.WndError;
 import com.example.pedometerpixeldungeon.mainsrc.windows.WndStory;
 import com.example.pedometerpixeldungeon.noosa.BitmapText;
 import com.example.pedometerpixeldungeon.noosa.Camera;
@@ -173,15 +174,16 @@ public class InterlevelScene extends PixelScene {
                 break;
 
             case STATIC:
-//                if (error != null) {
-//                    add( new WndError( error ) {
-//                        public void onBackPressed() {
-//                            super.onBackPressed();
-//                            Game.switchScene( StartScene.class );
-//                        };
-//                    } );
-//                    error = null;
-//                }
+                // TODO error창
+                if (error != null) {
+                    add( new WndError( error ) {
+                        public void onBackPressed() {
+                            super.onBackPressed();
+                            Game.switchScene( StartScene.class );
+                        };
+                    } );
+                    error = null;
+                }
                 break;
         }
     }

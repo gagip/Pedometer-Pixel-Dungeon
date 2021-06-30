@@ -6,16 +6,20 @@ import com.example.pedometerpixeldungeon.gltextures.TextureCache;
 import com.example.pedometerpixeldungeon.mainsrc.Assets;
 import com.example.pedometerpixeldungeon.mainsrc.Dungeon;
 import com.example.pedometerpixeldungeon.mainsrc.DungeonTilemap;
+import com.example.pedometerpixeldungeon.mainsrc.effects.CellEmitter;
+import com.example.pedometerpixeldungeon.mainsrc.effects.Speck;
 import com.example.pedometerpixeldungeon.mainsrc.items.Gold;
 import com.example.pedometerpixeldungeon.mainsrc.items.Heap;
 import com.example.pedometerpixeldungeon.mainsrc.items.Item;
 import com.example.pedometerpixeldungeon.mainsrc.levels.Level;
 import com.example.pedometerpixeldungeon.mainsrc.levels.Terrain;
+import com.example.pedometerpixeldungeon.mainsrc.scenes.GameScene;
 import com.example.pedometerpixeldungeon.noosa.Game;
 import com.example.pedometerpixeldungeon.noosa.MovieClip;
 import com.example.pedometerpixeldungeon.noosa.TextureFilm;
 import com.example.pedometerpixeldungeon.noosa.audio.Sample;
 import com.example.pedometerpixeldungeon.utils.PointF;
+import com.example.pedometerpixeldungeon.utils.Random;
 
 public class ItemSprite extends MovieClip {
 
@@ -101,8 +105,8 @@ public class ItemSprite extends MovieClip {
         acc.set( 0, -speed.y / DROP_INTERVAL * 2 );
 
         if (visible && heap != null && heap.peek() instanceof Gold) {
-//            CellEmitter.center( heap.pos ).burst( Speck.factory( Speck.COIN ), 5 );
-//            Sample.INSTANCE.play( Assets.SND_GOLD, 1, 1, Random.Float( 0.9f, 1.1f ) );
+            CellEmitter.center( heap.pos ).burst( Speck.factory( Speck.COIN ), 5 );
+            Sample.INSTANCE.play( Assets.SND_GOLD, 1, 1, Random.Float( 0.9f, 1.1f ) );
         }
     }
 
@@ -146,7 +150,7 @@ public class ItemSprite extends MovieClip {
                 boolean water = Level.water[heap.pos];
 
                 if (water) {
-//                    GameScene.ripple( heap.pos );
+                    GameScene.ripple( heap.pos );
                 } else {
                     int cell = Dungeon.level.map[heap.pos];
                     water = (cell == Terrain.WELL || cell == Terrain.ALCHEMY);

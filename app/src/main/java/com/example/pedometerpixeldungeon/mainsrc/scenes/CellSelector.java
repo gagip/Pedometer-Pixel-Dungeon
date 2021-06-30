@@ -1,6 +1,5 @@
 package com.example.pedometerpixeldungeon.mainsrc.scenes;
 
-import com.example.pedometerpixeldungeon.input.Touchscreen;
 import com.example.pedometerpixeldungeon.input.Touchscreen.Touch;
 import com.example.pedometerpixeldungeon.mainsrc.DungeonTilemap;
 import com.example.pedometerpixeldungeon.mainsrc.PedometerPixelDungeon;
@@ -51,7 +50,7 @@ public class CellSelector extends TouchArea {
     }
 
     private boolean pinching = false;
-    private Touchscreen.Touch another;
+    private Touch another;
     private float startZoom;
     private float startSpan;
 

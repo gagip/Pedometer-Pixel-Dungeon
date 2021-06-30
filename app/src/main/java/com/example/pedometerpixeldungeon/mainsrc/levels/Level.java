@@ -9,8 +9,17 @@ import com.example.pedometerpixeldungeon.mainsrc.actors.Blobs.Alchemy;
 import com.example.pedometerpixeldungeon.mainsrc.actors.Blobs.Blob;
 import com.example.pedometerpixeldungeon.mainsrc.actors.Blobs.WellWater;
 import com.example.pedometerpixeldungeon.mainsrc.actors.Char;
+import com.example.pedometerpixeldungeon.mainsrc.actors.buffs.Awareness;
+import com.example.pedometerpixeldungeon.mainsrc.actors.buffs.Blindness;
+import com.example.pedometerpixeldungeon.mainsrc.actors.buffs.Buff;
+import com.example.pedometerpixeldungeon.mainsrc.actors.buffs.MindVision;
+import com.example.pedometerpixeldungeon.mainsrc.actors.buffs.Shadows;
+import com.example.pedometerpixeldungeon.mainsrc.actors.hero.Hero;
+import com.example.pedometerpixeldungeon.mainsrc.actors.hero.HeroClass;
 import com.example.pedometerpixeldungeon.mainsrc.actors.mobs.Bestiary;
 import com.example.pedometerpixeldungeon.mainsrc.actors.mobs.Mob;
+import com.example.pedometerpixeldungeon.mainsrc.effects.particles.FlowParticle;
+import com.example.pedometerpixeldungeon.mainsrc.effects.particles.WindParticle;
 import com.example.pedometerpixeldungeon.mainsrc.items.Generator;
 import com.example.pedometerpixeldungeon.mainsrc.items.Gold;
 import com.example.pedometerpixeldungeon.mainsrc.items.Heap;
@@ -20,11 +29,10 @@ import com.example.pedometerpixeldungeon.mainsrc.items.bags.ScrollHolder;
 import com.example.pedometerpixeldungeon.mainsrc.items.bags.SeedPouch;
 import com.example.pedometerpixeldungeon.mainsrc.items.foods.Food;
 import com.example.pedometerpixeldungeon.mainsrc.items.potions.PotionOfHealing;
-import com.example.pedometerpixeldungeon.mainsrc.items.potions.PotionOfStrength;
 import com.example.pedometerpixeldungeon.mainsrc.items.scrolls.Scroll;
-import com.example.pedometerpixeldungeon.mainsrc.items.scrolls.ScrollOfEnchantment;
 import com.example.pedometerpixeldungeon.mainsrc.items.scrolls.ScrollOfUpgrade;
 import com.example.pedometerpixeldungeon.mainsrc.levels.features.Chasm;
+import com.example.pedometerpixeldungeon.mainsrc.levels.features.Door;
 import com.example.pedometerpixeldungeon.mainsrc.levels.traps.AlarmTrap;
 import com.example.pedometerpixeldungeon.mainsrc.levels.traps.FireTrap;
 import com.example.pedometerpixeldungeon.mainsrc.levels.traps.GrippingTrap;
@@ -139,18 +147,18 @@ public abstract class Level implements Bundlable {
 
         if (!Dungeon.bossLevel()) {
             addItemToSpawn( Generator.random( Generator.Category.FOOD ) );
-            if (Dungeon.posNeeded()) {
-                addItemToSpawn( new PotionOfStrength() );
-                Dungeon.potionOfStrength++;
-            }
-            if (Dungeon.souNeeded()) {
-                addItemToSpawn( new ScrollOfUpgrade() );
-                Dungeon.scrollsOfUpgrade++;
-            }
-            if (Dungeon.soeNeeded()) {
-                addItemToSpawn( new ScrollOfEnchantment() );
-                Dungeon.scrollsOfEnchantment++;
-            }
+//            if (Dungeon.posNeeded()) {
+//                addItemToSpawn( new PotionOfStrength() );
+//                Dungeon.potionOfStrength++;
+//            }
+//            if (Dungeon.souNeeded()) {
+//                addItemToSpawn( new ScrollOfUpgrade() );
+//                Dungeon.scrollsOfUpgrade++;
+//            }
+//            if (Dungeon.soeNeeded()) {
+//                addItemToSpawn( new ScrollOfEnchantment() );
+//                Dungeon.scrollsOfEnchantment++;
+//            }
 
             if (Dungeon.depth > 1) {
                 switch (Random.Int( 10 )) {
@@ -328,9 +336,9 @@ public abstract class Level implements Bundlable {
     public void addVisuals(Scene scene ) {
         for (int i=0; i < LENGTH; i++) {
             if (pit[i]) {
-//                scene.add( new WindParticle.Wind( i ) );
+                scene.add( new WindParticle.Wind( i ) );
                 if (i >= WIDTH && water[i-WIDTH]) {
-//                    scene.add( new FlowParticle.Flow( i - WIDTH ) );
+                    scene.add( new FlowParticle.Flow( i - WIDTH ) );
                 }
             }
         }
@@ -339,7 +347,7 @@ public abstract class Level implements Bundlable {
     public int nMobs() {
         return 0;
     }
-//
+
     public Actor respawner() {
         return new Actor() {
             @Override
@@ -680,7 +688,7 @@ public abstract class Level implements Bundlable {
                 break;
 
             case Terrain.DOOR:
-//                Door.enter( cell );
+                Door.enter( cell );
                 break;
         }
 
@@ -744,7 +752,7 @@ public abstract class Level implements Bundlable {
                 break;
 
             case Terrain.DOOR:
-//                Door.enter( cell );
+                Door.enter( cell );
 
             default:
                 trap = false;
@@ -769,22 +777,19 @@ public abstract class Level implements Bundlable {
         int cx = c.pos % WIDTH;
         int cy = c.pos / WIDTH;
 
-//        boolean sighted = c.buff( Blindness.class ) == null && c.buff( Shadows.class ) == null && c.isAlive();
-        boolean sighted = false;
+        boolean sighted = c.buff( Blindness.class ) == null && c.buff( Shadows.class ) == null && c.isAlive();
 
-//        if (sighted) {
-////            ShadowCaster.castShadow( cx, cy, fieldOfView, c.viewDistance );
-//        } else {
-//            Arrays.fill( fieldOfView, false );
-//        }
-        ShadowCaster.castShadow( cx, cy, fieldOfView, c.viewDistance );
-//        Arrays.fill( fieldOfView, false );
+        if (sighted) {
+            ShadowCaster.castShadow( cx, cy, fieldOfView, c.viewDistance );
+        } else {
+            Arrays.fill( fieldOfView, false );
+        }
 
         int sense = 1;
         if (c.isAlive()) {
-//            for (Buff b : c.buffs( MindVision.class )) {
-//                sense = Math.max( ((MindVision)b).distance, sense );
-//            }
+            for (Buff b : c.buffs( MindVision.class )) {
+                sense = Math.max( ((MindVision)b).distance, sense );
+            }
         }
 
         if ((sighted && sense > 1) || !sighted) {
@@ -810,51 +815,51 @@ public abstract class Level implements Bundlable {
             fieldOfView[i] = true;
         }
 
-//        if (c.isAlive()) {
-//            if (c.buff( MindVision.class ) != null) {
-//                for (Mob mob : mobs) {
-//                    int p = mob.pos;
-//                    fieldOfView[p] = true;
-//                    fieldOfView[p + 1] = true;
-//                    fieldOfView[p - 1] = true;
-//                    fieldOfView[p + WIDTH + 1] = true;
-//                    fieldOfView[p + WIDTH - 1] = true;
-//                    fieldOfView[p - WIDTH + 1] = true;
-//                    fieldOfView[p - WIDTH - 1] = true;
-//                    fieldOfView[p + WIDTH] = true;
-//                    fieldOfView[p - WIDTH] = true;
-//                }
-//            } else if (c == Dungeon.hero && ((Hero)c).heroClass == HeroClass.HUNTRESS) {
-//                for (Mob mob : mobs) {
-//                    int p = mob.pos;
-//                    if (distance( c.pos, p) == 2) {
-//                        fieldOfView[p] = true;
-//                        fieldOfView[p + 1] = true;
-//                        fieldOfView[p - 1] = true;
-//                        fieldOfView[p + WIDTH + 1] = true;
-//                        fieldOfView[p + WIDTH - 1] = true;
-//                        fieldOfView[p - WIDTH + 1] = true;
-//                        fieldOfView[p - WIDTH - 1] = true;
-//                        fieldOfView[p + WIDTH] = true;
-//                        fieldOfView[p - WIDTH] = true;
-//                    }
-//                }
-//            }
-//            if (c.buff( Awareness.class ) != null) {
-//                for (Heap heap : heaps.values()) {
-//                    int p = heap.pos;
-//                    fieldOfView[p] = true;
-//                    fieldOfView[p + 1] = true;
-//                    fieldOfView[p - 1] = true;
-//                    fieldOfView[p + WIDTH + 1] = true;
-//                    fieldOfView[p + WIDTH - 1] = true;
-//                    fieldOfView[p - WIDTH + 1] = true;
-//                    fieldOfView[p - WIDTH - 1] = true;
-//                    fieldOfView[p + WIDTH] = true;
-//                    fieldOfView[p - WIDTH] = true;
-//                }
-//            }
-//        }
+        if (c.isAlive()) {
+            if (c.buff( MindVision.class ) != null) {
+                for (Mob mob : mobs) {
+                    int p = mob.pos;
+                    fieldOfView[p] = true;
+                    fieldOfView[p + 1] = true;
+                    fieldOfView[p - 1] = true;
+                    fieldOfView[p + WIDTH + 1] = true;
+                    fieldOfView[p + WIDTH - 1] = true;
+                    fieldOfView[p - WIDTH + 1] = true;
+                    fieldOfView[p - WIDTH - 1] = true;
+                    fieldOfView[p + WIDTH] = true;
+                    fieldOfView[p - WIDTH] = true;
+                }
+            } else if (c == Dungeon.hero && ((Hero)c).heroClass == HeroClass.HUNTRESS) {
+                for (Mob mob : mobs) {
+                    int p = mob.pos;
+                    if (distance( c.pos, p) == 2) {
+                        fieldOfView[p] = true;
+                        fieldOfView[p + 1] = true;
+                        fieldOfView[p - 1] = true;
+                        fieldOfView[p + WIDTH + 1] = true;
+                        fieldOfView[p + WIDTH - 1] = true;
+                        fieldOfView[p - WIDTH + 1] = true;
+                        fieldOfView[p - WIDTH - 1] = true;
+                        fieldOfView[p + WIDTH] = true;
+                        fieldOfView[p - WIDTH] = true;
+                    }
+                }
+            }
+            if (c.buff( Awareness.class ) != null) {
+                for (Heap heap : heaps.values()) {
+                    int p = heap.pos;
+                    fieldOfView[p] = true;
+                    fieldOfView[p + 1] = true;
+                    fieldOfView[p - 1] = true;
+                    fieldOfView[p + WIDTH + 1] = true;
+                    fieldOfView[p + WIDTH - 1] = true;
+                    fieldOfView[p - WIDTH + 1] = true;
+                    fieldOfView[p - WIDTH - 1] = true;
+                    fieldOfView[p + WIDTH] = true;
+                    fieldOfView[p - WIDTH] = true;
+                }
+            }
+        }
 
         return fieldOfView;
     }

@@ -1,14 +1,45 @@
 package com.example.pedometerpixeldungeon.mainsrc.actors;
 
+import com.example.pedometerpixeldungeon.mainsrc.Assets;
 import com.example.pedometerpixeldungeon.mainsrc.Dungeon;
+import com.example.pedometerpixeldungeon.mainsrc.ResultDescriptions;
+import com.example.pedometerpixeldungeon.mainsrc.actors.buffs.Amok;
+import com.example.pedometerpixeldungeon.mainsrc.actors.buffs.Bleeding;
 import com.example.pedometerpixeldungeon.mainsrc.actors.buffs.Buff;
+import com.example.pedometerpixeldungeon.mainsrc.actors.buffs.Burning;
+import com.example.pedometerpixeldungeon.mainsrc.actors.buffs.Charm;
+import com.example.pedometerpixeldungeon.mainsrc.actors.buffs.Cripple;
+import com.example.pedometerpixeldungeon.mainsrc.actors.buffs.Frost;
+import com.example.pedometerpixeldungeon.mainsrc.actors.buffs.Invisibility;
+import com.example.pedometerpixeldungeon.mainsrc.actors.buffs.Levitation;
+import com.example.pedometerpixeldungeon.mainsrc.actors.buffs.Light;
+import com.example.pedometerpixeldungeon.mainsrc.actors.buffs.MindVision;
+import com.example.pedometerpixeldungeon.mainsrc.actors.buffs.Paralysis;
+import com.example.pedometerpixeldungeon.mainsrc.actors.buffs.Poison;
+import com.example.pedometerpixeldungeon.mainsrc.actors.buffs.Roots;
+import com.example.pedometerpixeldungeon.mainsrc.actors.buffs.Shadows;
+import com.example.pedometerpixeldungeon.mainsrc.actors.buffs.Sleep;
+import com.example.pedometerpixeldungeon.mainsrc.actors.buffs.Slow;
+import com.example.pedometerpixeldungeon.mainsrc.actors.buffs.Speed;
+import com.example.pedometerpixeldungeon.mainsrc.actors.buffs.Terror;
+import com.example.pedometerpixeldungeon.mainsrc.actors.buffs.Vertigo;
+import com.example.pedometerpixeldungeon.mainsrc.actors.hero.Hero;
+import com.example.pedometerpixeldungeon.mainsrc.actors.hero.HeroSubClass;
+import com.example.pedometerpixeldungeon.mainsrc.actors.mobs.Bestiary;
+import com.example.pedometerpixeldungeon.mainsrc.effects.CellEmitter;
+import com.example.pedometerpixeldungeon.mainsrc.effects.particles.PoisonParticle;
 import com.example.pedometerpixeldungeon.mainsrc.levels.Level;
 import com.example.pedometerpixeldungeon.mainsrc.levels.Terrain;
+import com.example.pedometerpixeldungeon.mainsrc.levels.features.Door;
 import com.example.pedometerpixeldungeon.mainsrc.sprites.CharSprite;
+import com.example.pedometerpixeldungeon.mainsrc.utils.GLog;
+import com.example.pedometerpixeldungeon.mainsrc.utils.Utils;
+import com.example.pedometerpixeldungeon.noosa.Camera;
+import com.example.pedometerpixeldungeon.noosa.audio.Sample;
 import com.example.pedometerpixeldungeon.utils.Bundlable;
 import com.example.pedometerpixeldungeon.utils.Bundle;
+import com.example.pedometerpixeldungeon.utils.GameMath;
 import com.example.pedometerpixeldungeon.utils.Random;
-import com.example.pedometerpixeldungeon.mainsrc.levels.features.Door;
 
 import java.util.HashSet;
 
@@ -82,84 +113,84 @@ public abstract class Char extends Actor {
     }
 
     public boolean attack( Char enemy ) {
-//
-//        boolean visibleFight = Dungeon.visible[pos] || Dungeon.visible[enemy.pos];
-//
-//        if (hit( this, enemy, false )) {
-//
-//            if (visibleFight) {
-//                GLog.i( TXT_HIT, name, enemy.name );
-//            }
-//
-//            // FIXME
-//            int dr = this instanceof Hero && ((Hero)this).rangedWeapon != null && ((Hero)this).subClass == HeroSubClass.SNIPER ? 0 :
-//                    Random.IntRange( 0, enemy.dr() );
-//
-//            int dmg = damageRoll();
-//            int effectiveDamage = Math.max( dmg - dr, 0 );
-//
-//            effectiveDamage = attackProc( enemy, effectiveDamage );
-//            effectiveDamage = enemy.defenseProc( this, effectiveDamage );
-//            enemy.damage( effectiveDamage, this );
-//
-//            if (visibleFight) {
-//                Sample.INSTANCE.play( Assets.SND_HIT, 1, 1, Random.Float( 0.8f, 1.25f ) );
-//            }
-//
-//            if (enemy == Dungeon.hero) {
-//                Dungeon.hero.interrupt();
-//                if (effectiveDamage > enemy.HT / 4) {
-//                    Camera.main.shake( GameMath.gate( 1, effectiveDamage / (enemy.HT / 4), 5), 0.3f );
-//                }
-//            }
-//
-//            enemy.sprite.bloodBurstA( sprite.center(), effectiveDamage );
-//            enemy.sprite.flash();
-//
-//            if (!enemy.isAlive() && visibleFight) {
-//                if (enemy == Dungeon.hero) {
-//
-//                    if (Dungeon.hero.killerGlyph != null) {
-//
-//                        // FIXME
-//                        //	Dungeon.fail( Utils.format( ResultDescriptions.GLYPH, Dungeon.hero.killerGlyph.name(), Dungeon.depth ) );
-//                        //	GLog.n( TXT_KILL, Dungeon.hero.killerGlyph.name() );
-//
-//                    } else {
-//                        if (Bestiary.isBoss( this )) {
-//                            Dungeon.fail( Utils.format( ResultDescriptions.BOSS, name, Dungeon.depth ) );
-//                        } else {
-//                            Dungeon.fail( Utils.format( ResultDescriptions.MOB,
-//                                    Utils.indefinite( name ), Dungeon.depth ) );
-//                        }
-//
-//                        GLog.n( TXT_KILL, name );
-//                    }
-//
-//                } else {
-//                    GLog.i( TXT_DEFEAT, name, enemy.name );
-//                }
-//            }
-//
-//            return true;
-//
-//        } else {
-//
-//            if (visibleFight) {
-//                String defense = enemy.defenseVerb();
-//                enemy.sprite.showStatus( CharSprite.NEUTRAL, defense );
-//                if (this == Dungeon.hero) {
-//                    GLog.i( TXT_YOU_MISSED, enemy.name, defense );
-//                } else {
-//                    GLog.i( TXT_SMB_MISSED, enemy.name, defense, name );
-//                }
-//
-//                Sample.INSTANCE.play( Assets.SND_MISS );
-//            }
+
+        boolean visibleFight = Dungeon.visible[pos] || Dungeon.visible[enemy.pos];
+
+        if (hit( this, enemy, false )) {
+
+            if (visibleFight) {
+                GLog.i( TXT_HIT, name, enemy.name );
+            }
+
+            // FIXME
+            int dr = this instanceof Hero && ((Hero)this).rangedWeapon != null && ((Hero)this).subClass == HeroSubClass.SNIPER ? 0 :
+                    Random.IntRange( 0, enemy.dr() );
+
+            int dmg = damageRoll();
+            int effectiveDamage = Math.max( dmg - dr, 0 );
+
+            effectiveDamage = attackProc( enemy, effectiveDamage );
+            effectiveDamage = enemy.defenseProc( this, effectiveDamage );
+            enemy.damage( effectiveDamage, this );
+
+            if (visibleFight) {
+                Sample.INSTANCE.play( Assets.SND_HIT, 1, 1, Random.Float( 0.8f, 1.25f ) );
+            }
+
+            if (enemy == Dungeon.hero) {
+                Dungeon.hero.interrupt();
+                if (effectiveDamage > enemy.HT / 4) {
+                    Camera.main.shake( GameMath.gate( 1, effectiveDamage / (enemy.HT / 4), 5), 0.3f );
+                }
+            }
+
+            enemy.sprite.bloodBurstA( sprite.center(), effectiveDamage );
+            enemy.sprite.flash();
+
+            if (!enemy.isAlive() && visibleFight) {
+                if (enemy == Dungeon.hero) {
+
+                    if (Dungeon.hero.killerGlyph != null) {
+
+                        // FIXME
+//                        Dungeon.fail( Utils.format( ResultDescriptions.GLYPH, Dungeon.hero.killerGlyph.name(), Dungeon.depth ) );
+//                        GLog.n( TXT_KILL, Dungeon.hero.killerGlyph.name() );
+
+                    } else {
+                        if (Bestiary.isBoss( this )) {
+                            Dungeon.fail( Utils.format( ResultDescriptions.BOSS, name, Dungeon.depth ) );
+                        } else {
+                            Dungeon.fail( Utils.format( ResultDescriptions.MOB,
+                                    Utils.indefinite( name ), Dungeon.depth ) );
+                        }
+
+                        GLog.n( TXT_KILL, name );
+                    }
+
+                } else {
+                    GLog.i( TXT_DEFEAT, name, enemy.name );
+                }
+            }
+
+            return true;
+
+        } else {
+
+            if (visibleFight) {
+                String defense = enemy.defenseVerb();
+                enemy.sprite.showStatus( CharSprite.NEUTRAL, defense );
+                if (this == Dungeon.hero) {
+                    GLog.i( TXT_YOU_MISSED, enemy.name, defense );
+                } else {
+                    GLog.i( TXT_SMB_MISSED, enemy.name, defense, name );
+                }
+
+                Sample.INSTANCE.play( Assets.SND_MISS );
+            }
 
             return false;
 
-//        }
+        }
     }
 
     public static boolean hit( Char attacker, Char defender, boolean magic ) {
@@ -197,8 +228,7 @@ public abstract class Char extends Actor {
     }
 
     public float speed() {
-//        return buff( Cripple.class ) == null ? baseSpeed : baseSpeed * 0.5f;
-        return 1;
+        return buff( Cripple.class ) == null ? baseSpeed : baseSpeed * 0.5f;
     }
 
     public void damage( int dmg, Object src ) {
@@ -207,7 +237,7 @@ public abstract class Char extends Actor {
             return;
         }
 
-//        Buff.detach( this, Frost.class );
+        Buff.detach( this, Frost.class );
 
         Class<?> srcClass = src.getClass();
         if (immunities().contains( srcClass )) {
@@ -216,14 +246,14 @@ public abstract class Char extends Actor {
             dmg = Random.IntRange( 0, dmg );
         }
 
-//        if (buff( Paralysis.class ) != null) {
-//            if (Random.Int( dmg ) >= Random.Int( HP )) {
-//                Buff.detach( this, Paralysis.class );
-//                if (Dungeon.visible[pos]) {
-//                    GLog.i( TXT_OUT_OF_PARALYSIS, name );
-//                }
-//            }
-//        }
+        if (buff( Paralysis.class ) != null) {
+            if (Random.Int( dmg ) >= Random.Int( HP )) {
+                Buff.detach( this, Paralysis.class );
+                if (Dungeon.visible[pos]) {
+                    GLog.i( TXT_OUT_OF_PARALYSIS, name );
+                }
+            }
+        }
 
         HP -= dmg;
         if (dmg > 0 || src instanceof Char) {
@@ -251,20 +281,20 @@ public abstract class Char extends Actor {
     public boolean isAlive() {
         return HP > 0;
     }
-//
-//    @Override
-//    protected void spend( float time ) {
-//
-//        float timeScale = 1f;
-//        if (buff( Slow.class ) != null) {
-//            timeScale *= 0.5f;
-//        }
-//        if (buff( Speed.class ) != null) {
-//            timeScale *= 2.0f;
-//        }
-//
-//        super.spend( time / timeScale );
-//    }
+
+    @Override
+    protected void spend( float time ) {
+
+        float timeScale = 1f;
+        if (buff( Slow.class ) != null) {
+            timeScale *= 0.5f;
+        }
+        if (buff( Speed.class ) != null) {
+            timeScale *= 2.0f;
+        }
+
+        super.spend( time / timeScale );
+    }
 
     public HashSet<Buff> buffs() {
         return buffs;
@@ -291,107 +321,107 @@ public abstract class Char extends Actor {
         return null;
     }
 
-//    public boolean isCharmedBy( Char ch ) {
-//        int chID = ch.id();
-//        for (Buff b : buffs) {
-//            if (b instanceof Charm && ((Charm)b).object == chID) {
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
+    public boolean isCharmedBy( Char ch ) {
+        int chID = ch.id();
+        for (Buff b : buffs) {
+            if (b instanceof Charm && ((Charm)b).object == chID) {
+                return true;
+            }
+        }
+        return false;
+    }
 
-//    public void add( Buff buff ) {
-//
-//        buffs.add( buff );
-//        Actor.add( buff );
-//
-//        if (sprite != null) {
-//            if (buff instanceof Poison) {
-//
-//                CellEmitter.center( pos ).burst( PoisonParticle.SPLASH, 5 );
-//                sprite.showStatus( CharSprite.NEGATIVE, "poisoned" );
-//
-//            } else if (buff instanceof Amok) {
-//
-//                sprite.showStatus( CharSprite.NEGATIVE, "amok" );
-//
-//            } else if (buff instanceof Slow) {
-//
-//                sprite.showStatus( CharSprite.NEGATIVE, "slowed" );
-//
-//            } else if (buff instanceof MindVision) {
-//
-//                sprite.showStatus( CharSprite.POSITIVE, "mind" );
-//                sprite.showStatus( CharSprite.POSITIVE, "vision" );
-//
-//            } else if (buff instanceof Paralysis) {
-//
-//                sprite.add( CharSprite.State.PARALYSED );
-//                sprite.showStatus( CharSprite.NEGATIVE, "paralysed" );
-//
-//            } else if (buff instanceof Terror) {
-//
-//                sprite.showStatus( CharSprite.NEGATIVE, "frightened" );
-//
-//            } else if (buff instanceof Roots) {
-//
-//                sprite.showStatus( CharSprite.NEGATIVE, "rooted" );
-//
-//            } else if (buff instanceof Cripple) {
-//
-//                sprite.showStatus( CharSprite.NEGATIVE, "crippled" );
-//
-//            } else if (buff instanceof Bleeding) {
-//
-//                sprite.showStatus( CharSprite.NEGATIVE, "bleeding" );
-//
-//            } else if (buff instanceof Vertigo) {
-//
-//                sprite.showStatus( CharSprite.NEGATIVE, "dizzy" );
-//
-//            } else if (buff instanceof Sleep) {
-//                sprite.idle();
-//            }
-//
-//            else if (buff instanceof Burning) {
-//                sprite.add( CharSprite.State.BURNING );
-//            } else if (buff instanceof Levitation) {
-//                sprite.add( CharSprite.State.LEVITATING );
-//            } else if (buff instanceof Frost) {
-//                sprite.add( CharSprite.State.FROZEN );
-//            } else if (buff instanceof Invisibility) {
-//                if (!(buff instanceof Shadows)) {
-//                    sprite.showStatus( CharSprite.POSITIVE, "invisible" );
-//                }
-//                sprite.add( CharSprite.State.INVISIBLE );
-//            }
-//        }
-//    }
+    public void add( Buff buff ) {
 
-//    public void remove( Buff buff ) {
-//
-//        buffs.remove( buff );
-//        Actor.remove( buff );
-//
-//        if (buff instanceof Burning) {
-//            sprite.remove( CharSprite.State.BURNING );
-//        } else if (buff instanceof Levitation) {
-//            sprite.remove( CharSprite.State.LEVITATING );
-//        } else if (buff instanceof Invisibility && invisible <= 0) {
-//            sprite.remove( CharSprite.State.INVISIBLE );
-//        } else if (buff instanceof Paralysis) {
-//            sprite.remove( CharSprite.State.PARALYSED );
-//        } else if (buff instanceof Frost) {
-//            sprite.remove( CharSprite.State.FROZEN );
-//        }
-//    }
+        buffs.add( buff );
+        Actor.add( buff );
 
-//    public void remove( Class<? extends Buff> buffClass ) {
-//        for (Buff buff : buffs( buffClass )) {
-//            remove( buff );
-//        }
-//    }
+        if (sprite != null) {
+            if (buff instanceof Poison) {
+
+                CellEmitter.center( pos ).burst( PoisonParticle.SPLASH, 5 );
+                sprite.showStatus( CharSprite.NEGATIVE, "poisoned" );
+
+            } else if (buff instanceof Amok) {
+
+                sprite.showStatus( CharSprite.NEGATIVE, "amok" );
+
+            } else if (buff instanceof Slow) {
+
+                sprite.showStatus( CharSprite.NEGATIVE, "slowed" );
+
+            } else if (buff instanceof MindVision) {
+
+                sprite.showStatus( CharSprite.POSITIVE, "mind" );
+                sprite.showStatus( CharSprite.POSITIVE, "vision" );
+
+            } else if (buff instanceof Paralysis) {
+
+                sprite.add( CharSprite.State.PARALYSED );
+                sprite.showStatus( CharSprite.NEGATIVE, "paralysed" );
+
+            } else if (buff instanceof Terror) {
+
+                sprite.showStatus( CharSprite.NEGATIVE, "frightened" );
+
+            } else if (buff instanceof Roots) {
+
+                sprite.showStatus( CharSprite.NEGATIVE, "rooted" );
+
+            } else if (buff instanceof Cripple) {
+
+                sprite.showStatus( CharSprite.NEGATIVE, "crippled" );
+
+            } else if (buff instanceof Bleeding) {
+
+                sprite.showStatus( CharSprite.NEGATIVE, "bleeding" );
+
+            } else if (buff instanceof Vertigo) {
+
+                sprite.showStatus( CharSprite.NEGATIVE, "dizzy" );
+
+            } else if (buff instanceof Sleep) {
+                sprite.idle();
+            }
+
+            else if (buff instanceof Burning) {
+                sprite.add( CharSprite.State.BURNING );
+            } else if (buff instanceof Levitation) {
+                sprite.add( CharSprite.State.LEVITATING );
+            } else if (buff instanceof Frost) {
+                sprite.add( CharSprite.State.FROZEN );
+            } else if (buff instanceof Invisibility) {
+                if (!(buff instanceof Shadows)) {
+                    sprite.showStatus( CharSprite.POSITIVE, "invisible" );
+                }
+                sprite.add( CharSprite.State.INVISIBLE );
+            }
+        }
+    }
+
+    public void remove( Buff buff ) {
+
+        buffs.remove( buff );
+        Actor.remove( buff );
+
+        if (buff instanceof Burning) {
+            sprite.remove( CharSprite.State.BURNING );
+        } else if (buff instanceof Levitation) {
+            sprite.remove( CharSprite.State.LEVITATING );
+        } else if (buff instanceof Invisibility && invisible <= 0) {
+            sprite.remove( CharSprite.State.INVISIBLE );
+        } else if (buff instanceof Paralysis) {
+            sprite.remove( CharSprite.State.PARALYSED );
+        } else if (buff instanceof Frost) {
+            sprite.remove( CharSprite.State.FROZEN );
+        }
+    }
+
+    public void remove( Class<? extends Buff> buffClass ) {
+        for (Buff buff : buffs( buffClass )) {
+            remove( buff );
+        }
+    }
 
 
 
@@ -402,23 +432,23 @@ public abstract class Char extends Actor {
         }
     }
 
-//    public void updateSpriteState() {
-//        for (Buff buff:buffs) {
-//            if (buff instanceof Burning) {
-//                sprite.add( CharSprite.State.BURNING );
-//            } else if (buff instanceof Levitation) {
-//                sprite.add( CharSprite.State.LEVITATING );
-//            } else if (buff instanceof Invisibility) {
-//                sprite.add( CharSprite.State.INVISIBLE );
-//            } else if (buff instanceof Paralysis) {
-//                sprite.add( CharSprite.State.PARALYSED );
-//            } else if (buff instanceof Frost) {
-//                sprite.add( CharSprite.State.FROZEN );
-//            } else if (buff instanceof Light) {
-//                sprite.add( CharSprite.State.ILLUMINATED );
-//            }
-//        }
-//    }
+    public void updateSpriteState() {
+        for (Buff buff:buffs) {
+            if (buff instanceof Burning) {
+                sprite.add( CharSprite.State.BURNING );
+            } else if (buff instanceof Levitation) {
+                sprite.add( CharSprite.State.LEVITATING );
+            } else if (buff instanceof Invisibility) {
+                sprite.add( CharSprite.State.INVISIBLE );
+            } else if (buff instanceof Paralysis) {
+                sprite.add( CharSprite.State.PARALYSED );
+            } else if (buff instanceof Frost) {
+                sprite.add( CharSprite.State.FROZEN );
+            } else if (buff instanceof Light) {
+                sprite.add( CharSprite.State.ILLUMINATED );
+            }
+        }
+    }
 
     public int stealth() {
         return 0;

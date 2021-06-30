@@ -2,11 +2,14 @@ package com.example.pedometerpixeldungeon.mainsrc;
 
 import com.example.pedometerpixeldungeon.mainsrc.actors.Actor;
 import com.example.pedometerpixeldungeon.mainsrc.actors.Char;
+import com.example.pedometerpixeldungeon.mainsrc.actors.buffs.Amok;
 import com.example.pedometerpixeldungeon.mainsrc.actors.buffs.Light;
+import com.example.pedometerpixeldungeon.mainsrc.actors.buffs.Rage;
 import com.example.pedometerpixeldungeon.mainsrc.actors.hero.Hero;
 import com.example.pedometerpixeldungeon.mainsrc.actors.hero.HeroClass;
 import com.example.pedometerpixeldungeon.mainsrc.items.Item;
 import com.example.pedometerpixeldungeon.mainsrc.items.potions.Potion;
+import com.example.pedometerpixeldungeon.mainsrc.items.rings.Ring;
 import com.example.pedometerpixeldungeon.mainsrc.items.scrolls.Scroll;
 import com.example.pedometerpixeldungeon.mainsrc.items.wands.Wand;
 import com.example.pedometerpixeldungeon.mainsrc.levels.DeadEndLevel;
@@ -70,10 +73,10 @@ public class Dungeon {
         Scroll.initLabels();
         Potion.initColors();
         Wand.initWoods();
-//        Ring.initGems();
+        Ring.initGems();
 
         Statistics.reset();
-//        Journal.reset();
+        Journal.reset();
 
         depth = 0;
         gold = 0;
@@ -358,14 +361,14 @@ public class Dungeon {
             Room.storeRoomsInBundle( bundle );
 
             Statistics.storeInBundle( bundle );
-//            Journal.storeInBundle( bundle );
+            Journal.storeInBundle( bundle );
 
             QuickSlot.save( bundle );
 
             Scroll.save( bundle );
             Potion.save( bundle );
             Wand.save( bundle );
-//            Ring.save( bundle );
+            Ring.save( bundle );
 
             Bundle badges = new Bundle();
 //            Badges.saveLocal( badges );
@@ -432,7 +435,7 @@ public class Dungeon {
         Scroll.restore( bundle );
         Potion.restore( bundle );
         Wand.restore( bundle );
-//        Ring.restore( bundle );
+        Ring.restore( bundle );
 
         potionOfStrength = bundle.getInt( POS );
         scrollsOfUpgrade = bundle.getInt( SOU );
@@ -485,8 +488,8 @@ public class Dungeon {
         depth = bundle.getInt( DEPTH );
 
         Statistics.restoreFromBundle( bundle );
-//        Journal.restoreFromBundle( bundle );
-//
+        Journal.restoreFromBundle( bundle );
+
         droppedItems = new SparseArray<ArrayList<Item>>();
         for (int i=2; i <= Statistics.deepestFloor + 1; i++) {
             ArrayList<Item> dropped = new ArrayList<Item>();
@@ -550,17 +553,17 @@ public class Dungeon {
 //        }
     }
 
-//    public static void win( String desc ) {
-//
-//        hero.belongings.identify();
-//
-//        if (challenges != 0) {
+    public static void win( String desc ) {
+
+        hero.belongings.identify();
+
+        if (challenges != 0) {
 //            Badges.validateChampion();
-//        }
-//
-//        resultDescription = desc;
+        }
+
+        resultDescription = desc;
 //        Rankings.INSTANCE.submit( true );
-//    }
+    }
 
     public static void observe() {
 
@@ -584,13 +587,12 @@ public class Dungeon {
             return Actor.findChar( to ) == null && (pass[to] || Level.avoid[to]) ? to : -1;
         }
 
-//        if (ch.flying || ch.buff( Amok.class ) != null || ch.buff( Rage.class ) != null) {
-//            BArray.or( pass, Level.avoid, passable );
-//        } else {
-//            System.arraycopy( pass, 0, passable, 0, Level.LENGTH );
-//        }
-        System.arraycopy( pass, 0, passable, 0, Level.LENGTH );
-
+        if (ch.flying || ch.buff( Amok.class ) != null || ch.buff( Rage.class ) != null) {
+            BArray.or( pass, Level.avoid, passable );
+        } else {
+            System.arraycopy( pass, 0, passable, 0, Level.LENGTH );
+        }
+        
         for (Actor actor : Actor.all()) {
             if (actor instanceof Char) {
                 int pos = ((Char)actor).pos;

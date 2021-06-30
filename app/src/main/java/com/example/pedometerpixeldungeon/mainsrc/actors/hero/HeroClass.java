@@ -1,6 +1,13 @@
 package com.example.pedometerpixeldungeon.mainsrc.actors.hero;
 
 import com.example.pedometerpixeldungeon.mainsrc.Assets;
+import com.example.pedometerpixeldungeon.mainsrc.items.armors.ClothArmor;
+import com.example.pedometerpixeldungeon.mainsrc.items.bags.Keyring;
+import com.example.pedometerpixeldungeon.mainsrc.items.foods.Food;
+import com.example.pedometerpixeldungeon.mainsrc.items.potions.PotionOfStrength;
+import com.example.pedometerpixeldungeon.mainsrc.items.weapons.melee.ShortSword;
+import com.example.pedometerpixeldungeon.mainsrc.items.weapons.missiles.Dart;
+import com.example.pedometerpixeldungeon.mainsrc.ui.QuickSlot;
 import com.example.pedometerpixeldungeon.utils.Bundle;
 
 public enum  HeroClass {
@@ -76,14 +83,12 @@ public enum  HeroClass {
         hero.updateAwareness();
     }
 
-    private void initCommon(Hero hero) {
-    }
 
-//    private static void initCommon( Hero hero ) {
-//        (hero.belongings.armor = new ClothArmor()).identify();
-//        new Food().identify().collect();
-//        new Keyring().collect();
-//}
+    private static void initCommon( Hero hero ) {
+        (hero.belongings.armor = new ClothArmor()).identify();
+        new Food().identify().collect();
+        new Keyring().collect();
+}
 
 //    public Badges.Badge masteryBadge() {
 //        switch (this) {
@@ -102,13 +107,13 @@ public enum  HeroClass {
     private static void initWarrior( Hero hero ) {
         hero.STR = hero.STR + 1;
 
-//        (hero.belongings.weapon = new ShortSword()).identify();
-//        new Dart( 8 ).identify().collect();
-//
-//        QuickSlot.primaryValue = Dart.class;
-//
-//        new PotionOfStrength().setKnown();
-//    }
+        (hero.belongings.weapon = new ShortSword()).identify();
+        new Dart( 8 ).identify().collect();
+
+        QuickSlot.primaryValue = Dart.class;
+
+        new PotionOfStrength().setKnown();
+    }
 
 //    private static void initMage( Hero hero ) {
 //        (hero.belongings.weapon = new Knuckles()).identify();
@@ -143,7 +148,8 @@ public enum  HeroClass {
 //
 //        QuickSlot.primaryValue = boomerang;
 //    
-    }
+//    }
+
     public String title() {
         return title;
     }
