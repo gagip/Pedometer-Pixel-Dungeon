@@ -3,6 +3,7 @@ package com.example.pedometerpixeldungeon.mainsrc.actors;
 import android.util.SparseArray;
 
 import com.example.pedometerpixeldungeon.mainsrc.Dungeon;
+import com.example.pedometerpixeldungeon.mainsrc.Statistics;
 import com.example.pedometerpixeldungeon.mainsrc.actors.mobs.Mob;
 import com.example.pedometerpixeldungeon.mainsrc.levels.Level;
 import com.example.pedometerpixeldungeon.utils.Bundlable;
@@ -96,9 +97,9 @@ public abstract class Actor implements Bundlable {
 
     public static void fixTime() {
 
-//        if (Dungeon.hero != null && all.contains( Dungeon.hero )) {
-//            Statistics.duration += now;
-//        }
+        if (Dungeon.hero != null && all.contains( Dungeon.hero )) {
+            Statistics.duration += now;
+        }
 
         float min = Float.MAX_VALUE;
         for (Actor a : all) {

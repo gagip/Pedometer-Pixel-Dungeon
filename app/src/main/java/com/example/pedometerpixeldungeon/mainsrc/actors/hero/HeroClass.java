@@ -76,11 +76,14 @@ public enum  HeroClass {
         hero.updateAwareness();
     }
 
-    private static void initCommon( Hero hero ) {
+    private void initCommon(Hero hero) {
+    }
+
+//    private static void initCommon( Hero hero ) {
 //        (hero.belongings.armor = new ClothArmor()).identify();
 //        new Food().identify().collect();
 //        new Keyring().collect();
-    }
+//}
 
 //    public Badges.Badge masteryBadge() {
 //        switch (this) {
@@ -105,7 +108,7 @@ public enum  HeroClass {
 //        QuickSlot.primaryValue = Dart.class;
 //
 //        new PotionOfStrength().setKnown();
-    }
+//    }
 
 //    private static void initMage( Hero hero ) {
 //        (hero.belongings.weapon = new Knuckles()).identify();
@@ -139,8 +142,8 @@ public enum  HeroClass {
 //        boomerang.identify().collect();
 //
 //        QuickSlot.primaryValue = boomerang;
-//    }
-
+//    
+    }
     public String title() {
         return title;
     }
@@ -149,7 +152,7 @@ public enum  HeroClass {
 
         switch (this) {
             case WARRIOR:
-                return Assets.WARRIOR;
+                return Assets.WARRIOR; // 플레이어 사진 세팅 부분
             case MAGE:
                 return Assets.MAGE;
             case ROGUE:

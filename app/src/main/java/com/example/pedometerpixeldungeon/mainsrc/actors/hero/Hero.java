@@ -4,6 +4,8 @@ import com.example.pedometerpixeldungeon.mainsrc.Assets;
 import com.example.pedometerpixeldungeon.mainsrc.Dungeon;
 import com.example.pedometerpixeldungeon.mainsrc.GamesInProgress;
 import com.example.pedometerpixeldungeon.mainsrc.actors.Char;
+import com.example.pedometerpixeldungeon.mainsrc.actors.buffs.Buff;
+import com.example.pedometerpixeldungeon.mainsrc.actors.buffs.Hunger;
 import com.example.pedometerpixeldungeon.mainsrc.actors.mobs.Mob;
 import com.example.pedometerpixeldungeon.mainsrc.items.Item;
 import com.example.pedometerpixeldungeon.mainsrc.levels.Level;
@@ -144,10 +146,10 @@ public class Hero extends Char {
         return subClass == null || subClass == HeroSubClass.NONE ? heroClass.title() : subClass.title();
     }
 
-//    public void live() {
+    public void live() {
 //        Buff.affect( this, Regeneration.class );
-//        Buff.affect( this, Hunger.class );
-//    }
+        Buff.affect( this, Hunger.class );
+    }
 
 //    public int tier() {
 //        return belongings.armor == null ? 0 : belongings.armor.tier;

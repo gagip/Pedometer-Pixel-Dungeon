@@ -1,5 +1,6 @@
 package com.example.pedometerpixeldungeon.mainsrc.actors;
 
+import com.example.pedometerpixeldungeon.mainsrc.actors.buffs.Buff;
 import com.example.pedometerpixeldungeon.mainsrc.levels.Level;
 import com.example.pedometerpixeldungeon.mainsrc.sprites.CharSprite;
 import com.example.pedometerpixeldungeon.utils.Bundle;
@@ -36,7 +37,7 @@ public abstract class Char extends Actor {
 
     public int viewDistance	= 8;
 
-//    private HashSet<Buff> buffs = new HashSet<Buff>();
+    private HashSet<Buff> buffs = new HashSet<Buff>();
 
     @Override
     protected boolean act() {
@@ -57,7 +58,7 @@ public abstract class Char extends Actor {
         bundle.put( POS, pos );
         bundle.put( TAG_HP, HP );
         bundle.put( TAG_HT, HT );
-//        bundle.put( BUFFS, buffs );
+        bundle.put( BUFFS, buffs );
     }
 
     @Override
@@ -260,30 +261,30 @@ public abstract class Char extends Actor {
 //        super.spend( time / timeScale );
 //    }
 //
-//    public HashSet<Buff> buffs() {
-//        return buffs;
-//    }
+    public HashSet<Buff> buffs() {
+        return buffs;
+    }
 //
-//    @SuppressWarnings("unchecked")
-//    public <T extends Buff> HashSet<T> buffs( Class<T> c ) {
-//        HashSet<T> filtered = new HashSet<T>();
-//        for (Buff b : buffs) {
-//            if (c.isInstance( b )) {
-//                filtered.add( (T)b );
-//            }
-//        }
-//        return filtered;
-//    }
+    @SuppressWarnings("unchecked")
+    public <T extends Buff> HashSet<T> buffs( Class<T> c ) {
+        HashSet<T> filtered = new HashSet<T>();
+        for (Buff b : buffs) {
+            if (c.isInstance( b )) {
+                filtered.add( (T)b );
+            }
+        }
+        return filtered;
+    }
 
-//    @SuppressWarnings("unchecked")
-//    public <T extends Buff> T buff( Class<T> c ) {
-//        for (Buff b : buffs) {
-//            if (c.isInstance( b )) {
-//                return (T)b;
-//            }
-//        }
-//        return null;
-//    }
+    @SuppressWarnings("unchecked")
+    public <T extends Buff> T buff( Class<T> c ) {
+        for (Buff b : buffs) {
+            if (c.isInstance( b )) {
+                return (T)b;
+            }
+        }
+        return null;
+    }
 
 //    public boolean isCharmedBy( Char ch ) {
 //        int chID = ch.id();
