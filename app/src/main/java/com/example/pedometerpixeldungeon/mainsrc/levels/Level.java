@@ -1,19 +1,44 @@
 package com.example.pedometerpixeldungeon.mainsrc.levels;
 
+import com.example.pedometerpixeldungeon.mainsrc.Assets;
 import com.example.pedometerpixeldungeon.mainsrc.Challenges;
 import com.example.pedometerpixeldungeon.mainsrc.Dungeon;
 import com.example.pedometerpixeldungeon.mainsrc.Statistics;
 import com.example.pedometerpixeldungeon.mainsrc.actors.Actor;
+import com.example.pedometerpixeldungeon.mainsrc.actors.Blobs.Alchemy;
 import com.example.pedometerpixeldungeon.mainsrc.actors.Blobs.Blob;
+import com.example.pedometerpixeldungeon.mainsrc.actors.Blobs.WellWater;
 import com.example.pedometerpixeldungeon.mainsrc.actors.Char;
 import com.example.pedometerpixeldungeon.mainsrc.actors.mobs.Bestiary;
 import com.example.pedometerpixeldungeon.mainsrc.actors.mobs.Mob;
+import com.example.pedometerpixeldungeon.mainsrc.items.Generator;
+import com.example.pedometerpixeldungeon.mainsrc.items.Gold;
 import com.example.pedometerpixeldungeon.mainsrc.items.Heap;
 import com.example.pedometerpixeldungeon.mainsrc.items.Item;
+import com.example.pedometerpixeldungeon.mainsrc.items.armors.Armor;
+import com.example.pedometerpixeldungeon.mainsrc.items.bags.ScrollHolder;
+import com.example.pedometerpixeldungeon.mainsrc.items.bags.SeedPouch;
+import com.example.pedometerpixeldungeon.mainsrc.items.foods.Food;
+import com.example.pedometerpixeldungeon.mainsrc.items.potions.PotionOfHealing;
+import com.example.pedometerpixeldungeon.mainsrc.items.potions.PotionOfStrength;
+import com.example.pedometerpixeldungeon.mainsrc.items.scrolls.Scroll;
+import com.example.pedometerpixeldungeon.mainsrc.items.scrolls.ScrollOfEnchantment;
+import com.example.pedometerpixeldungeon.mainsrc.items.scrolls.ScrollOfUpgrade;
+import com.example.pedometerpixeldungeon.mainsrc.levels.features.Chasm;
+import com.example.pedometerpixeldungeon.mainsrc.levels.traps.AlarmTrap;
+import com.example.pedometerpixeldungeon.mainsrc.levels.traps.FireTrap;
+import com.example.pedometerpixeldungeon.mainsrc.levels.traps.GrippingTrap;
+import com.example.pedometerpixeldungeon.mainsrc.levels.traps.LightningTrap;
+import com.example.pedometerpixeldungeon.mainsrc.levels.traps.ParalyticTrap;
+import com.example.pedometerpixeldungeon.mainsrc.levels.traps.PoisonTrap;
+import com.example.pedometerpixeldungeon.mainsrc.levels.traps.SummoningTrap;
+import com.example.pedometerpixeldungeon.mainsrc.levels.traps.ToxicTrap;
 import com.example.pedometerpixeldungeon.mainsrc.mechanics.ShadowCaster;
 import com.example.pedometerpixeldungeon.mainsrc.plants.Plant;
 import com.example.pedometerpixeldungeon.mainsrc.scenes.GameScene;
+import com.example.pedometerpixeldungeon.mainsrc.utils.GLog;
 import com.example.pedometerpixeldungeon.noosa.Scene;
+import com.example.pedometerpixeldungeon.noosa.audio.Sample;
 import com.example.pedometerpixeldungeon.utils.Bundlable;
 import com.example.pedometerpixeldungeon.utils.Bundle;
 import com.example.pedometerpixeldungeon.utils.Random;
@@ -113,19 +138,19 @@ public abstract class Level implements Bundlable {
         plants = new SparseArray<Plant>();
 
         if (!Dungeon.bossLevel()) {
-//            addItemToSpawn( Generator.random( Generator.Category.FOOD ) );
-//            if (Dungeon.posNeeded()) {
-//                addItemToSpawn( new PotionOfStrength() );
-//                Dungeon.potionOfStrength++;
-//            }
-//            if (Dungeon.souNeeded()) {
-//                addItemToSpawn( new ScrollOfUpgrade() );
-//                Dungeon.scrollsOfUpgrade++;
-//            }
-//            if (Dungeon.soeNeeded()) {
-//                addItemToSpawn( new ScrollOfEnchantment() );
-//                Dungeon.scrollsOfEnchantment++;
-//            }
+            addItemToSpawn( Generator.random( Generator.Category.FOOD ) );
+            if (Dungeon.posNeeded()) {
+                addItemToSpawn( new PotionOfStrength() );
+                Dungeon.potionOfStrength++;
+            }
+            if (Dungeon.souNeeded()) {
+                addItemToSpawn( new ScrollOfUpgrade() );
+                Dungeon.scrollsOfUpgrade++;
+            }
+            if (Dungeon.soeNeeded()) {
+                addItemToSpawn( new ScrollOfEnchantment() );
+                Dungeon.scrollsOfEnchantment++;
+            }
 
             if (Dungeon.depth > 1) {
                 switch (Random.Int( 10 )) {
@@ -176,9 +201,9 @@ public abstract class Level implements Bundlable {
     public void restoreFromBundle( Bundle bundle ) {
 
         mobs = new HashSet<Mob>();
-//        heaps = new SparseArray<Heap>();
-//        blobs = new HashMap<Class<? extends Blob>, Blob>();
-//        plants = new SparseArray<Plant>();
+        heaps = new SparseArray<Heap>();
+        blobs = new HashMap<Class<? extends Blob>, Blob>();
+        plants = new SparseArray<Plant>();
 
         map		= bundle.getIntArray( MAP );
         visited	= bundle.getBooleanArray( VISITED );
@@ -189,7 +214,7 @@ public abstract class Level implements Bundlable {
 
         weakFloorCreated = false;
 
-//        adjustMapSize();
+        adjustMapSize();
 
         Collection<Bundlable> collection = bundle.getCollection( HEAPS );
         for (Bundlable h : collection) {
@@ -492,25 +517,25 @@ public abstract class Level implements Bundlable {
 //
     public Heap drop(Item item, int cell ) {
 
-//        if (Dungeon.isChallenged( Challenges.NO_FOOD ) && item instanceof Food) {
-//            item = new Gold( item.price() );
-//        } else
-//        if (Dungeon.isChallenged( Challenges.NO_ARMOR ) && item instanceof Armor) {
-//            item = new Gold( item.price() );
-//        } else
-//        if (Dungeon.isChallenged( Challenges.NO_HEALING ) && item instanceof PotionOfHealing) {
-//            item = new Gold( item.price() );
-//        } else
-//        if (Dungeon.isChallenged( Challenges.NO_HERBALISM ) && item instanceof SeedPouch) {
-//            item = new Gold( item.price() );
-//        } else
-//        if (Dungeon.isChallenged( Challenges.NO_SCROLLS ) && (item instanceof Scroll || item instanceof ScrollHolder)) {
-//            if (item instanceof ScrollOfUpgrade) {
-//                // These scrolls still can be found
-//            } else {
-//                item = new Gold( item.price() );
-//            }
-//        }
+        if (Dungeon.isChallenged( Challenges.NO_FOOD ) && item instanceof Food) {
+            item = new Gold( item.price() );
+        } else
+        if (Dungeon.isChallenged( Challenges.NO_ARMOR ) && item instanceof Armor) {
+            item = new Gold( item.price() );
+        } else
+        if (Dungeon.isChallenged( Challenges.NO_HEALING ) && item instanceof PotionOfHealing) {
+            item = new Gold( item.price() );
+        } else
+        if (Dungeon.isChallenged( Challenges.NO_HERBALISM ) && item instanceof SeedPouch) {
+            item = new Gold( item.price() );
+        } else
+        if (Dungeon.isChallenged( Challenges.NO_SCROLLS ) && (item instanceof Scroll || item instanceof ScrollHolder)) {
+            if (item instanceof ScrollOfUpgrade) {
+                // These scrolls still can be found
+            } else {
+                item = new Gold( item.price() );
+            }
+        }
 
         if ((map[cell] == Terrain.ALCHEMY) && !(item instanceof Plant.Seed)) {
             int n;
@@ -575,168 +600,168 @@ public abstract class Level implements Bundlable {
 
     public void press( int cell, Char ch ) {
 
-//        if (pit[cell] && ch == Dungeon.hero) {
-//            Chasm.heroFall( cell );
-//            return;
-//        }
-//
-//        boolean trap = false;
-//
-//        switch (map[cell]) {
-//
-//            case Terrain.SECRET_TOXIC_TRAP:
-//                GLog.i( TXT_HIDDEN_PLATE_CLICKS );
-//            case Terrain.TOXIC_TRAP:
-//                trap = true;
-//                ToxicTrap.trigger( cell, ch );
-//                break;
-//
-//            case Terrain.SECRET_FIRE_TRAP:
-//                GLog.i( TXT_HIDDEN_PLATE_CLICKS );
-//            case Terrain.FIRE_TRAP:
-//                trap = true;
-//                FireTrap.trigger( cell, ch );
-//                break;
-//
-//            case Terrain.SECRET_PARALYTIC_TRAP:
-//                GLog.i( TXT_HIDDEN_PLATE_CLICKS );
-//            case Terrain.PARALYTIC_TRAP:
-//                trap = true;
-//                ParalyticTrap.trigger( cell,  ch );
-//                break;
-//
-//            case Terrain.SECRET_POISON_TRAP:
-//                GLog.i( TXT_HIDDEN_PLATE_CLICKS );
-//            case Terrain.POISON_TRAP:
-//                trap = true;
-//                PoisonTrap.trigger( cell, ch );
-//                break;
-//
-//            case Terrain.SECRET_ALARM_TRAP:
-//                GLog.i( TXT_HIDDEN_PLATE_CLICKS );
-//            case Terrain.ALARM_TRAP:
-//                trap = true;
-//                AlarmTrap.trigger( cell, ch );
-//                break;
-//
-//            case Terrain.SECRET_LIGHTNING_TRAP:
-//                GLog.i( TXT_HIDDEN_PLATE_CLICKS );
-//            case Terrain.LIGHTNING_TRAP:
-//                trap = true;
-//                LightningTrap.trigger( cell, ch );
-//                break;
-//
-//            case Terrain.SECRET_GRIPPING_TRAP:
-//                GLog.i( TXT_HIDDEN_PLATE_CLICKS );
-//            case Terrain.GRIPPING_TRAP:
-//                trap = true;
-//                GrippingTrap.trigger( cell, ch );
-//                break;
-//
-//            case Terrain.SECRET_SUMMONING_TRAP:
-//                GLog.i( TXT_HIDDEN_PLATE_CLICKS );
-//            case Terrain.SUMMONING_TRAP:
-//                trap = true;
-//                SummoningTrap.trigger( cell, ch );
-//                break;
-//
-//            case Terrain.HIGH_GRASS:
+        if (pit[cell] && ch == Dungeon.hero) {
+            Chasm.heroFall( cell );
+            return;
+        }
+
+        boolean trap = false;
+
+        switch (map[cell]) {
+
+            case Terrain.SECRET_TOXIC_TRAP:
+                GLog.i( TXT_HIDDEN_PLATE_CLICKS );
+            case Terrain.TOXIC_TRAP:
+                trap = true;
+                ToxicTrap.trigger( cell, ch );
+                break;
+
+            case Terrain.SECRET_FIRE_TRAP:
+                GLog.i( TXT_HIDDEN_PLATE_CLICKS );
+            case Terrain.FIRE_TRAP:
+                trap = true;
+                FireTrap.trigger( cell, ch );
+                break;
+
+            case Terrain.SECRET_PARALYTIC_TRAP:
+                GLog.i( TXT_HIDDEN_PLATE_CLICKS );
+            case Terrain.PARALYTIC_TRAP:
+                trap = true;
+                ParalyticTrap.trigger( cell,  ch );
+                break;
+
+            case Terrain.SECRET_POISON_TRAP:
+                GLog.i( TXT_HIDDEN_PLATE_CLICKS );
+            case Terrain.POISON_TRAP:
+                trap = true;
+                PoisonTrap.trigger( cell, ch );
+                break;
+
+            case Terrain.SECRET_ALARM_TRAP:
+                GLog.i( TXT_HIDDEN_PLATE_CLICKS );
+            case Terrain.ALARM_TRAP:
+                trap = true;
+                AlarmTrap.trigger( cell, ch );
+                break;
+
+            case Terrain.SECRET_LIGHTNING_TRAP:
+                GLog.i( TXT_HIDDEN_PLATE_CLICKS );
+            case Terrain.LIGHTNING_TRAP:
+                trap = true;
+                LightningTrap.trigger( cell, ch );
+                break;
+
+            case Terrain.SECRET_GRIPPING_TRAP:
+                GLog.i( TXT_HIDDEN_PLATE_CLICKS );
+            case Terrain.GRIPPING_TRAP:
+                trap = true;
+                GrippingTrap.trigger( cell, ch );
+                break;
+
+            case Terrain.SECRET_SUMMONING_TRAP:
+                GLog.i( TXT_HIDDEN_PLATE_CLICKS );
+            case Terrain.SUMMONING_TRAP:
+                trap = true;
+                SummoningTrap.trigger( cell, ch );
+                break;
+
+            case Terrain.HIGH_GRASS:
 //                HighGrass.trample( this, cell, ch );
-//                break;
-//
-//            case Terrain.WELL:
-//                WellWater.affectCell( cell );
-//                break;
-//
-//            case Terrain.ALCHEMY:
-//                if (ch == null) {
-//                    Alchemy.transmute( cell );
-//                }
-//                break;
-//
-//            case Terrain.DOOR:
+                break;
+
+            case Terrain.WELL:
+                WellWater.affectCell( cell );
+                break;
+
+            case Terrain.ALCHEMY:
+                if (ch == null) {
+                    Alchemy.transmute( cell );
+                }
+                break;
+
+            case Terrain.DOOR:
 //                Door.enter( cell );
-//                break;
-//        }
-//
-//        if (trap) {
-//            Sample.INSTANCE.play( Assets.SND_TRAP );
-//            if (ch == Dungeon.hero) {
-//                Dungeon.hero.interrupt();
-//            }
-//            set( cell, Terrain.INACTIVE_TRAP );
-//            GameScene.updateMap( cell );
-//        }
-//
-//        Plant plant = plants.get( cell );
-//        if (plant != null) {
-//            plant.activate( ch );
-//        }
+                break;
+        }
+
+        if (trap) {
+            Sample.INSTANCE.play( Assets.SND_TRAP );
+            if (ch == Dungeon.hero) {
+                Dungeon.hero.interrupt();
+            }
+            set( cell, Terrain.INACTIVE_TRAP );
+            GameScene.updateMap( cell );
+        }
+
+        Plant plant = plants.get( cell );
+        if (plant != null) {
+            plant.activate( ch );
+        }
     }
-//
+
     public void mobPress( Mob mob ) {
 
         int cell = mob.pos;
 
-//        if (pit[cell] && !mob.flying) {
-//            Chasm.mobFall( mob );
-//            return;
-//        }
+        if (pit[cell] && !mob.flying) {
+            Chasm.mobFall( mob );
+            return;
+        }
 
-//        boolean trap = true;
-//        switch (map[cell]) {
-//
-//            case Terrain.TOXIC_TRAP:
-//                ToxicTrap.trigger( cell,  mob );
-//                break;
-//
-//            case Terrain.FIRE_TRAP:
-//                FireTrap.trigger( cell, mob );
-//                break;
-//
-//            case Terrain.PARALYTIC_TRAP:
-//                ParalyticTrap.trigger( cell,  mob );
-//                break;
-//
-//            case Terrain.POISON_TRAP:
-//                PoisonTrap.trigger( cell, mob );
-//                break;
-//
-//            case Terrain.ALARM_TRAP:
-//                AlarmTrap.trigger( cell,  mob );
-//                break;
-//
-//            case Terrain.LIGHTNING_TRAP:
-//                LightningTrap.trigger( cell, mob );
-//                break;
-//
-//            case Terrain.GRIPPING_TRAP:
-//                GrippingTrap.trigger( cell, mob );
-//                break;
-//
-//            case Terrain.SUMMONING_TRAP:
-//                SummoningTrap.trigger( cell, mob );
-//                break;
-//
-//            case Terrain.DOOR:
+        boolean trap = true;
+        switch (map[cell]) {
+
+            case Terrain.TOXIC_TRAP:
+                ToxicTrap.trigger( cell,  mob );
+                break;
+
+            case Terrain.FIRE_TRAP:
+                FireTrap.trigger( cell, mob );
+                break;
+
+            case Terrain.PARALYTIC_TRAP:
+                ParalyticTrap.trigger( cell,  mob );
+                break;
+
+            case Terrain.POISON_TRAP:
+                PoisonTrap.trigger( cell, mob );
+                break;
+
+            case Terrain.ALARM_TRAP:
+                AlarmTrap.trigger( cell,  mob );
+                break;
+
+            case Terrain.LIGHTNING_TRAP:
+                LightningTrap.trigger( cell, mob );
+                break;
+
+            case Terrain.GRIPPING_TRAP:
+                GrippingTrap.trigger( cell, mob );
+                break;
+
+            case Terrain.SUMMONING_TRAP:
+                SummoningTrap.trigger( cell, mob );
+                break;
+
+            case Terrain.DOOR:
 //                Door.enter( cell );
-//
-//            default:
-//                trap = false;
-//        }
 
-//        if (trap) {
-//            if (Dungeon.visible[cell]) {
-//                Sample.INSTANCE.play( Assets.SND_TRAP );
-//            }
-//            set( cell, Terrain.INACTIVE_TRAP );
-//            GameScene.updateMap( cell );
-//        }
-//
-//        Plant plant = plants.get( cell );
-//        if (plant != null) {
-//            plant.activate( mob );
-//        }
+            default:
+                trap = false;
+        }
+
+        if (trap) {
+            if (Dungeon.visible[cell]) {
+                Sample.INSTANCE.play( Assets.SND_TRAP );
+            }
+            set( cell, Terrain.INACTIVE_TRAP );
+            GameScene.updateMap( cell );
+        }
+
+        Plant plant = plants.get( cell );
+        if (plant != null) {
+            plant.activate( mob );
+        }
     }
 
     public boolean[] updateFieldOfView( Char c ) {

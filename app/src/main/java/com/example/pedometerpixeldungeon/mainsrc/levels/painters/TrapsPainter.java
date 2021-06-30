@@ -1,8 +1,10 @@
 package com.example.pedometerpixeldungeon.mainsrc.levels.painters;
 
 import com.example.pedometerpixeldungeon.mainsrc.Dungeon;
+import com.example.pedometerpixeldungeon.mainsrc.items.Generator;
 import com.example.pedometerpixeldungeon.mainsrc.items.Heap;
 import com.example.pedometerpixeldungeon.mainsrc.items.Item;
+import com.example.pedometerpixeldungeon.mainsrc.items.potions.PotionOfLevitation;
 import com.example.pedometerpixeldungeon.mainsrc.levels.Level;
 import com.example.pedometerpixeldungeon.mainsrc.levels.Painter;
 import com.example.pedometerpixeldungeon.mainsrc.levels.Room;
@@ -56,7 +58,7 @@ public class TrapsPainter extends Painter {
             level.drop( prize( level ), pos );
         }
 
-//        level.addItemToSpawn( new PotionOfLevitation() );
+        level.addItemToSpawn( new PotionOfLevitation() );
     }
 
     private static Item prize( Level level ) {
@@ -66,19 +68,19 @@ public class TrapsPainter extends Painter {
             return prize;
         }
 
-//        prize = Generator.random( Random.oneOf(
-//                Generator.Category.WEAPON,
-//                Generator.Category.ARMOR
-//        ) );
+        prize = Generator.random( Random.oneOf(
+                Generator.Category.WEAPON,
+                Generator.Category.ARMOR
+        ) );
 
         for (int i=0; i < 3; i++) {
-//            Item another = Generator.random( Random.oneOf(
-//                    Generator.Category.WEAPON,
-//                    Generator.Category.ARMOR
-//            ) );
-//            if (another.level() > prize.level()) {
-//                prize = another;
-//            }
+            Item another = Generator.random( Random.oneOf(
+                    Generator.Category.WEAPON,
+                    Generator.Category.ARMOR
+            ) );
+            if (another.level() > prize.level()) {
+                prize = another;
+            }
         }
 
         return prize;

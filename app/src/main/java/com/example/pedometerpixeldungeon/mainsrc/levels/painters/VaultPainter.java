@@ -1,5 +1,9 @@
 package com.example.pedometerpixeldungeon.mainsrc.levels.painters;
 
+import com.example.pedometerpixeldungeon.mainsrc.items.Generator;
+import com.example.pedometerpixeldungeon.mainsrc.items.Heap;
+import com.example.pedometerpixeldungeon.mainsrc.items.Item;
+import com.example.pedometerpixeldungeon.mainsrc.items.keys.GoldenKey;
 import com.example.pedometerpixeldungeon.mainsrc.items.keys.IronKey;
 import com.example.pedometerpixeldungeon.mainsrc.levels.Level;
 import com.example.pedometerpixeldungeon.mainsrc.levels.Painter;
@@ -20,36 +24,36 @@ public class VaultPainter extends Painter {
 
         switch (Random.Int( 3 )) {
 
-//            case 0:
-//                level.drop( prize( level ), c ).type = Type.LOCKED_CHEST;
-//                level.addItemToSpawn( new GoldenKey() );
-//                break;
-//
-//            case 1:
-//                Item i1, i2;
-//                do {
-//                    i1 = prize( level );
-//                    i2 = prize( level );
-//                } while (i1.getClass() == i2.getClass());
-//                level.drop( i1, c ).type = Type.CRYSTAL_CHEST;
-//                level.drop( i2, c + Level.NEIGHBOURS8[Random.Int( 8 )]).type = Type.CRYSTAL_CHEST;
-//                level.addItemToSpawn( new GoldenKey() );
-//                break;
-//
-//            case 2:
-//                level.drop( prize( level ), c );
-//                set( level, c, Terrain.PEDESTAL );
-//                break;
+            case 0:
+                level.drop( prize( level ), c ).type = Heap.Type.LOCKED_CHEST;
+                level.addItemToSpawn( new GoldenKey() );
+                break;
+
+            case 1:
+                Item i1, i2;
+                do {
+                    i1 = prize( level );
+                    i2 = prize( level );
+                } while (i1.getClass() == i2.getClass());
+                level.drop( i1, c ).type = Heap.Type.CRYSTAL_CHEST;
+                level.drop( i2, c + Level.NEIGHBOURS8[Random.Int( 8 )]).type = Heap.Type.CRYSTAL_CHEST;
+                level.addItemToSpawn( new GoldenKey() );
+                break;
+
+            case 2:
+                level.drop( prize( level ), c );
+                set( level, c, Terrain.PEDESTAL );
+                break;
         }
 
         room.entrance().set( Room.Door.Type.LOCKED );
         level.addItemToSpawn( new IronKey() );
     }
 
-//    private static Item prize( Level level ) {
-//        return Generator.random( Random.oneOf(
-//                Generator.Category.WAND,
-//                Generator.Category.RING
-//        ) );
-//    }
+    private static Item prize( Level level ) {
+        return Generator.random( Random.oneOf(
+                Generator.Category.WAND,
+                Generator.Category.RING
+        ) );
+    }
 }

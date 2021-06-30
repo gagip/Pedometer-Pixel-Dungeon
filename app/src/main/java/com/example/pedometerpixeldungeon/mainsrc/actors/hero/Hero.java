@@ -4,12 +4,19 @@ import com.example.pedometerpixeldungeon.mainsrc.Assets;
 import com.example.pedometerpixeldungeon.mainsrc.Dungeon;
 import com.example.pedometerpixeldungeon.mainsrc.GamesInProgress;
 import com.example.pedometerpixeldungeon.mainsrc.actors.Char;
+import com.example.pedometerpixeldungeon.mainsrc.actors.buffs.Barkskin;
 import com.example.pedometerpixeldungeon.mainsrc.actors.buffs.Buff;
+import com.example.pedometerpixeldungeon.mainsrc.actors.buffs.Fury;
 import com.example.pedometerpixeldungeon.mainsrc.actors.buffs.Hunger;
 import com.example.pedometerpixeldungeon.mainsrc.actors.buffs.Regeneration;
 import com.example.pedometerpixeldungeon.mainsrc.actors.mobs.Mob;
 import com.example.pedometerpixeldungeon.mainsrc.items.Heap;
 import com.example.pedometerpixeldungeon.mainsrc.items.Item;
+import com.example.pedometerpixeldungeon.mainsrc.items.KindOfWeapon;
+import com.example.pedometerpixeldungeon.mainsrc.items.armors.Armor;
+import com.example.pedometerpixeldungeon.mainsrc.items.rings.RingOfAccuracy;
+import com.example.pedometerpixeldungeon.mainsrc.items.rings.RingOfHaste;
+import com.example.pedometerpixeldungeon.mainsrc.items.weapons.missiles.MissileWeapon;
 import com.example.pedometerpixeldungeon.mainsrc.levels.Level;
 import com.example.pedometerpixeldungeon.mainsrc.levels.Terrain;
 import com.example.pedometerpixeldungeon.mainsrc.scenes.GameScene;
@@ -62,13 +69,13 @@ public class Hero extends Char {
 
     private Char enemy;
 
-//    public Armor.Glyph killerGlyph = null;
+    public Armor.Glyph killerGlyph = null;
 
     private Item theKey;
 
     public boolean restoreHealth = false;
 
-//    public MissileWeapon rangedWeapon = null;
+    public MissileWeapon rangedWeapon = null;
     public Belongings belongings;
 
     public int STR;
@@ -158,34 +165,34 @@ public class Hero extends Char {
         return belongings.armor == null ? 0 : belongings.armor.tier;
     }
 
-//    public boolean shoot( Char enemy, MissileWeapon wep ) {
-//
-//        rangedWeapon = wep;
-//        boolean result = attack( enemy );
-//        rangedWeapon = null;
-//
-//        return result;
-//    }
+    public boolean shoot( Char enemy, MissileWeapon wep ) {
 
-//    @Override
-//    public int attackSkill( Char target ) {
-//
-//        int bonus = 0;
-//        for (Buff buff : buffs( RingOfAccuracy.Accuracy.class )) {
-//            bonus += ((RingOfAccuracy.Accuracy)buff).level;
-//        }
-//        float accuracy = (bonus == 0) ? 1 : (float)Math.pow( 1.4, bonus );
-//        if (rangedWeapon != null && Level.distance( pos, target.pos ) == 1) {
-//            accuracy *= 0.5f;
-//        }
-//
-//        KindOfWeapon wep = rangedWeapon != null ? rangedWeapon : belongings.weapon;
-//        if (wep != null) {
-//            return (int)(attackSkill * accuracy * wep.acuracyFactor( this ));
-//        } else {
-//            return (int)(attackSkill * accuracy);
-//        }
-//    }
+        rangedWeapon = wep;
+        boolean result = attack( enemy );
+        rangedWeapon = null;
+
+        return result;
+    }
+
+    @Override
+    public int attackSkill( Char target ) {
+
+        int bonus = 0;
+        for (Buff buff : buffs( RingOfAccuracy.Accuracy.class )) {
+            bonus += ((RingOfAccuracy.Accuracy)buff).level;
+        }
+        float accuracy = (bonus == 0) ? 1 : (float)Math.pow( 1.4, bonus );
+        if (rangedWeapon != null && Level.distance( pos, target.pos ) == 1) {
+            accuracy *= 0.5f;
+        }
+
+        KindOfWeapon wep = rangedWeapon != null ? rangedWeapon : belongings.weapon;
+        if (wep != null) {
+            return (int)(attackSkill * accuracy * wep.acuracyFactor( this ));
+        } else {
+            return (int)(attackSkill * accuracy);
+        }
+    }
 
 //    @Override
 //    public int defenseSkill( Char enemy ) {
@@ -218,27 +225,27 @@ public class Hero extends Char {
 //        }
 //    }
 
-//    @Override
-//    public int dr() {
-//        int dr = belongings.armor != null ? Math.max( belongings.armor.DR(), 0 ) : 0;
-//        Barkskin barkskin = buff( Barkskin.class );
-//        if (barkskin != null) {
-//            dr += barkskin.level();
-//        }
-//        return dr;
-//    }
+    @Override
+    public int dr() {
+        int dr = belongings.armor != null ? Math.max( belongings.armor.DR(), 0 ) : 0;
+        Barkskin barkskin = buff( Barkskin.class );
+        if (barkskin != null) {
+            dr += barkskin.level();
+        }
+        return dr;
+    }
 
-//    @Override
-//    public int damageRoll() {
-//        KindOfWeapon wep = rangedWeapon != null ? rangedWeapon : belongings.weapon;
-//        int dmg;
-//        if (wep != null) {
-//            dmg = wep.damageRoll( this );
-//        } else {
-//            dmg = STR() > 10 ? Random.IntRange( 1, STR() - 9 ) : 1;
-//        }
-//        return buff( Fury.class ) != null ? (int)(dmg * 1.5f) : dmg;
-//    }
+    @Override
+    public int damageRoll() {
+        KindOfWeapon wep = rangedWeapon != null ? rangedWeapon : belongings.weapon;
+        int dmg;
+        if (wep != null) {
+            dmg = wep.damageRoll( this );
+        } else {
+            dmg = STR() > 10 ? Random.IntRange( 1, STR() - 9 ) : 1;
+        }
+        return buff( Fury.class ) != null ? (int)(dmg * 1.5f) : dmg;
+    }
 
     @Override
     public float speed() {
@@ -256,23 +263,23 @@ public class Hero extends Char {
         }
     }
 
-//    public float attackDelay() {
-//        KindOfWeapon wep = rangedWeapon != null ? rangedWeapon : belongings.weapon;
-//        if (wep != null) {
-//
-//            return wep.speedFactor( this );
-//
-//        } else {
-//            return 1f;
-//        }
-//    }
+    public float attackDelay() {
+        KindOfWeapon wep = rangedWeapon != null ? rangedWeapon : belongings.weapon;
+        if (wep != null) {
+
+            return wep.speedFactor( this );
+
+        } else {
+            return 1f;
+        }
+    }
 
     @Override
     public void spend( float time ) {
         int hasteLevel = 0;
-//        for (Buff buff : buffs( RingOfHaste.Haste.class )) {
-//            hasteLevel += ((RingOfHaste.Haste)buff).level;
-//        }
+        for (Buff buff : buffs( RingOfHaste.Haste.class )) {
+            hasteLevel += ((RingOfHaste.Haste)buff).level;
+        }
         super.spend( hasteLevel == 0 ? time : (float)(time * Math.pow( 1.1, -hasteLevel )) );
     };
 

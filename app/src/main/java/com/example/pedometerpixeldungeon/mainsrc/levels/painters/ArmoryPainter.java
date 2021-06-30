@@ -1,10 +1,13 @@
 package com.example.pedometerpixeldungeon.mainsrc.levels.painters;
 
+import com.example.pedometerpixeldungeon.mainsrc.items.Bomb;
+import com.example.pedometerpixeldungeon.mainsrc.items.Generator;
+import com.example.pedometerpixeldungeon.mainsrc.items.Item;
+import com.example.pedometerpixeldungeon.mainsrc.items.keys.IronKey;
 import com.example.pedometerpixeldungeon.mainsrc.levels.Level;
 import com.example.pedometerpixeldungeon.mainsrc.levels.Painter;
 import com.example.pedometerpixeldungeon.mainsrc.levels.Room;
 import com.example.pedometerpixeldungeon.mainsrc.levels.Terrain;
-import com.example.pedometerpixeldungeon.mainsrc.items.Item;
 import com.example.pedometerpixeldungeon.utils.Point;
 import com.example.pedometerpixeldungeon.utils.Random;
 
@@ -40,18 +43,16 @@ public class ArmoryPainter extends Painter {
         }
 
         entrance.set( Room.Door.Type.LOCKED );
-//        level.addItemToSpawn( new IronKey() );
+        level.addItemToSpawn( new IronKey() );
     }
 
 
     private static Item prize(Level level ) {
-//        return Random.Int( 6 ) == 0 ?
-//                new Bomb().random() :
-//                Generator.random( Random.oneOf(
-//                        Generator.Category.ARMOR,
-//                        Generator.Category.WEAPON
-//                ) );
-
-        return null;
+        return Random.Int( 6 ) == 0 ?
+                new Bomb().random() :
+                Generator.random( Random.oneOf(
+                        Generator.Category.ARMOR,
+                        Generator.Category.WEAPON
+                ) );
     }
 }

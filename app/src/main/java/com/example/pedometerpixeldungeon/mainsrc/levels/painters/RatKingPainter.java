@@ -1,8 +1,10 @@
 package com.example.pedometerpixeldungeon.mainsrc.levels.painters;
 
+import com.example.pedometerpixeldungeon.mainsrc.items.Generator;
 import com.example.pedometerpixeldungeon.mainsrc.items.Gold;
 import com.example.pedometerpixeldungeon.mainsrc.items.Heap;
 import com.example.pedometerpixeldungeon.mainsrc.items.Item;
+import com.example.pedometerpixeldungeon.mainsrc.items.weapons.missiles.MissileWeapon;
 import com.example.pedometerpixeldungeon.mainsrc.levels.Level;
 import com.example.pedometerpixeldungeon.mainsrc.levels.Painter;
 import com.example.pedometerpixeldungeon.mainsrc.levels.Room;
@@ -54,17 +56,17 @@ public class RatKingPainter extends Painter {
 
         Item prize;
         switch (Random.Int( 10 )) {
-//            case 0:
-//                prize = Generator.random( Generator.Category.WEAPON );
-//                if (prize instanceof MissileWeapon) {
-//                    prize.quantity( 1 );
-//                } else {
-//                    prize.degrade( Random.Int( 3 ) );
-//                }
-//                break;
-//            case 1:
-//                prize = Generator.random( Generator.Category.ARMOR ).degrade( Random.Int( 3 ) );
-//                break;
+            case 0:
+                prize = Generator.random( Generator.Category.WEAPON );
+                if (prize instanceof MissileWeapon) {
+                    prize.quantity( 1 );
+                } else {
+                    prize.degrade( Random.Int( 3 ) );
+                }
+                break;
+            case 1:
+                prize = Generator.random( Generator.Category.ARMOR ).degrade( Random.Int( 3 ) );
+                break;
             default:
                 prize = new Gold( Random.IntRange( 1, 5 ) );
                 break;

@@ -12,6 +12,8 @@ import com.example.pedometerpixeldungeon.mainsrc.plants.Plant;
 import com.example.pedometerpixeldungeon.mainsrc.scenes.CellSelector;
 import com.example.pedometerpixeldungeon.mainsrc.scenes.GameScene;
 import com.example.pedometerpixeldungeon.mainsrc.sprites.ItemSprite;
+import com.example.pedometerpixeldungeon.mainsrc.windows.WndBag;
+import com.example.pedometerpixeldungeon.mainsrc.windows.WndCatalogus;
 import com.example.pedometerpixeldungeon.mainsrc.windows.WndHero;
 import com.example.pedometerpixeldungeon.mainsrc.windows.WndInfoCell;
 import com.example.pedometerpixeldungeon.noosa.Game;
@@ -70,28 +72,28 @@ public class Toolbar extends Component {
             }
         } );
 
-//        add( btnInventory = new Tool( 60, 7, 23, 25 ) {
-//            private GoldIndicator gold;
-//            @Override
-//            protected void onClick() {
-//                GameScene.show( new WndBag( Dungeon.hero.belongings.backpack, null, WndBag.Mode.ALL, null ) );
-//            }
-//            protected boolean onLongClick() {
-//                GameScene.show( new WndCatalogus() );
-//                return true;
-//            };
-//            @Override
-//            protected void createChildren() {
-//                super.createChildren();
-//                gold = new GoldIndicator();
-//                add( gold );
-//            };
-//            @Override
-//            protected void layout() {
-//                super.layout();
-//                gold.fill( this );
-//            };
-//        } );
+        add( btnInventory = new Tool( 60, 7, 23, 25 ) {
+            private GoldIndicator gold;
+            @Override
+            protected void onClick() {
+                GameScene.show( new WndBag( Dungeon.hero.belongings.backpack, null, WndBag.Mode.ALL, null ) );
+            }
+            protected boolean onLongClick() {
+                GameScene.show( new WndCatalogus() );
+                return true;
+            };
+            @Override
+            protected void createChildren() {
+                super.createChildren();
+                gold = new GoldIndicator();
+                add( gold );
+            };
+            @Override
+            protected void layout() {
+                super.layout();
+                gold.fill( this );
+            };
+        } );
 
         add( btnQuick1 = new QuickslotTool( 83, 7, 22, 25, true ) );
         add( btnQuick2 = new QuickslotTool( 83, 7, 22, 25, false ) );

@@ -1,9 +1,11 @@
 package com.example.pedometerpixeldungeon.mainsrc.levels.painters;
 
+import com.example.pedometerpixeldungeon.mainsrc.items.Generator;
 import com.example.pedometerpixeldungeon.mainsrc.levels.Level;
 import com.example.pedometerpixeldungeon.mainsrc.levels.Painter;
 import com.example.pedometerpixeldungeon.mainsrc.levels.Room;
 import com.example.pedometerpixeldungeon.mainsrc.levels.Terrain;
+import com.example.pedometerpixeldungeon.utils.Random;
 
 public class BlacksmithPainter extends Painter {
     public static void paint(Level level, Room room ) {
@@ -17,11 +19,11 @@ public class BlacksmithPainter extends Painter {
             do {
                 pos = room.random();
             } while (level.map[pos] != Terrain.EMPTY_SP);
-//            level.drop(
-//                    Generator.random( Random.oneOf(
-//                            Generator.Category.ARMOR,
-//                            Generator.Category.WEAPON
-//                    ) ), pos );
+            level.drop(
+                    Generator.random( Random.oneOf(
+                            Generator.Category.ARMOR,
+                            Generator.Category.WEAPON
+                    ) ), pos );
         }
 
         for (Room.Door door : room.connected.values()) {

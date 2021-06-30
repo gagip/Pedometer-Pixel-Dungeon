@@ -1,5 +1,6 @@
-package com.example.pedometerpixeldungeon.mainsrc.sprites;
+package com.example.pedometerpixeldungeon.mainsrc.sprites.itemsprites;
 
+import com.example.pedometerpixeldungeon.mainsrc.sprites.ItemSprite;
 import com.example.pedometerpixeldungeon.noosa.Game;
 
 public class DiscardedItemSprite extends ItemSprite {

@@ -1,7 +1,8 @@
-package com.example.pedometerpixeldungeon.mainsrc.sprites;
+package com.example.pedometerpixeldungeon.mainsrc.sprites.mobsprites;
 
 import com.example.pedometerpixeldungeon.mainsrc.DungeonTilemap;
 import com.example.pedometerpixeldungeon.mainsrc.actors.mobs.Mob;
+import com.example.pedometerpixeldungeon.mainsrc.sprites.CharSprite;
 import com.example.pedometerpixeldungeon.noosa.tweeners.AlphaTweener;
 import com.example.pedometerpixeldungeon.noosa.tweeners.ScaleTweener;
 import com.example.pedometerpixeldungeon.utils.PointF;

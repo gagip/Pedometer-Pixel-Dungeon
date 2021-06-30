@@ -1,9 +1,14 @@
 package com.example.pedometerpixeldungeon.mainsrc.levels;
 
+import com.example.pedometerpixeldungeon.mainsrc.Bones;
 import com.example.pedometerpixeldungeon.mainsrc.Dungeon;
 import com.example.pedometerpixeldungeon.mainsrc.actors.Actor;
+import com.example.pedometerpixeldungeon.mainsrc.actors.mobs.Bestiary;
+import com.example.pedometerpixeldungeon.mainsrc.actors.mobs.Mob;
 import com.example.pedometerpixeldungeon.mainsrc.items.Generator;
 import com.example.pedometerpixeldungeon.mainsrc.items.Heap;
+import com.example.pedometerpixeldungeon.mainsrc.items.Item;
+import com.example.pedometerpixeldungeon.mainsrc.items.scrolls.ScrollOfUpgrade;
 import com.example.pedometerpixeldungeon.mainsrc.levels.Room.Type;
 import com.example.pedometerpixeldungeon.utils.Bundle;
 import com.example.pedometerpixeldungeon.utils.Graph;
@@ -503,12 +508,12 @@ public abstract class RegularLevel extends Level {
     protected void createMobs() {
         int nMobs = nMobs();
         for (int i=0; i < nMobs; i++) {
-//            Mob mob = Bestiary.mob( Dungeon.depth );
-//            do {
-//                mob.pos = randomRespawnCell();
-//            } while (mob.pos == -1);
-//            mobs.add( mob );
-//            Actor.occupyCell( mob );
+            Mob mob = Bestiary.mob( Dungeon.depth );
+            do {
+                mob.pos = randomRespawnCell();
+            } while (mob.pos == -1);
+            mobs.add( mob );
+            Actor.occupyCell( mob );
         }
     }
 
@@ -585,20 +590,20 @@ public abstract class RegularLevel extends Level {
             drop( Generator.random(), randomDropCell() ).type = type;
         }
 
-//        for (Item item : itemsToSpawn) {
-//            int cell = randomDropCell();
-//            if (item instanceof ScrollOfUpgrade) {
-//                while (map[cell] == Terrain.FIRE_TRAP || map[cell] == Terrain.SECRET_FIRE_TRAP) {
-//                    cell = randomDropCell();
-//                }
-//            }
-//            drop( item, cell ).type = Heap.Type.HEAP;
-//        }
-//
-//        Item item = Bones.get();
-//        if (item != null) {
-//            drop( item, randomDropCell() ).type = Heap.Type.SKELETON;
-//        }
+        for (Item item : itemsToSpawn) {
+            int cell = randomDropCell();
+            if (item instanceof ScrollOfUpgrade) {
+                while (map[cell] == Terrain.FIRE_TRAP || map[cell] == Terrain.SECRET_FIRE_TRAP) {
+                    cell = randomDropCell();
+                }
+            }
+            drop( item, cell ).type = Heap.Type.HEAP;
+        }
+
+        Item item = Bones.get();
+        if (item != null) {
+            drop( item, randomDropCell() ).type = Heap.Type.SKELETON;
+        }
     }
 
     protected Room randomRoom( Room.Type type, int tries ) {
