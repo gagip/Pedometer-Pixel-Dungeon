@@ -1,6 +1,8 @@
 package com.example.pedometerpixeldungeon.mainsrc.items;
 
+import com.example.pedometerpixeldungeon.mainsrc.items.bags.Bag;
 import com.example.pedometerpixeldungeon.utils.Random;
+
 import java.util.HashMap;
 
 public class Generator {
@@ -26,8 +28,7 @@ public class Generator {
                 }
             }
 
-//            return item instanceof Bag ? Integer.MAX_VALUE : Integer.MAX_VALUE - 1;
-            return 1; // ddd
+            return item instanceof Bag ? Integer.MAX_VALUE : Integer.MAX_VALUE - 1;
         }
     };
 

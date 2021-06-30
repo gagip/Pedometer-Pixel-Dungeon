@@ -1,18 +1,15 @@
 package com.example.pedometerpixeldungeon.mainsrc.ui;
 
-
 import com.example.pedometerpixeldungeon.gltextures.SmartTexture;
 import com.example.pedometerpixeldungeon.gltextures.TextureCache;
+import com.example.pedometerpixeldungeon.mainsrc.Assets;
+import com.example.pedometerpixeldungeon.mainsrc.Dungeon;
+import com.example.pedometerpixeldungeon.mainsrc.actors.Char;
+import com.example.pedometerpixeldungeon.mainsrc.actors.buffs.Buff;
 import com.example.pedometerpixeldungeon.noosa.Image;
 import com.example.pedometerpixeldungeon.noosa.TextureFilm;
 import com.example.pedometerpixeldungeon.noosa.tweeners.AlphaTweener;
 import com.example.pedometerpixeldungeon.noosa.ui.Component;
-import com.example.pedometerpixeldungeon.mainsrc.Assets;
-import com.example.pedometerpixeldungeon.mainsrc.Dungeon;
-
-import com.example.pedometerpixeldungeon.mainsrc.actors.Char;
-import com.example.pedometerpixeldungeon.mainsrc.actors.buffs.Buff;
-
 import com.example.pedometerpixeldungeon.utils.SparseArray;
 
 public class BuffIndicator extends Component {

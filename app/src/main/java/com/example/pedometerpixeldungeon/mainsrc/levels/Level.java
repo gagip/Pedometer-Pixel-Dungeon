@@ -1,14 +1,16 @@
 package com.example.pedometerpixeldungeon.mainsrc.levels;
 
+import com.example.pedometerpixeldungeon.mainsrc.Challenges;
 import com.example.pedometerpixeldungeon.mainsrc.Dungeon;
-import com.example.pedometerpixeldungeon.mainsrc.ShadowCaster;
 import com.example.pedometerpixeldungeon.mainsrc.Statistics;
 import com.example.pedometerpixeldungeon.mainsrc.actors.Actor;
+import com.example.pedometerpixeldungeon.mainsrc.actors.Blobs.Blob;
 import com.example.pedometerpixeldungeon.mainsrc.actors.Char;
 import com.example.pedometerpixeldungeon.mainsrc.actors.mobs.Bestiary;
 import com.example.pedometerpixeldungeon.mainsrc.actors.mobs.Mob;
 import com.example.pedometerpixeldungeon.mainsrc.items.Heap;
 import com.example.pedometerpixeldungeon.mainsrc.items.Item;
+import com.example.pedometerpixeldungeon.mainsrc.mechanics.ShadowCaster;
 import com.example.pedometerpixeldungeon.mainsrc.plants.Plant;
 import com.example.pedometerpixeldungeon.mainsrc.scenes.GameScene;
 import com.example.pedometerpixeldungeon.noosa.Scene;
@@ -17,7 +19,6 @@ import com.example.pedometerpixeldungeon.utils.Bundle;
 import com.example.pedometerpixeldungeon.utils.Random;
 import com.example.pedometerpixeldungeon.utils.SparseArray;
 
-import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -52,7 +53,7 @@ public abstract class Level implements Bundlable {
     public boolean[] visited;
     public boolean[] mapped;
 
-//    public int viewDistance = Dungeon.isChallenged( Challenges.DARKNESS ) ? 3: 8;
+    public int viewDistance = Dungeon.isChallenged( Challenges.DARKNESS ) ? 3: 8;
 
     public static boolean[] fieldOfView = new boolean[LENGTH];
 
@@ -110,8 +111,8 @@ public abstract class Level implements Bundlable {
         heaps = new SparseArray<Heap>();
         blobs = new HashMap<Class<? extends Blob>,Blob>();
         plants = new SparseArray<Plant>();
-//
-//        if (!Dungeon.bossLevel()) {
+
+        if (!Dungeon.bossLevel()) {
 //            addItemToSpawn( Generator.random( Generator.Category.FOOD ) );
 //            if (Dungeon.posNeeded()) {
 //                addItemToSpawn( new PotionOfStrength() );
@@ -125,7 +126,7 @@ public abstract class Level implements Bundlable {
 //                addItemToSpawn( new ScrollOfEnchantment() );
 //                Dungeon.scrollsOfEnchantment++;
 //            }
-//
+
             if (Dungeon.depth > 1) {
                 switch (Random.Int( 10 )) {
                     case 0:
@@ -141,10 +142,10 @@ public abstract class Level implements Bundlable {
                         break;
                 }
             }
-//        }
+        }
 
         boolean pitNeeded = Dungeon.depth > 1 && weakFloorCreated;
-//
+
         do {
             Arrays.fill( map, feeling == Feeling.CHASM ? Terrain.CHASM : Terrain.WALL );
 
@@ -158,7 +159,7 @@ public abstract class Level implements Bundlable {
         cleanWalls();
 
         createMobs();
-//        createItems();
+        createItems();
     }
 
     public void reset() {
@@ -191,23 +192,23 @@ public abstract class Level implements Bundlable {
 //        adjustMapSize();
 
         Collection<Bundlable> collection = bundle.getCollection( HEAPS );
-//        for (Bundlable h : collection) {
-//            Heap heap = (Heap)h;
-//            if (resizingNeeded) {
-//                heap.pos = adjustPos( heap.pos );
-//            }
-//            heaps.put( heap.pos, heap );
-//        }
-//
-//        collection = bundle.getCollection( PLANTS );
-//        for (Bundlable p : collection) {
-//            Plant plant = (Plant)p;
-//            if (resizingNeeded) {
-//                plant.pos = adjustPos( plant.pos );
-//            }
-//            plants.put( plant.pos, plant );
-//        }
-//
+        for (Bundlable h : collection) {
+            Heap heap = (Heap)h;
+            if (resizingNeeded) {
+                heap.pos = adjustPos( heap.pos );
+            }
+            heaps.put( heap.pos, heap );
+        }
+
+        collection = bundle.getCollection( PLANTS );
+        for (Bundlable p : collection) {
+            Plant plant = (Plant)p;
+            if (resizingNeeded) {
+                plant.pos = adjustPos( plant.pos );
+            }
+            plants.put( plant.pos, plant );
+        }
+
         collection = bundle.getCollection( MOBS );
         for (Bundlable m : collection) {
             Mob mob = (Mob)m;
@@ -219,14 +220,14 @@ public abstract class Level implements Bundlable {
             }
         }
 
-//        collection = bundle.getCollection( BLOBS );
-//        for (Bundlable b : collection) {
-//            Blob blob = (Blob)b;
-//            blobs.put( blob.getClass(), blob );
-//        }
+        collection = bundle.getCollection( BLOBS );
+        for (Bundlable b : collection) {
+            Blob blob = (Blob)b;
+            blobs.put( blob.getClass(), blob );
+        }
 
-//        buildFlagMaps();
-//        cleanWalls();
+        buildFlagMaps();
+        cleanWalls();
     }
 
     @Override
@@ -236,10 +237,10 @@ public abstract class Level implements Bundlable {
         bundle.put( MAPPED, mapped );
         bundle.put( ENTRANCE, entrance );
         bundle.put( EXIT, exit );
-//        bundle.put( HEAPS, heaps.values() );
-//        bundle.put( PLANTS, plants.values() );
+        bundle.put( HEAPS, heaps.values() );
+        bundle.put( PLANTS, plants.values() );
         bundle.put( MOBS, mobs );
-//        bundle.put( BLOBS, blobs.values() );
+        bundle.put( BLOBS, blobs.values() );
     }
 
     public int tunnelTile() {
@@ -511,13 +512,13 @@ public abstract class Level implements Bundlable {
 //            }
 //        }
 
-//        if ((map[cell] == Terrain.ALCHEMY) && !(item instanceof Plant.Seed)) {
-//            int n;
-//            do {
-//                n = cell + NEIGHBOURS8[Random.Int( 8 )];
-//            } while (map[n] != Terrain.EMPTY_SP);
-//            cell = n;
-//        }
+        if ((map[cell] == Terrain.ALCHEMY) && !(item instanceof Plant.Seed)) {
+            int n;
+            do {
+                n = cell + NEIGHBOURS8[Random.Int( 8 )];
+            } while (map[n] != Terrain.EMPTY_SP);
+            cell = n;
+        }
 
         Heap heap = heaps.get( cell );
         if (heap == null) {
@@ -525,11 +526,11 @@ public abstract class Level implements Bundlable {
             heap = new Heap();
             heap.pos = cell;
             if (map[cell] == Terrain.CHASM || (Dungeon.level != null && pit[cell])) {
-//                Dungeon.dropToChasm( item );
-//                GameScene.discard( heap );
+                Dungeon.dropToChasm( item );
+                GameScene.discard( heap );
             } else {
-//                heaps.put( cell, heap );
-//                GameScene.add( heap );
+                heaps.put( cell, heap );
+                GameScene.add( heap );
             }
 
         } else if (heap.type == Heap.Type.LOCKED_CHEST || heap.type == Heap.Type.CRYSTAL_CHEST) {

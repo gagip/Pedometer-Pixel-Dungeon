@@ -1,7 +1,5 @@
 package com.example.pedometerpixeldungeon.mainsrc.actors.buffs;
 
-
-
 import com.example.pedometerpixeldungeon.mainsrc.actors.Actor;
 import com.example.pedometerpixeldungeon.mainsrc.actors.Char;
 import com.example.pedometerpixeldungeon.mainsrc.ui.BuffIndicator;
@@ -10,20 +8,20 @@ public class Buff extends Actor {
 
     public Char target;
 
-    public boolean attachTo(Char target) {
+    public boolean attachTo( Char target ) {
 
-        if (target.immunities().contains(getClass())) {
+        if (target.immunities().contains( getClass() )) {
             return false;
         }
 
         this.target = target;
-        target.add(this);
+        target.add( this );
 
         return true;
     }
 
     public void detach() {
-        target.remove(this);
+        target.remove( this );
     }
 
     @Override
@@ -36,41 +34,36 @@ public class Buff extends Actor {
         return BuffIndicator.NONE;
     }
 
-    public static <T extends Buff> T append(Char target, Class<T> buffClass) {
+    public static<T extends Buff> T append( Char target, Class<T> buffClass ) {
         try {
             T buff = buffClass.newInstance();
-            buff.attachTo(target);
+            buff.attachTo( target );
             return buff;
         } catch (Exception e) {
             return null;
         }
     }
 
-
-    // 임시 괄호 삭제 예정
-//
     public static<T extends FlavourBuff> T append( Char target, Class<T> buffClass, float duration ) {
         T buff = append( target, buffClass );
         buff.spend( duration );
         return buff;
     }
 
-    public static <T extends Buff> T affect(Char target, Class<T> buffClass) {
-        T buff = target.buff(buffClass);
+    public static<T extends Buff> T affect( Char target, Class<T> buffClass ) {
+        T buff = target.buff( buffClass );
         if (buff != null) {
             return buff;
         } else {
-            return append(target, buffClass);
+            return append( target, buffClass );
         }
     }
 
-
-    public static <T extends FlavourBuff> T affect(Char target, Class<T> buffClass, float duration) {
-        T buff = affect(target, buffClass);
-        buff.spend(duration);
+    public static<T extends FlavourBuff> T affect( Char target, Class<T> buffClass, float duration ) {
+        T buff = affect( target, buffClass );
+        buff.spend( duration );
         return buff;
     }
-
 
     public static<T extends FlavourBuff> T prolong( Char target, Class<T> buffClass, float duration ) {
         T buff = affect( target, buffClass );

@@ -1,11 +1,23 @@
 package com.example.pedometerpixeldungeon.mainsrc.items;
 
+import com.example.pedometerpixeldungeon.mainsrc.Assets;
+import com.example.pedometerpixeldungeon.mainsrc.Dungeon;
+import com.example.pedometerpixeldungeon.mainsrc.actors.Actor;
+import com.example.pedometerpixeldungeon.mainsrc.actors.Char;
 import com.example.pedometerpixeldungeon.mainsrc.actors.hero.Hero;
+import com.example.pedometerpixeldungeon.mainsrc.items.bags.Bag;
+import com.example.pedometerpixeldungeon.mainsrc.mechanics.Ballistica;
+import com.example.pedometerpixeldungeon.mainsrc.scenes.CellSelector;
+import com.example.pedometerpixeldungeon.mainsrc.sprites.ItemSprite;
+import com.example.pedometerpixeldungeon.mainsrc.ui.QuickSlot;
+import com.example.pedometerpixeldungeon.mainsrc.utils.GLog;
 import com.example.pedometerpixeldungeon.mainsrc.utils.Utils;
+import com.example.pedometerpixeldungeon.noosa.audio.Sample;
 import com.example.pedometerpixeldungeon.utils.Bundlable;
 import com.example.pedometerpixeldungeon.utils.Bundle;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 
 public class Item implements Bundlable {
@@ -105,105 +117,105 @@ public class Item implements Bundlable {
     }
 
     protected void onThrow( int cell ) {
-//        Heap heap = Dungeon.level.drop( this, cell );
-//        if (!heap.isEmpty()) {
-//            heap.sprite.drop( cell );
-//        }
+        Heap heap = Dungeon.level.drop( this, cell );
+        if (!heap.isEmpty()) {
+            heap.sprite.drop( cell );
+        }
     }
 
-//    public boolean collect( Bag container ) {
-//
-//        ArrayList<Item> items = container.items;
-//
-//        if (items.contains( this )) {
-//            return true;
-//        }
-//
-//        for (Item item:items) {
-//            if (item instanceof Bag && ((Bag)item).grab( this )) {
-//                return collect( (Bag)item );
-//            }
-//        }
-//
-//        if (stackable) {
-//
-//            Class<?>c = getClass();
-//            for (Item item:items) {
-//                if (item.getClass() == c) {
-//                    item.quantity += quantity;
-//                    item.updateQuickslot();
-//                    return true;
-//                }
-//            }
-//        }
-//
-//        if (items.size() < container.size) {
-//
+    public boolean collect( Bag container ) {
+
+        ArrayList<Item> items = container.items;
+
+        if (items.contains( this )) {
+            return true;
+        }
+
+        for (Item item:items) {
+            if (item instanceof Bag && ((Bag)item).grab( this )) {
+                return collect( (Bag)item );
+            }
+        }
+
+        if (stackable) {
+
+            Class<?>c = getClass();
+            for (Item item:items) {
+                if (item.getClass() == c) {
+                    item.quantity += quantity;
+                    item.updateQuickslot();
+                    return true;
+                }
+            }
+        }
+
+        if (items.size() < container.size) {
+
 //            if (Dungeon.hero != null && Dungeon.hero.isAlive()) {
 //                Badges.validateItemLevelAquired( this );
 //            }
-//
-//            items.add( this );
-//            QuickSlot.refresh();
-//            Collections.sort( items, itemComparator );
-//            return true;
-//
-//        } else {
-//
-//            GLog.n( TXT_PACK_FULL, name() );
-//            return false;
-//
-//        }
-//    }
 
-//    public boolean collect() {
-//        return collect( Dungeon.hero.belongings.backpack );
-//    }
+            items.add( this );
+            QuickSlot.refresh();
+            Collections.sort( items, itemComparator );
+            return true;
 
-//    public final Item detach( Bag container ) {
-//
-//        if (quantity <= 0) {
-//
-//            return null;
-//
-//        } else
-//        if (quantity == 1) {
-//
-//            return detachAll( container );
-//
-//        } else {
-//
-//            quantity--;
-//            updateQuickslot();
-//
-//            try {
-//                Item detached = getClass().newInstance();
-//                detached.onDetach( );
-//                return detached;
-//            } catch (Exception e) {
-//                return null;
-//            }
-//        }
-//    }
+        } else {
 
-//    public final Item detachAll( Bag container ) {
-//
-//        for (Item item : container.items) {
-//            if (item == this) {
-//                container.items.remove( this );
-//                item.onDetach( );
-//                QuickSlot.refresh();
-//                return this;
-//            } else if (item instanceof Bag) {
-//                Bag bag = (Bag)item;
-//                if (bag.contains( this )) {
-//                    return detachAll( bag );
-//                }
-//            }
-//        }
-//
-//        return this;
-//    }
+            GLog.n( TXT_PACK_FULL, name() );
+            return false;
+
+        }
+    }
+
+    public boolean collect() {
+        return collect( Dungeon.hero.belongings.backpack );
+    }
+
+    public final Item detach( Bag container ) {
+
+        if (quantity <= 0) {
+
+            return null;
+
+        } else
+        if (quantity == 1) {
+
+            return detachAll( container );
+
+        } else {
+
+            quantity--;
+            updateQuickslot();
+
+            try {
+                Item detached = getClass().newInstance();
+                detached.onDetach( );
+                return detached;
+            } catch (Exception e) {
+                return null;
+            }
+        }
+    }
+
+    public final Item detachAll( Bag container ) {
+
+        for (Item item : container.items) {
+            if (item == this) {
+                container.items.remove( this );
+                item.onDetach( );
+                QuickSlot.refresh();
+                return this;
+            } else if (item instanceof Bag) {
+                Bag bag = (Bag)item;
+                if (bag.contains( this )) {
+                    return detachAll( bag );
+                }
+            }
+        }
+
+        return this;
+    }
 
     protected void onDetach( ) {
     }
@@ -379,9 +391,9 @@ public class Item implements Bundlable {
         return image;
     }
 
-//    public ItemSprite.Glowing glowing() {
-//        return null;
-//    }
+    public ItemSprite.Glowing glowing() {
+        return null;
+    }
 
     public String info() {
         return desc();
@@ -446,14 +458,14 @@ public class Item implements Bundlable {
 
     public void updateQuickslot() {
 
-//        if (stackable) {
-//            Class<? extends Item> cl = getClass();
-//            if (QuickSlot.primaryValue == cl || QuickSlot.secondaryValue == cl) {
-//                QuickSlot.refresh();
-//            }
-//        } else if (QuickSlot.primaryValue == this || QuickSlot.secondaryValue == this) {
-//            QuickSlot.refresh();
-//        }
+        if (stackable) {
+            Class<? extends Item> cl = getClass();
+            if (QuickSlot.primaryValue == cl || QuickSlot.secondaryValue == cl) {
+                QuickSlot.refresh();
+            }
+        } else if (QuickSlot.primaryValue == this || QuickSlot.secondaryValue == this) {
+            QuickSlot.refresh();
+        }
     }
 
     private static final String QUANTITY		= "quantity";
@@ -500,17 +512,17 @@ public class Item implements Bundlable {
 
     public void cast( final Hero user, int dst ) {
 
-//        final int cell = Ballistica.cast( user.pos, dst, false, true );
-//        user.sprite.zap( cell );
-//        user.busy();
-//
-//        Sample.INSTANCE.play( Assets.SND_MISS, 0.6f, 0.6f, 1.5f );
-//
-//        Char enemy = Actor.findChar( cell );
-//        QuickSlot.target( this, enemy );
-//
-//        // FIXME!!!
-//        float delay = TIME_TO_THROW;
+        final int cell = Ballistica.cast( user.pos, dst, false, true );
+        user.sprite.zap( cell );
+        user.busy();
+
+        Sample.INSTANCE.play( Assets.SND_MISS, 0.6f, 0.6f, 1.5f );
+
+        Char enemy = Actor.findChar( cell );
+        QuickSlot.target( this, enemy );
+
+        // FIXME!!!
+        float delay = TIME_TO_THROW;
 //        if (this instanceof MissileWeapon) {
 //            delay *= ((MissileWeapon)this).speedFactor( user );
 //            if (enemy != null) {
@@ -537,16 +549,16 @@ public class Item implements Bundlable {
 
     protected static Hero curUser = null;
     protected static Item curItem = null;
-//    protected static CellSelector.Listener thrower = new CellSelector.Listener() {
-//        @Override
-//        public void onSelect( Integer target ) {
-//            if (target != null) {
-//                curItem.cast( curUser, target );
-//            }
-//        }
-//        @Override
-//        public String prompt() {
-//            return "Choose direction of throw";
-//        }
-//    };
+    protected static CellSelector.Listener thrower = new CellSelector.Listener() {
+        @Override
+        public void onSelect( Integer target ) {
+            if (target != null) {
+                curItem.cast( curUser, target );
+            }
+        }
+        @Override
+        public String prompt() {
+            return "Choose direction of throw";
+        }
+    };
 }

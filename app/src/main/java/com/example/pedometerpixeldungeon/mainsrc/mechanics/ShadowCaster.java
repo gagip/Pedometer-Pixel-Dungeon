@@ -1,4 +1,4 @@
-package com.example.pedometerpixeldungeon.mainsrc;
+package com.example.pedometerpixeldungeon.mainsrc.mechanics;
 
 import com.example.pedometerpixeldungeon.mainsrc.levels.Level;
 

@@ -6,12 +6,15 @@ import com.example.pedometerpixeldungeon.mainsrc.GamesInProgress;
 import com.example.pedometerpixeldungeon.mainsrc.actors.Char;
 import com.example.pedometerpixeldungeon.mainsrc.actors.buffs.Buff;
 import com.example.pedometerpixeldungeon.mainsrc.actors.buffs.Hunger;
+import com.example.pedometerpixeldungeon.mainsrc.actors.buffs.Regeneration;
 import com.example.pedometerpixeldungeon.mainsrc.actors.mobs.Mob;
+import com.example.pedometerpixeldungeon.mainsrc.items.Heap;
 import com.example.pedometerpixeldungeon.mainsrc.items.Item;
 import com.example.pedometerpixeldungeon.mainsrc.levels.Level;
 import com.example.pedometerpixeldungeon.mainsrc.levels.Terrain;
 import com.example.pedometerpixeldungeon.mainsrc.scenes.GameScene;
 import com.example.pedometerpixeldungeon.mainsrc.sprites.CharSprite;
+import com.example.pedometerpixeldungeon.mainsrc.sprites.HeroSprite;
 import com.example.pedometerpixeldungeon.mainsrc.utils.GLog;
 import com.example.pedometerpixeldungeon.noosa.Camera;
 import com.example.pedometerpixeldungeon.noosa.audio.Sample;
@@ -66,7 +69,7 @@ public class Hero extends Char {
     public boolean restoreHealth = false;
 
 //    public MissileWeapon rangedWeapon = null;
-//    public Belongings belongings;
+    public Belongings belongings;
 
     public int STR;
     public boolean weakened = false;
@@ -86,7 +89,7 @@ public class Hero extends Char {
         STR = STARTING_STR;
         awareness = 0.1f;
 
-//        belongings = new Belongings( this );
+        belongings = new Belongings( this );
 
         visibleEnemies = new ArrayList<Mob>();
     }
@@ -116,7 +119,7 @@ public class Hero extends Char {
         bundle.put( LEVEL, lvl );
         bundle.put( EXPERIENCE, exp );
 
-//        belongings.storeInBundle( bundle );
+        belongings.storeInBundle( bundle );
     }
 
     @Override
@@ -135,7 +138,7 @@ public class Hero extends Char {
         lvl = bundle.getInt( LEVEL );
         exp = bundle.getInt( EXPERIENCE );
 
-//        belongings.restoreFromBundle( bundle );
+        belongings.restoreFromBundle( bundle );
     }
 
     public static void preview(GamesInProgress.Info info, Bundle bundle ) {
@@ -147,13 +150,13 @@ public class Hero extends Char {
     }
 
     public void live() {
-//        Buff.affect( this, Regeneration.class );
+        Buff.affect( this, Regeneration.class );
         Buff.affect( this, Hunger.class );
     }
 
-//    public int tier() {
-//        return belongings.armor == null ? 0 : belongings.armor.tier;
-//    }
+    public int tier() {
+        return belongings.armor == null ? 0 : belongings.armor.tier;
+    }
 
 //    public boolean shoot( Char enemy, MissileWeapon wep ) {
 //
@@ -237,21 +240,21 @@ public class Hero extends Char {
 //        return buff( Fury.class ) != null ? (int)(dmg * 1.5f) : dmg;
 //    }
 
-//    @Override
-//    public float speed() {
-//
-//        int aEnc = belongings.armor != null ? belongings.armor.STR - STR() : 0;
-//        if (aEnc > 0) {
-//
-//            return (float)(super.speed() * Math.pow( 1.3, -aEnc ));
-//
-//        } else {
-//
-//            float speed = super.speed();
-//            return ((HeroSprite)sprite).sprint( subClass == HeroSubClass.FREERUNNER && !isStarving() ) ? 1.6f * speed : speed;
-//
-//        }
-//    }
+    @Override
+    public float speed() {
+
+        int aEnc = belongings.armor != null ? belongings.armor.STR - STR() : 0;
+        if (aEnc > 0) {
+
+            return (float)(super.speed() * Math.pow( 1.3, -aEnc ));
+
+        } else {
+
+            float speed = super.speed();
+            return ((HeroSprite)sprite).sprint( subClass == HeroSubClass.FREERUNNER && !isStarving() ) ? 1.6f * speed : speed;
+
+        }
+    }
 
 //    public float attackDelay() {
 //        KindOfWeapon wep = rangedWeapon != null ? rangedWeapon : belongings.weapon;
@@ -382,12 +385,12 @@ public class Hero extends Char {
         GameScene.ready();
     }
 
-//    public void interrupt() {
+    public void interrupt() {
 //        if (isAlive() && curAction != null && curAction.dst != pos) {
 //            lastAction = curAction;
 //        }
 //        curAction = null;
-//    }
+    }
 
 //    public void resume() {
 //        curAction = lastAction;
@@ -870,15 +873,15 @@ public class Hero extends Char {
 
     }
 
-//    public boolean handle( int cell ) {
-//
-//        if (cell == -1) {
-//            return false;
-//        }
-//
-//        Char ch;
-//        Heap heap;
-//
+    public boolean handle( int cell ) {
+
+        if (cell == -1) {
+            return false;
+        }
+
+        Char ch;
+        Heap heap;
+
 //        if (Dungeon.level.map[cell] == Terrain.ALCHEMY && cell != pos) {
 //
 //            curAction = new HeroAction.Cook( cell );
@@ -924,9 +927,9 @@ public class Hero extends Char {
 //            lastAction = null;
 //
 //        }
-//
-//        return act();
-//    }
+
+        return act();
+    }
 
     public void earnExp( int exp ) {
 
@@ -981,9 +984,9 @@ public class Hero extends Char {
         ));
     }
 
-//    public boolean isStarving() {
-//        return ((Hunger)buff( Hunger.class )).isStarving();
-//    }
+    public boolean isStarving() {
+        return ((Hunger)buff( Hunger.class )).isStarving();
+    }
 
 //    @Override
 //    public void add( Buff buff ) {

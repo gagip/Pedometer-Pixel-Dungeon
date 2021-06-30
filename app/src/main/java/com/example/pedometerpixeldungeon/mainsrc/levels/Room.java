@@ -1,19 +1,26 @@
 package com.example.pedometerpixeldungeon.mainsrc.levels;
 
 import com.example.pedometerpixeldungeon.mainsrc.PedometerPixelDungeon;
+import com.example.pedometerpixeldungeon.mainsrc.levels.painters.AltarPainter;
 import com.example.pedometerpixeldungeon.mainsrc.levels.painters.ArmoryPainter;
 import com.example.pedometerpixeldungeon.mainsrc.levels.painters.BlacksmithPainter;
 import com.example.pedometerpixeldungeon.mainsrc.levels.painters.BossExitPainter;
 import com.example.pedometerpixeldungeon.mainsrc.levels.painters.CryptPainter;
 import com.example.pedometerpixeldungeon.mainsrc.levels.painters.EntrancePainter;
 import com.example.pedometerpixeldungeon.mainsrc.levels.painters.ExitPainter;
+import com.example.pedometerpixeldungeon.mainsrc.levels.painters.GardenPainter;
 import com.example.pedometerpixeldungeon.mainsrc.levels.painters.LaboratoryPainter;
 import com.example.pedometerpixeldungeon.mainsrc.levels.painters.LibraryPainter;
+import com.example.pedometerpixeldungeon.mainsrc.levels.painters.MagicWellPainter;
 import com.example.pedometerpixeldungeon.mainsrc.levels.painters.PassagePainter;
 import com.example.pedometerpixeldungeon.mainsrc.levels.painters.PitPainter;
+import com.example.pedometerpixeldungeon.mainsrc.levels.painters.PoolPainter;
+import com.example.pedometerpixeldungeon.mainsrc.levels.painters.RatKingPainter;
 import com.example.pedometerpixeldungeon.mainsrc.levels.painters.ShopPainter;
 import com.example.pedometerpixeldungeon.mainsrc.levels.painters.StandardPainter;
 import com.example.pedometerpixeldungeon.mainsrc.levels.painters.StatuePainter;
+import com.example.pedometerpixeldungeon.mainsrc.levels.painters.StoragePainter;
+import com.example.pedometerpixeldungeon.mainsrc.levels.painters.TrapsPainter;
 import com.example.pedometerpixeldungeon.mainsrc.levels.painters.TreasuryPainter;
 import com.example.pedometerpixeldungeon.mainsrc.levels.painters.TunnelPainter;
 import com.example.pedometerpixeldungeon.mainsrc.levels.painters.VaultPainter;
@@ -55,17 +62,17 @@ public class Room extends Rect implements Graph.Node, Bundlable {
         LIBRARY		( LibraryPainter.class ),
         LABORATORY	( LaboratoryPainter.class ),
         VAULT		( VaultPainter.class ),
-//        TRAPS		( TrapsPainter.class ),
-//        STORAGE		( StoragePainter.class ),
-//        MAGIC_WELL	( MagicWellPainter.class ),
-//        GARDEN		( GardenPainter.class ),
+        TRAPS		( TrapsPainter.class ),
+        STORAGE		( StoragePainter.class ),
+        MAGIC_WELL	( MagicWellPainter.class ),
+        GARDEN		( GardenPainter.class ),
         CRYPT		( CryptPainter.class ),
         STATUE		( StatuePainter.class ),
-//        POOL		( PoolPainter.class ),
-//        RAT_KING	( RatKingPainter.class ),
+        POOL		( PoolPainter.class ),
+        RAT_KING	( RatKingPainter.class ),
         WEAK_FLOOR	(WeakFloorPainter.class),
-        PIT			( PitPainter.class );
-//        ALTAR		( AltarPainter.class );
+        PIT			( PitPainter.class ),
+        ALTAR		( AltarPainter.class );
 
         private Method paint;
 
@@ -88,8 +95,8 @@ public class Room extends Rect implements Graph.Node, Bundlable {
 
     public static final ArrayList<Type> SPECIALS = new ArrayList<Type>( Arrays.asList(
             Type.ARMORY
-//            , Type.WEAK_FLOOR, Type.MAGIC_WELL, Type.CRYPT, Type.POOL, Type.GARDEN, Type.LIBRARY,
-//            Type.TREASURY, Type.TRAPS, Type.STORAGE, Type.STATUE, Type.LABORATORY, Type.VAULT, Type.ALTAR
+            , Type.WEAK_FLOOR, Type.MAGIC_WELL, Type.CRYPT, Type.POOL, Type.GARDEN, Type.LIBRARY,
+            Type.TREASURY, Type.TRAPS, Type.STORAGE, Type.STATUE, Type.LABORATORY, Type.VAULT, Type.ALTAR
     ) );
 
     public Type type = Type.NULL;
@@ -205,24 +212,24 @@ public class Room extends Rect implements Graph.Node, Bundlable {
 
     private static final String ROOMS	= "rooms";
 
-//    public static void restoreRoomsFromBundle( Bundle bundle ) {
-//        if (bundle.contains( ROOMS )) {
-//            SPECIALS.clear();
-//            for (String type : bundle.getStringArray( ROOMS )) {
-//                SPECIALS.add( Type.valueOf( type ));
-//            }
-//        } else {
-//            shuffleTypes();
-//        }
-//    }
-//
-//    public static void storeRoomsInBundle( Bundle bundle ) {
-//        String[] array = new String[SPECIALS.size()];
-//        for (int i=0; i < array.length; i++) {
-//            array[i] = SPECIALS.get( i ).toString();
-//        }
-//        bundle.put( ROOMS, array );
-//    }
+    public static void restoreRoomsFromBundle( Bundle bundle ) {
+        if (bundle.contains( ROOMS )) {
+            SPECIALS.clear();
+            for (String type : bundle.getStringArray( ROOMS )) {
+                SPECIALS.add( Type.valueOf( type ));
+            }
+        } else {
+            shuffleTypes();
+        }
+    }
+
+    public static void storeRoomsInBundle( Bundle bundle ) {
+        String[] array = new String[SPECIALS.size()];
+        for (int i=0; i < array.length; i++) {
+            array[i] = SPECIALS.get( i ).toString();
+        }
+        bundle.put( ROOMS, array );
+    }
 
     public static class Door extends Point {
 
