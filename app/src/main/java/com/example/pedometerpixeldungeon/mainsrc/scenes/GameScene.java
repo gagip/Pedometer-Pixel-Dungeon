@@ -12,17 +12,24 @@ import com.example.pedometerpixeldungeon.mainsrc.actors.Actor;
 import com.example.pedometerpixeldungeon.mainsrc.actors.Blobs.Blob;
 import com.example.pedometerpixeldungeon.mainsrc.actors.mobs.Mob;
 import com.example.pedometerpixeldungeon.mainsrc.effects.BlobEmitter;
+import com.example.pedometerpixeldungeon.mainsrc.effects.EmoIcon;
+import com.example.pedometerpixeldungeon.mainsrc.effects.Flare;
+import com.example.pedometerpixeldungeon.mainsrc.effects.FloatingText;
+import com.example.pedometerpixeldungeon.mainsrc.effects.Ripple;
 import com.example.pedometerpixeldungeon.mainsrc.items.Heap;
 import com.example.pedometerpixeldungeon.mainsrc.items.Item;
 import com.example.pedometerpixeldungeon.mainsrc.items.potions.Potion;
+import com.example.pedometerpixeldungeon.mainsrc.items.wands.WandOfBlink;
 import com.example.pedometerpixeldungeon.mainsrc.levels.Level;
 import com.example.pedometerpixeldungeon.mainsrc.levels.RegularLevel;
+import com.example.pedometerpixeldungeon.mainsrc.levels.features.Chasm;
 import com.example.pedometerpixeldungeon.mainsrc.plants.Plant;
 import com.example.pedometerpixeldungeon.mainsrc.sprites.CharSprite;
-import com.example.pedometerpixeldungeon.mainsrc.sprites.DiscardedItemSprite;
+import com.example.pedometerpixeldungeon.mainsrc.sprites.itemsprites.DiscardedItemSprite;
 import com.example.pedometerpixeldungeon.mainsrc.sprites.HeroSprite;
 import com.example.pedometerpixeldungeon.mainsrc.sprites.ItemSprite;
 import com.example.pedometerpixeldungeon.mainsrc.sprites.PlantSprite;
+import com.example.pedometerpixeldungeon.mainsrc.sprites.SpellSprite;
 import com.example.pedometerpixeldungeon.mainsrc.ui.AttackIndicator;
 import com.example.pedometerpixeldungeon.mainsrc.ui.BusyIndicator;
 import com.example.pedometerpixeldungeon.mainsrc.ui.GameLog;
@@ -34,15 +41,19 @@ import com.example.pedometerpixeldungeon.mainsrc.ui.Toolbar;
 import com.example.pedometerpixeldungeon.mainsrc.ui.Window;
 import com.example.pedometerpixeldungeon.mainsrc.utils.GLog;
 import com.example.pedometerpixeldungeon.mainsrc.windows.WndBag;
+import com.example.pedometerpixeldungeon.mainsrc.windows.WndGame;
 import com.example.pedometerpixeldungeon.mainsrc.windows.WndStory;
 import com.example.pedometerpixeldungeon.noosa.Camera;
+import com.example.pedometerpixeldungeon.noosa.Game;
 import com.example.pedometerpixeldungeon.noosa.Group;
 import com.example.pedometerpixeldungeon.noosa.SkinnedBlock;
+import com.example.pedometerpixeldungeon.noosa.Visual;
 import com.example.pedometerpixeldungeon.noosa.audio.Music;
 import com.example.pedometerpixeldungeon.noosa.audio.Sample;
 import com.example.pedometerpixeldungeon.noosa.particles.Emitter;
 import com.example.pedometerpixeldungeon.utils.Random;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class GameScene extends PixelScene {
@@ -206,16 +217,16 @@ public class GameScene extends PixelScene {
         add( busy );
 
         switch (InterlevelScene.mode) {
-//            case RESURRECT:
-//                WandOfBlink.appear( Dungeon.hero, Dungeon.level.entrance );
-//                new Flare( 8, 32 ).color( 0xFFFF66, true ).show( hero, 2f ) ;
-//                break;
-//            case RETURN:
-//                WandOfBlink.appear(  Dungeon.hero, Dungeon.hero.pos );
-//                break;
-//            case FALL:
-//                Chasm.heroLand();
-//                break;
+            case RESURRECT:
+                WandOfBlink.appear( Dungeon.hero, Dungeon.level.entrance );
+                new Flare( 8, 32 ).color( 0xFFFF66, true ).show( hero, 2f ) ;
+                break;
+            case RETURN:
+                WandOfBlink.appear(  Dungeon.hero, Dungeon.hero.pos );
+                break;
+            case FALL:
+                Chasm.heroLand();
+                break;
             case DESCEND:
                 switch (Dungeon.depth) {
                     case 1:
@@ -291,57 +302,57 @@ public class GameScene extends PixelScene {
         }
     }
 
-//    public void destroy() {
-//
-//        scene = null;
+    public void destroy() {
+
+        scene = null;
 //        Badges.saveGlobal();
-//
-//        super.destroy();
-//    }
-//
-//    @Override
-//    public synchronized void pause() {
-//        try {
-//            Dungeon.saveAll();
+
+        super.destroy();
+    }
+
+    @Override
+    public synchronized void pause() {
+        try {
+            Dungeon.saveAll();
 //            Badges.saveGlobal();
-//        } catch (IOException e) {
-//            //
-//        }
-//    }
-//
-//    @Override
-//    public synchronized void update() {
-//        if (Dungeon.hero == null) {
-//            return;
-//        }
-//
-//        super.update();
-//
-//        water.offset( 0, -5 * Game.elapsed );
-//
-//        Actor.process();
-//
-//        if (Dungeon.hero.ready && !Dungeon.hero.paralysed) {
-//            log.newLine();
-//        }
-//
-//        cellSelector.enabled = Dungeon.hero.ready;
-//    }
-//
-//    @Override
-//    protected void onBackPressed() {
-//        if (!cancel()) {
-//            add( new WndGame() );
-//        }
-//    }
-//
-//    @Override
-//    protected void onMenuPressed() {
-//        if (Dungeon.hero.ready) {
-//            selectItem( null, WndBag.Mode.ALL, null );
-//        }
-//    }
-//
+        } catch (IOException e) {
+            //
+        }
+    }
+
+    @Override
+    public synchronized void update() {
+        if (Dungeon.hero == null) {
+            return;
+        }
+
+        super.update();
+
+        water.offset( 0, -5 * Game.elapsed );
+
+        Actor.process();
+
+        if (Dungeon.hero.ready && !Dungeon.hero.paralysed) {
+            log.newLine();
+        }
+
+        cellSelector.enabled = Dungeon.hero.ready;
+    }
+
+    @Override
+    protected void onBackPressed() {
+        if (!cancel()) {
+            add( new WndGame() );
+        }
+    }
+
+    @Override
+    protected void onMenuPressed() {
+        if (Dungeon.hero.ready) {
+            selectItem( null, WndBag.Mode.ALL, null );
+        }
+    }
+
     public void brightness( boolean value ) {
         water.rm = water.gm = water.bm =
                 tiles.rm = tiles.gm = tiles.bm =
@@ -454,23 +465,23 @@ public class GameScene extends PixelScene {
         scene.addMobSprite( mob );
     }
 
-//    public static void add( EmoIcon icon ) {
-//        scene.emoicons.add( icon );
-//    }
+    public static void add( EmoIcon icon ) {
+        scene.emoicons.add( icon );
+    }
 
-//    public static void effect( Visual effect ) {
-//        scene.effects.add( effect );
-//    }
+    public static void effect( Visual effect ) {
+        scene.effects.add( effect );
+    }
 
-//    public static Ripple ripple( int pos ) {
-//        Ripple ripple = (Ripple)scene.ripples.recycle( Ripple.class );
-//        ripple.reset( pos );
-//        return ripple;
-//    }
+    public static Ripple ripple(int pos ) {
+        Ripple ripple = (Ripple)scene.ripples.recycle( Ripple.class );
+        ripple.reset( pos );
+        return ripple;
+    }
 
-//    public static SpellSprite spellSprite() {
-//        return (SpellSprite)scene.spells.recycle( SpellSprite.class );
-//    }
+    public static SpellSprite spellSprite() {
+        return (SpellSprite)scene.spells.recycle( SpellSprite.class );
+    }
 
     public static Emitter emitter() {
         if (scene != null) {
@@ -482,13 +493,13 @@ public class GameScene extends PixelScene {
         }
     }
 
-//    public static FloatingText status() {
-//        return scene != null ? (FloatingText)scene.statuses.recycle( FloatingText.class ) : null;
-//    }
+    public static FloatingText status() {
+        return scene != null ? (FloatingText)scene.statuses.recycle( FloatingText.class ) : null;
+    }
 
-//    public static void pickUp( Item item ) {
-//        scene.toolbar.pickup( item );
-//    }
+    public static void pickUp( Item item ) {
+        scene.toolbar.pickup( item );
+    }
 
     public static void updateMap() {
         if (scene != null) {
@@ -509,7 +520,7 @@ public class GameScene extends PixelScene {
     }
 
     public static void show( Window wnd ) {
-//        cancelCellSelector();
+        cancelCellSelector();
         scene.add( wnd );
     }
 
@@ -523,27 +534,27 @@ public class GameScene extends PixelScene {
         }
     }
 
-//    public static void flash( int color ) {
-//        scene.fadeIn( 0xFF000000 | color, true );
-//    }
+    public static void flash( int color ) {
+        scene.fadeIn( 0xFF000000 | color, true );
+    }
 
-//    public static void gameOver() {
+    public static void gameOver() {
 //        Banner gameOver = new Banner( BannerSprites.get( BannerSprites.Type.GAME_OVER ) );
 //        gameOver.show( 0x000000, 1f );
 //        scene.showBanner( gameOver );
-//
-//        Sample.INSTANCE.play( Assets.SND_DEATH );
-//    }
 
-//    public static void bossSlain() {
-//        if (Dungeon.hero.isAlive()) {
+        Sample.INSTANCE.play( Assets.SND_DEATH );
+    }
+
+    public static void bossSlain() {
+        if (Dungeon.hero.isAlive()) {
 //            Banner bossSlain = new Banner( BannerSprites.get( BannerSprites.Type.BOSS_SLAIN ) );
 //            bossSlain.show( 0xFFFFFF, 0.3f, 5f );
 //            scene.showBanner( bossSlain );
-//
-//            Sample.INSTANCE.play( Assets.SND_BOSS );
-//        }
-//    }
+
+            Sample.INSTANCE.play( Assets.SND_BOSS );
+        }
+    }
 
     public static void handleCell( int cell ) {
         cellSelector.select( cell );
@@ -551,7 +562,7 @@ public class GameScene extends PixelScene {
 
     public static void selectCell( CellSelector.Listener listener ) {
         cellSelector.listener = listener;
-//        scene.prompt( listener.prompt() );
+        scene.prompt( listener.prompt() );
     }
 
     private static boolean cancelCellSelector() {
@@ -597,9 +608,9 @@ public class GameScene extends PixelScene {
     private static final CellSelector.Listener defaultCellListener = new CellSelector.Listener() {
         @Override
         public void onSelect( Integer cell ) {
-//            if (Dungeon.hero.handle( cell )) {
-//                Dungeon.hero.next();
-//            }
+            if (Dungeon.hero.handle( cell )) {
+                Dungeon.hero.next();
+            }
         }
         @Override
         public String prompt() {

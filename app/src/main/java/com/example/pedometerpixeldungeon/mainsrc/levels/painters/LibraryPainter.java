@@ -1,6 +1,9 @@
 package com.example.pedometerpixeldungeon.mainsrc.levels.painters;
 
+import com.example.pedometerpixeldungeon.mainsrc.items.Generator;
+import com.example.pedometerpixeldungeon.mainsrc.items.Item;
 import com.example.pedometerpixeldungeon.mainsrc.items.keys.IronKey;
+import com.example.pedometerpixeldungeon.mainsrc.items.scrolls.Scroll;
 import com.example.pedometerpixeldungeon.mainsrc.levels.Level;
 import com.example.pedometerpixeldungeon.mainsrc.levels.Painter;
 import com.example.pedometerpixeldungeon.mainsrc.levels.Room;
@@ -48,22 +51,22 @@ public class LibraryPainter extends Painter {
             do {
                 pos = room.random();
             } while (level.map[pos] != Terrain.EMPTY || level.heaps.get( pos ) != null);
-//            level.drop( prize( level), pos );
+            level.drop( prize( level), pos );
         }
 
         entrance.set( Room.Door.Type.LOCKED );
         level.addItemToSpawn( new IronKey() );
     }
 
-//    private static Item prize( Level level ) {
-//
-//        Item prize = level.itemToSpanAsPrize();
-//        if (prize instanceof Scroll) {
-//            return prize;
-//        } else if (prize != null) {
-//            level.addItemToSpawn( prize );
-//        }
-//
-//        return Generator.random( Generator.Category.SCROLL );
-//    }
+    private static Item prize( Level level ) {
+
+        Item prize = level.itemToSpanAsPrize();
+        if (prize instanceof Scroll) {
+            return prize;
+        } else if (prize != null) {
+            level.addItemToSpawn( prize );
+        }
+
+        return Generator.random( Generator.Category.SCROLL );
+    }
 }

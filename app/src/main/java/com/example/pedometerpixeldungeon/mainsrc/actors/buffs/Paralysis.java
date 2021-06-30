@@ -2,6 +2,7 @@ package com.example.pedometerpixeldungeon.mainsrc.actors.buffs;
 
 import com.example.pedometerpixeldungeon.mainsrc.actors.Char;
 
+import com.example.pedometerpixeldungeon.mainsrc.items.rings.RingOfElements;
 import com.example.pedometerpixeldungeon.mainsrc.ui.BuffIndicator;
 
 public class Paralysis extends FlavourBuff {
@@ -34,16 +35,16 @@ public class Paralysis extends FlavourBuff {
         return "Paralysed";
     }
 
-//    public static float duration( Char ch ) {
-//        Resistance r = ch.buff( Resistance.class );
-//        return r != null ? r.durationFactor() * DURATION : DURATION;
-//    }
-//
-//    public static void unfreeze( Char ch ) {
-//        if (ch.buff( Paralysis.class ) == null &&
-//                ch.buff( Frost.class ) == null) {
-//
-//            ch.paralysed = false;
-//        }
-//    }
+    public static float duration( Char ch ) {
+        RingOfElements.Resistance r = ch.buff( RingOfElements.Resistance.class );
+        return r != null ? r.durationFactor() * DURATION : DURATION;
+    }
+
+    public static void unfreeze( Char ch ) {
+        if (ch.buff( Paralysis.class ) == null &&
+                ch.buff( Frost.class ) == null) {
+
+            ch.paralysed = false;
+        }
+    }
 }

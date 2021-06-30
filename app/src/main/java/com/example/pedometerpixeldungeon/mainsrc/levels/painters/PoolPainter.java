@@ -2,6 +2,7 @@ package com.example.pedometerpixeldungeon.mainsrc.levels.painters;
 
 import com.example.pedometerpixeldungeon.mainsrc.items.Heap;
 import com.example.pedometerpixeldungeon.mainsrc.items.Item;
+import com.example.pedometerpixeldungeon.mainsrc.items.potions.PotionOfInvisibility;
 import com.example.pedometerpixeldungeon.mainsrc.levels.Level;
 import com.example.pedometerpixeldungeon.mainsrc.levels.Painter;
 import com.example.pedometerpixeldungeon.mainsrc.levels.Room;
@@ -49,16 +50,16 @@ public class PoolPainter extends Painter {
                 Random.Int( 3 ) == 0 ? Heap.Type.CHEST : Heap.Type.HEAP;
         set( level, pos, Terrain.PEDESTAL );
 
-//        level.addItemToSpawn( new PotionOfInvisibility() );
-//
-//        for (int i=0; i < NPIRANHAS; i++) {
+        level.addItemToSpawn( new PotionOfInvisibility() );
+
+        for (int i=0; i < NPIRANHAS; i++) {
 //            Piranha piranha = new Piranha();
 //            do {
 //                piranha.pos = room.random();
 //            } while (level.map[piranha.pos] != Terrain.WATER|| Actor.findChar( piranha.pos ) != null);
 //            level.mobs.add( piranha );
 //            Actor.occupyCell( piranha );
-//        }
+        }
     }
 
     private static Item prize( Level level ) {

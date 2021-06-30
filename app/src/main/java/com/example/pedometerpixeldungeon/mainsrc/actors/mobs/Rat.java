@@ -1,7 +1,7 @@
 package com.example.pedometerpixeldungeon.mainsrc.actors.mobs;
 
 import com.example.pedometerpixeldungeon.mainsrc.actors.Char;
-import com.example.pedometerpixeldungeon.mainsrc.sprites.RatSprite;
+import com.example.pedometerpixeldungeon.mainsrc.sprites.mobsprites.RatSprite;
 import com.example.pedometerpixeldungeon.utils.Random;
 
 public class Rat extends Mob {

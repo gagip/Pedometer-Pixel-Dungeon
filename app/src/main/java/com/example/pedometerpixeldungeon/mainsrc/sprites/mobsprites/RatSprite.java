@@ -1,4 +1,4 @@
-package com.example.pedometerpixeldungeon.mainsrc.sprites;
+package com.example.pedometerpixeldungeon.mainsrc.sprites.mobsprites;
 
 import com.example.pedometerpixeldungeon.mainsrc.Assets;
 import com.example.pedometerpixeldungeon.noosa.TextureFilm;

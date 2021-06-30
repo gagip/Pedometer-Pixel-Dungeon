@@ -4,6 +4,7 @@ import com.example.pedometerpixeldungeon.mainsrc.Assets;
 import com.example.pedometerpixeldungeon.mainsrc.Dungeon;
 import com.example.pedometerpixeldungeon.mainsrc.Statistics;
 import com.example.pedometerpixeldungeon.mainsrc.actors.Actor;
+import com.example.pedometerpixeldungeon.mainsrc.items.Generator;
 import com.example.pedometerpixeldungeon.mainsrc.levels.Level;
 import com.example.pedometerpixeldungeon.mainsrc.ui.GameLog;
 import com.example.pedometerpixeldungeon.mainsrc.windows.WndStory;
@@ -94,7 +95,7 @@ public class InterlevelScene extends PixelScene {
 
                 try {
 
-//                    Generator.reset();
+                    Generator.reset();
 
                     switch (mode) {
                         case DESCEND:
@@ -215,13 +216,13 @@ public class InterlevelScene extends PixelScene {
         Dungeon.saveLevel();
 
         Level level;
-//        if (Dungeon.depth >= Statistics.deepestFloor) {
-//            level = Dungeon.newLevel();
-//        } else {
-//            Dungeon.depth++;
-//            level = Dungeon.loadLevel( Dungeon.hero.heroClass );
-//        }
-//        Dungeon.switchLevel( level, fallIntoPit ? level.pitCell() : level.randomRespawnCell() );
+        if (Dungeon.depth >= Statistics.deepestFloor) {
+            level = Dungeon.newLevel();
+        } else {
+            Dungeon.depth++;
+            level = Dungeon.loadLevel( Dungeon.hero.heroClass );
+        }
+        Dungeon.switchLevel( level, fallIntoPit ? level.pitCell() : level.randomRespawnCell() );
     }
 
     private void ascend() throws Exception {
@@ -247,31 +248,31 @@ public class InterlevelScene extends PixelScene {
 
         Actor.fixTime();
 
-//        GameLog.wipe();
-//
-//        Dungeon.loadGame( StartScene.curClass );
-//        if (Dungeon.depth == -1) {
-//            Dungeon.depth = Statistics.deepestFloor;
-//            Dungeon.switchLevel( Dungeon.loadLevel( StartScene.curClass ), -1 );
-//        } else {
-//            Level level = Dungeon.loadLevel( StartScene.curClass );
-//            Dungeon.switchLevel( level, Level.resizingNeeded ? level.adjustPos( Dungeon.hero.pos ) : Dungeon.hero.pos );
-//        }
+        GameLog.wipe();
+
+        Dungeon.loadGame( StartScene.curClass );
+        if (Dungeon.depth == -1) {
+            Dungeon.depth = Statistics.deepestFloor;
+            Dungeon.switchLevel( Dungeon.loadLevel( StartScene.curClass ), -1 );
+        } else {
+            Level level = Dungeon.loadLevel( StartScene.curClass );
+            Dungeon.switchLevel( level, Level.resizingNeeded ? level.adjustPos( Dungeon.hero.pos ) : Dungeon.hero.pos );
+        }
     }
 
     private void resurrect() throws Exception {
 
-//        Actor.fixTime();
-//
-//        if (Dungeon.bossLevel()) {
-//            Dungeon.hero.resurrect( Dungeon.depth );
-//            Dungeon.depth--;
-//            Level level = Dungeon.newLevel();
-//            Dungeon.switchLevel( level, level.entrance );
-//        } else {
-//            Dungeon.hero.resurrect( -1 );
-//            Dungeon.resetLevel();
-//        }
+        Actor.fixTime();
+
+        if (Dungeon.bossLevel()) {
+            Dungeon.hero.resurrect( Dungeon.depth );
+            Dungeon.depth--;
+            Level level = Dungeon.newLevel();
+            Dungeon.switchLevel( level, level.entrance );
+        } else {
+            Dungeon.hero.resurrect( -1 );
+            Dungeon.resetLevel();
+        }
     }
 
     @Override

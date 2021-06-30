@@ -1,6 +1,8 @@
 package com.example.pedometerpixeldungeon.mainsrc.levels.painters;
 
+import com.example.pedometerpixeldungeon.mainsrc.items.Generator;
 import com.example.pedometerpixeldungeon.mainsrc.items.Heap;
+import com.example.pedometerpixeldungeon.mainsrc.items.Item;
 import com.example.pedometerpixeldungeon.mainsrc.items.keys.IronKey;
 import com.example.pedometerpixeldungeon.mainsrc.levels.Level;
 import com.example.pedometerpixeldungeon.mainsrc.levels.Painter;
@@ -38,32 +40,32 @@ public class PitPainter extends Painter {
         level.drop( new IronKey(), remains ).type = Heap.Type.SKELETON;
 
         if (Random.Int( 5 ) == 0) {
-//            level.drop( Generator.random( Generator.Category.RING ), remains );
+            level.drop( Generator.random( Generator.Category.RING ), remains );
         } else {
-//            level.drop( Generator.random( Random.oneOf(
-//                    Generator.Category.WEAPON,
-//                    Generator.Category.ARMOR
-//            ) ), remains );
+            level.drop( Generator.random( Random.oneOf(
+                    Generator.Category.WEAPON,
+                    Generator.Category.ARMOR
+            ) ), remains );
         }
 
         int n = Random.IntRange( 1, 2 );
         for (int i=0; i < n; i++) {
-//            level.drop( prize( level ), remains );
+            level.drop( prize( level ), remains );
         }
     }
 
-//    private static Item prize( Level level ) {
-//
-//        Item prize = level.itemToSpanAsPrize();
-//        if (prize != null) {
-//            return prize;
-//        }
-//
-//        return Generator.random( Random.oneOf(
-//                Generator.Category.POTION,
-//                Generator.Category.SCROLL,
-//                Generator.Category.FOOD,
-//                Generator.Category.GOLD
-//        ) );
-//    }
+    private static Item prize( Level level ) {
+
+        Item prize = level.itemToSpanAsPrize();
+        if (prize != null) {
+            return prize;
+        }
+
+        return Generator.random( Random.oneOf(
+                Generator.Category.POTION,
+                Generator.Category.SCROLL,
+                Generator.Category.FOOD,
+                Generator.Category.GOLD
+        ) );
+    }
 }

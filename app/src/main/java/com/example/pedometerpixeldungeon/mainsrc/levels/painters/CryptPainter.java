@@ -1,5 +1,8 @@
 package com.example.pedometerpixeldungeon.mainsrc.levels.painters;
 
+import com.example.pedometerpixeldungeon.mainsrc.items.Generator;
+import com.example.pedometerpixeldungeon.mainsrc.items.Heap;
+import com.example.pedometerpixeldungeon.mainsrc.items.Item;
 import com.example.pedometerpixeldungeon.mainsrc.items.keys.IronKey;
 import com.example.pedometerpixeldungeon.mainsrc.levels.Level;
 import com.example.pedometerpixeldungeon.mainsrc.levels.Painter;
@@ -40,20 +43,20 @@ public class CryptPainter extends Painter {
             cy = room.top + 2;
         }
 
-//        level.drop( prize( level ), cx + cy * Level.WIDTH ).type = Type.TOMB;
+        level.drop( prize( level ), cx + cy * Level.WIDTH ).type = Heap.Type.TOMB;
     }
 
-//    private static Item prize( Level level ) {
-//
-//        Item prize = Generator.random( Generator.Category.ARMOR );
-//
-//        for (int i=0; i < 3; i++) {
-//            Item another = Generator.random( Generator.Category.ARMOR );
-//            if (another.level() > prize.level()) {
-//                prize = another;
-//            }
-//        }
-//
-//        return prize;
-//    }
+    private static Item prize( Level level ) {
+
+        Item prize = Generator.random( Generator.Category.ARMOR );
+
+        for (int i=0; i < 3; i++) {
+            Item another = Generator.random( Generator.Category.ARMOR );
+            if (another.level() > prize.level()) {
+                prize = another;
+            }
+        }
+
+        return prize;
+    }
 }
