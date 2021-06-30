@@ -3,10 +3,12 @@ package com.example.pedometerpixeldungeon.mainsrc.actors;
 import com.example.pedometerpixeldungeon.mainsrc.Dungeon;
 import com.example.pedometerpixeldungeon.mainsrc.actors.buffs.Buff;
 import com.example.pedometerpixeldungeon.mainsrc.levels.Level;
+import com.example.pedometerpixeldungeon.mainsrc.levels.Terrain;
 import com.example.pedometerpixeldungeon.mainsrc.sprites.CharSprite;
 import com.example.pedometerpixeldungeon.utils.Bundlable;
 import com.example.pedometerpixeldungeon.utils.Bundle;
 import com.example.pedometerpixeldungeon.utils.Random;
+import com.example.pedometerpixeldungeon.mainsrc.levels.features.Door;
 
 import java.util.HashSet;
 
@@ -431,19 +433,19 @@ public abstract class Char extends Actor {
             }
         }
 
-//        if (Dungeon.level.map[pos] == Terrain.OPEN_DOOR) {
-//            Door.leave( pos );
-//        }
+        if (Dungeon.level.map[pos] == Terrain.OPEN_DOOR) {
+            Door.leave( pos );
+        }
 
         pos = step;
 
-//        if (flying && Dungeon.level.map[pos] == Terrain.DOOR) {
-//            Door.enter( pos );
-//        }
-//
-//        if (this != Dungeon.hero) {
-//            sprite.visible = Dungeon.visible[pos];
-//        }
+        if (flying && Dungeon.level.map[pos] == Terrain.DOOR) {
+            Door.enter( pos );
+        }
+
+        if (this != Dungeon.hero) {
+            sprite.visible = Dungeon.visible[pos];
+        }
     }
 
     public int distance( Char other ) {
