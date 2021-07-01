@@ -1,4 +1,4 @@
-package com.bigdata.pedometer_sqlite_5;
+package com.example.pedometerpixeldungeon.mainsrc.pedometer;
 
 import android.Manifest;
 import android.content.ContentValues;
@@ -24,7 +24,7 @@ import androidx.core.content.ContextCompat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import static com.bigdata.pedometer_sqlite_5.DBOpenHelper.*;
+import static com.example.pedometerpixeldungeon.mainsrc.pedometer.DBOpenHelper.*;
 
 
 
