@@ -17,6 +17,9 @@ import com.example.pedometerpixeldungeon.mainsrc.items.bags.ScrollHolder;
 import com.example.pedometerpixeldungeon.mainsrc.items.bags.SeedPouch;
 import com.example.pedometerpixeldungeon.mainsrc.items.bags.WandHolster;
 import com.example.pedometerpixeldungeon.mainsrc.items.wands.Wand;
+import com.example.pedometerpixeldungeon.mainsrc.items.weapons.melee.MeleeWeapon;
+import com.example.pedometerpixeldungeon.mainsrc.items.weapons.missiles.Boomerang;
+import com.example.pedometerpixeldungeon.mainsrc.plants.Plant;
 import com.example.pedometerpixeldungeon.mainsrc.scenes.GameScene;
 import com.example.pedometerpixeldungeon.mainsrc.scenes.PixelScene;
 import com.example.pedometerpixeldungeon.mainsrc.sprites.ItemSpriteSheet;
@@ -366,11 +369,11 @@ public class WndBag extends WndTabbed {
                                     mode == Mode.FOR_SALE && (item.price() > 0) && (!item.isEquipped( Dungeon.hero ) || !item.cursed) ||
                                     mode == Mode.UPGRADEABLE && item.isUpgradable() ||
                                     mode == Mode.UNIDENTIFED && !item.isIdentified() ||
-//                                    mode == Mode.WEAPON && (item instanceof MeleeWeapon || item instanceof Boomerang) ||
+                                    mode == Mode.WEAPON && (item instanceof MeleeWeapon || item instanceof Boomerang) ||
                                     mode == Mode.ARMOR && (item instanceof Armor) ||
-//                                    mode == Mode.ENCHANTABLE && (item instanceof MeleeWeapon || item instanceof Boomerang || item instanceof Armor) ||
+                                    mode == Mode.ENCHANTABLE && (item instanceof MeleeWeapon || item instanceof Boomerang || item instanceof Armor) ||
                                     mode == Mode.WAND && (item instanceof Wand) ||
-//                                    mode == Mode.SEED && (item instanceof Seed) ||
+                                    mode == Mode.SEED && (item instanceof Plant.Seed) ||
                                     mode == Mode.ALL
                     );
                 }
