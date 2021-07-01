@@ -1,5 +1,7 @@
 package com.example.pedometerpixeldungeon.mainsrc.items;
 
+import com.example.pedometerpixeldungeon.mainsrc.sprites.ItemSpriteSheet;
+
 public class Gold extends Item {
 
     private static final String TXT_COLLECT	= "Collect gold coins to spend them later in a shop.";
@@ -9,7 +11,7 @@ public class Gold extends Item {
 
     {
         name = "gold";
-//        image = ItemSpriteSheet.GOLD;
+        image = ItemSpriteSheet.GOLD;
         stackable = true;
     }
 

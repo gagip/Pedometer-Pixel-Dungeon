@@ -3,6 +3,7 @@ package com.example.pedometerpixeldungeon.mainsrc.items;
 import com.example.pedometerpixeldungeon.mainsrc.Assets;
 import com.example.pedometerpixeldungeon.mainsrc.Dungeon;
 import com.example.pedometerpixeldungeon.mainsrc.actors.hero.Hero;
+import com.example.pedometerpixeldungeon.mainsrc.effects.particles.ShadowParticle;
 import com.example.pedometerpixeldungeon.mainsrc.utils.GLog;
 import com.example.pedometerpixeldungeon.noosa.audio.Sample;
 
@@ -44,7 +45,7 @@ public abstract class EquipableItem extends Item {
     }
 
     protected static void equipCursed( Hero hero ) {
-//        hero.sprite.emitter().burst( ShadowParticle.CURSE, 6 );
+        hero.sprite.emitter().burst( ShadowParticle.CURSE, 6 );
         Sample.INSTANCE.play( Assets.SND_CURSED );
     }
 

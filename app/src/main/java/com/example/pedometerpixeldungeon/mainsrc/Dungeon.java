@@ -21,6 +21,7 @@ import com.example.pedometerpixeldungeon.mainsrc.scenes.StartScene;
 import com.example.pedometerpixeldungeon.mainsrc.ui.QuickSlot;
 import com.example.pedometerpixeldungeon.mainsrc.utils.BArray;
 import com.example.pedometerpixeldungeon.mainsrc.utils.Utils;
+import com.example.pedometerpixeldungeon.mainsrc.windows.WndResurrect;
 import com.example.pedometerpixeldungeon.noosa.Game;
 import com.example.pedometerpixeldungeon.utils.Bundlable;
 import com.example.pedometerpixeldungeon.utils.Bundle;
@@ -403,12 +404,12 @@ public class Dungeon {
             GamesInProgress.set( hero.heroClass, depth, hero.lvl, challenges != 0 );
 
         }
-//        else if (WndResurrect.instance != null) {
-//
-//            WndResurrect.instance.hide();
-//            Hero.reallyDie( WndResurrect.causeOfDeath );
-//
-//        }
+        else if (WndResurrect.instance != null) {
+
+            WndResurrect.instance.hide();
+            Hero.reallyDie( WndResurrect.causeOfDeath );
+
+        }
     }
 
     public static void loadGame( HeroClass cl ) throws IOException {
