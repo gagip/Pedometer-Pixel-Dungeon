@@ -1,5 +1,6 @@
 package com.example.pedometerpixeldungeon.mainsrc.ui;
 
+import com.example.pedometerpixeldungeon.input.Touchscreen;
 import com.example.pedometerpixeldungeon.mainsrc.Assets;
 import com.example.pedometerpixeldungeon.mainsrc.Dungeon;
 import com.example.pedometerpixeldungeon.mainsrc.items.keys.IronKey;
@@ -7,9 +8,12 @@ import com.example.pedometerpixeldungeon.mainsrc.scenes.GameScene;
 import com.example.pedometerpixeldungeon.mainsrc.scenes.PixelScene;
 import com.example.pedometerpixeldungeon.mainsrc.sprites.HeroSprite;
 import com.example.pedometerpixeldungeon.mainsrc.windows.WndGame;
+import com.example.pedometerpixeldungeon.mainsrc.windows.WndHero;
 import com.example.pedometerpixeldungeon.noosa.BitmapText;
+import com.example.pedometerpixeldungeon.noosa.Camera;
 import com.example.pedometerpixeldungeon.noosa.Image;
 import com.example.pedometerpixeldungeon.noosa.NinePatch;
+import com.example.pedometerpixeldungeon.noosa.TouchArea;
 import com.example.pedometerpixeldungeon.noosa.audio.Sample;
 import com.example.pedometerpixeldungeon.noosa.particles.BitmaskEmitter;
 import com.example.pedometerpixeldungeon.noosa.particles.Emitter;
@@ -48,16 +52,16 @@ public class StatusPane extends Component {
         shield = new NinePatch( Assets.STATUS, 80, 0, 30   + 18, 0 );
         add( shield );
 
-//        add( new TouchArea( 0, 1, 30, 30 ) {
-//            @Override
-//            protected void onClick( Touch touch ) {
-//                Image sprite = Dungeon.hero.sprite;
-//                if (!sprite.isVisible()) {
-//                    Camera.main.focusOn( sprite );
-//                }
-//                GameScene.show( new WndHero() );
-//            };
-//        } );
+        add( new TouchArea( 0, 1, 30, 30 ) {
+            @Override
+            protected void onClick(Touchscreen.Touch touch ) {
+                Image sprite = Dungeon.hero.sprite;
+                if (!sprite.isVisible()) {
+                    Camera.main.focusOn( sprite );
+                }
+                GameScene.show( new WndHero() );
+            };
+        } );
 
         btnMenu = new MenuButton();
         add( btnMenu );

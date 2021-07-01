@@ -3,18 +3,26 @@ package com.example.pedometerpixeldungeon.mainsrc.actors.mobs;
 import com.example.pedometerpixeldungeon.mainsrc.Challenges;
 import com.example.pedometerpixeldungeon.mainsrc.Dungeon;
 import com.example.pedometerpixeldungeon.mainsrc.Statistics;
+import com.example.pedometerpixeldungeon.mainsrc.actors.Actor;
 import com.example.pedometerpixeldungeon.mainsrc.actors.Char;
 import com.example.pedometerpixeldungeon.mainsrc.actors.buffs.Amok;
 import com.example.pedometerpixeldungeon.mainsrc.actors.buffs.Buff;
 import com.example.pedometerpixeldungeon.mainsrc.actors.buffs.Sleep;
 import com.example.pedometerpixeldungeon.mainsrc.actors.buffs.Terror;
+import com.example.pedometerpixeldungeon.mainsrc.actors.hero.Hero;
+import com.example.pedometerpixeldungeon.mainsrc.actors.hero.HeroSubClass;
 import com.example.pedometerpixeldungeon.mainsrc.effects.Flare;
+import com.example.pedometerpixeldungeon.mainsrc.effects.Wound;
+import com.example.pedometerpixeldungeon.mainsrc.items.Generator;
+import com.example.pedometerpixeldungeon.mainsrc.items.Item;
 import com.example.pedometerpixeldungeon.mainsrc.levels.Level;
 import com.example.pedometerpixeldungeon.mainsrc.sprites.CharSprite;
 import com.example.pedometerpixeldungeon.mainsrc.utils.GLog;
 import com.example.pedometerpixeldungeon.mainsrc.utils.Utils;
 import com.example.pedometerpixeldungeon.utils.Bundle;
 import com.example.pedometerpixeldungeon.utils.Random;
+
+import java.util.HashSet;
 
 public class Mob extends Char {
 
@@ -129,29 +137,29 @@ public class Mob extends Char {
 
     protected Char chooseEnemy() {
 
-//        if (buff( Amok.class ) != null) {
-//            if (enemy == Dungeon.hero || enemy == null) {
-//
-//                HashSet<Mob> enemies = new HashSet<Mob>();
-//                for (Mob mob:Dungeon.level.mobs) {
-//                    if (mob != this && Level.fieldOfView[mob.pos]) {
-//                        enemies.add( mob );
-//                    }
-//                }
-//                if (enemies.size() > 0) {
-//                    return Random.element( enemies );
-//                }
-//
-//            }
-//        }
+        if (buff( Amok.class ) != null) {
+            if (enemy == Dungeon.hero || enemy == null) {
 
-//        Terror terror = (Terror)buff( Terror.class );
-//        if (terror != null) {
-//            Char source = (Char) Actor.findById( terror.object );
-//            if (source != null) {
-//                return source;
-//            }
-//        }
+                HashSet<Mob> enemies = new HashSet<Mob>();
+                for (Mob mob:Dungeon.level.mobs) {
+                    if (mob != this && Level.fieldOfView[mob.pos]) {
+                        enemies.add( mob );
+                    }
+                }
+                if (enemies.size() > 0) {
+                    return Random.element( enemies );
+                }
+
+            }
+        }
+
+        Terror terror = (Terror)buff( Terror.class );
+        if (terror != null) {
+            Char source = (Char) Actor.findById( terror.object );
+            if (source != null) {
+                return source;
+            }
+        }
 
         return enemy != null && enemy.isAlive() ? enemy : Dungeon.hero;
     }
@@ -269,10 +277,10 @@ public class Mob extends Char {
 
     @Override
     public int defenseProc( Char enemy, int damage ) {
-//        if (!enemySeen && enemy == Dungeon.hero && ((Hero)enemy).subClass == HeroSubClass.ASSASSIN) {
-//            damage += Random.Int( 1, damage );
-//            Wound.hit( this );
-//        }
+        if (!enemySeen && enemy == Dungeon.hero && ((Hero)enemy).subClass == HeroSubClass.ASSASSIN) {
+            damage += Random.Int( 1, damage );
+            Wound.hit( this );
+        }
         return damage;
     }
 
@@ -283,14 +291,14 @@ public class Mob extends Char {
     @Override
     public void damage( int dmg, Object src ) {
 
-//        Terror.recover( this );
-//
-//        if (state == SLEEPEING) {
-//            state = WANDERING;
-//        }
-//        alerted = true;
-//
-//        super.damage( dmg, src );
+        Terror.recover( this );
+
+        if (state == SLEEPEING) {
+            state = WANDERING;
+        }
+        alerted = true;
+
+        super.damage( dmg, src );
     }
 
 
@@ -347,23 +355,23 @@ public class Mob extends Char {
 
     @SuppressWarnings("unchecked")
     protected void dropLoot() {
-//        if (loot != null && Random.Float() < lootChance) {
-//            Item item = null;
-//            if (loot instanceof Generator.Category) {
-//
-//                item = Generator.random( (Generator.Category)loot );
-//
-//            } else if (loot instanceof Class<?>) {
-//
-//                item = Generator.random( (Class<? extends Item>)loot );
-//
-//            } else {
-//
-//                item = (Item)loot;
-//
-//            }
-//            Dungeon.level.drop( item, pos ).sprite.drop();
-//        }
+        if (loot != null && Random.Float() < lootChance) {
+            Item item = null;
+            if (loot instanceof Generator.Category) {
+
+                item = Generator.random( (Generator.Category)loot );
+
+            } else if (loot instanceof Class<?>) {
+
+                item = Generator.random( (Class<? extends Item>)loot );
+
+            } else {
+
+                item = (Item) loot;
+
+            }
+            Dungeon.level.drop( item, pos ).sprite.drop();
+        }
     }
 
     public boolean reset() {
