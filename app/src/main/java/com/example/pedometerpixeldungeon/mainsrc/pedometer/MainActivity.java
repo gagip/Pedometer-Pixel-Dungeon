@@ -1,8 +1,4 @@
-package com.example.pedometerpixeldungeon.mainsrc.pedometer;
-
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
+package com.bigdata.pedometer_sqlite_5;
 
 import android.Manifest;
 import android.content.ContentValues;
@@ -16,35 +12,49 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.View;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.pedometerpixeldungeon.R;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
-import static com.example.pedometerpixeldungeon.mainsrc.pedometer.DBOpenHelper.TABLE_NAME;
-import static com.example.pedometerpixeldungeon.mainsrc.pedometer.DBOpenHelper.TITLE;
-import static com.example.pedometerpixeldungeon.mainsrc.pedometer.DBOpenHelper.TIME;
-import static com.example.pedometerpixeldungeon.mainsrc.pedometer.DBOpenHelper._ID;
+import java.util.ArrayList;
+import java.util.Date;
+
+import static com.bigdata.pedometer_sqlite_5.DBOpenHelper.*;
+
+
+
 
 /**
  * 메인 액티비티 클래스입니다.
  * @author 조용두
  */
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
+    // Sensor
+    private SensorManager sensorManager;
+    private Sensor stepCountSensor;
 
-    SensorManager sensorManager;
-    Sensor stepCountSensor;
-    TextView stepCountView;
-    Button resetButton;
-
+    // DB
     private static final String DB_NAME = "MyDB";
     private static final int DB_VERSION = 1;
     private DBOpenHelper openHelper;
+    Pedometer pedometer = new Pedometer();
 
-    // 현재 걸음 수
-    int currentSteps = 0;
+    // UI
+    private TextView stepCountView;
+    private TextView moneyView;
+    private TextView dBView;
+    private TextView saveView;
+    private Button randomButton;
+    private Button rewardButton;
+
+    // custom
+    boolean isSaved;                                     // 저장 여부
+
 
     /**
      * 권한 요청
@@ -57,8 +67,22 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
         stepCountView = findViewById(R.id.stepCountView);
-        resetButton = findViewById(R.id.resetButton);
+        moneyView = findViewById(R.id.moneyView);
+        dBView = findViewById(R.id.DBView);
+        saveView = findViewById(R.id.saveView);
+        randomButton = findViewById(R.id.randomButton);
+        rewardButton = findViewById(R.id.rewardButton);
+
+        // DB객체 생성
+        openHelper = new DBOpenHelper(this, DB_NAME, null, DB_VERSION);
+
+        // call DB
+        if (openHelper.getReadableDatabase() != null) {
+//            displayDB();
+        }
 
 
         // 활동 퍼미션 체크
@@ -81,32 +105,15 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         if (stepCountSensor == null) {
             Toast.makeText(this, "No Step Sensor", Toast.LENGTH_SHORT).show();
         }
-
-        // 리셋 버튼 추가 - 리셋 기능
-        resetButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // 현재 걸음수 초기화
-                currentSteps = 0;
-                stepCountView.setText(String.valueOf(currentSteps));
-
-            }
-        });
-
-        openHelper = new DBOpenHelper(this, DB_NAME, null, DB_VERSION);
-        writeDB("Hello World!");
-        Cursor cursor = readDB();
-        displayDB(cursor);
-        openHelper.close();
-
     }
-
 
     /**
      * 센서 속도 설정
      */
-    public void onStart() {
-        super.onStart();
+    @Override
+    protected void onResume() {
+        super.onResume();
+        isSaved = false;
         if(stepCountSensor !=null) {
             // 센서 속도 설정
             // * 옵션
@@ -114,11 +121,18 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             // - SENSOR_DELAY_UI: 6,000 초 딜레이
             // - SENSOR_DELAY_GAME: 20,000 초 딜레이
             // - SENSOR_DELAY_FASTEST: 딜레이 없음
-            //
-            sensorManager.registerListener(this,stepCountSensor,SensorManager.SENSOR_DELAY_FASTEST);
+            sensorManager.registerListener(this, stepCountSensor, SensorManager.SENSOR_DELAY_FASTEST);
+            Log.i("test", "onResume");
         }
+        displayDB();
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+//        writeDB();
+        Log.i("test", "onPause");
+    }
 
     /**
      * 걸음 센서 이벤트 발생시 걸음수 증가
@@ -127,9 +141,22 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     public void onSensorChanged(SensorEvent event) {
         // 걸음 센서 이벤트 발생시
         if (event.sensor.getType() == Sensor.TYPE_STEP_COUNTER) {
-            stepCountView.setText(String.valueOf(event.values[0]));
-        }
+            pedometer.setCount((int) event.values[0]);
+            pedometer.setCulCount(pedometer.getCount());
 
+            if (!isSaved) {
+                writeDB();
+                Log.i("test", "onSensorChanged");
+                isSaved = !isSaved;
+            }
+
+            // print from UI
+            runOnUiThread(() -> {
+                stepCountView.setText(pedometer.getCount()+"");
+            });
+
+            return;
+        }
     }
 
 
@@ -139,20 +166,40 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     }
 
     /**
-     * 화면에 보이게 하는것
+     * 화면에 출력
      */
-    private void displayDB(Cursor cursor) {
+    private void displayDB() {
         StringBuilder builder = new StringBuilder("Saved DB:\n");
+        ArrayList<Pedometer> pedometerArr = new ArrayList<Pedometer>();
+
+        Cursor cursor = readDB();
         while (cursor.moveToNext()) {
-            long id = cursor.getLong(0);
+            // DB -> variable
+            int id = cursor.getInt(0);
             long time = cursor.getLong(1);
-            String title = cursor.getString(2);
-            builder.append(id).append(": ");
-            builder.append(time).append(": ");
-            builder.append(title).append("\n");
+            int count = cursor.getInt(2);
+            int culCount = cursor.getInt(3);
+
+            // variable -> DTO
+            Pedometer pedometer = new Pedometer();
+            pedometer.setId(id);
+            pedometer.setTime(new Date(time));
+            pedometer.setCount(count);
+            pedometer.setCulCount(culCount);
+
+            // append to DTO Array
+            pedometerArr.add(pedometer);
         }
-        TextView textView = (TextView) findViewById(R.id.stepCountView);
-        textView.setText(builder);
+
+        for (Pedometer p : pedometerArr) {
+            builder.append(p.getId()+": ");
+            builder.append(p.getTime()+": ");
+            builder.append(p.getCount()+": ");
+            builder.append(p.getCulCount()+"\n");
+        }
+
+        dBView.setText(builder);
+        Log.i("test", "displayDB");
     }
 
     /**
@@ -160,20 +207,64 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
      */
     private Cursor readDB() {
         SQLiteDatabase db = openHelper.getReadableDatabase();
-        String[] from = {_ID, TIME, TITLE};
-        Cursor cursor = db.query(TABLE_NAME, from, null, null, null, null, TIME + " " + "DESC");
+        String[] from = {_ID, TIME, COUNT, CULCOUNT};
+        Cursor cursor = db.query(TABLE_NAME, from, null, null, null, null, TIME + " DESC");
         startManagingCursor(cursor);
         return cursor;
     }
 
+    // 최신 자료
+    // 제일 최근 돈 가져오기
+    private void readLatestDB() {
+        int _money;
+        SQLiteDatabase db = openHelper.getReadableDatabase();
+        String[] from = {_ID, TIME, COUNT};
+        int latestIdx = getCountDB();
+        Cursor cursor = db.query(TABLE_NAME,
+                from,
+                _ID+"=?",
+                new String[] {String.valueOf(latestIdx)},
+                null, null, null, null);
+
+//                String query = "SELECT count FROM TestDB WHERE _id = (SELECT max(_id) from TestDB);";
+//                Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                _money = cursor.getInt(4);
+            }
+        }
+    }
+
+    // 현재 DB에 저장된 column개수를 센다.
+    private int getCountDB() {
+        String sql = String.format("SELECT * FROM %s", TABLE_NAME);
+        SQLiteDatabase db = openHelper.getReadableDatabase();
+        Cursor cursor = db.rawQuery(sql, null);
+
+        return cursor.getCount();
+    }
+
+    // 가장 최신의 자료에서 바로 뒤의 자료 가져오기
+    private int readCount() {
+        SQLiteDatabase db = openHelper.getReadableDatabase();
+        String query = "SELECT count FROM TestDB WHERE _id = (SELECT max(_id) -1 from TestDB);";
+        Cursor cursor = db.rawQuery(query, null);
+
+        return cursor.getColumnCount();
+    }
+
     /**
-     * 데이터 베이스에 쓰기
+     * DB 저장
      */
-    private void writeDB(String title) {
+    private void writeDB() {
         SQLiteDatabase db = openHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
+
         values.put(TIME, System.currentTimeMillis());
-        values.put(TITLE, title);
+        values.put(COUNT, pedometer.getCount());
+
         db.insertOrThrow(TABLE_NAME, null, values);
     }
+
 }
