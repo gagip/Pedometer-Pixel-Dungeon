@@ -1,6 +1,5 @@
 package com.example.pedometerpixeldungeon.mainsrc.ui;
 
-import com.example.pedometerpixeldungeon.mainsrc.Dungeon;
 import com.example.pedometerpixeldungeon.mainsrc.scenes.PixelScene;
 import com.example.pedometerpixeldungeon.noosa.Image;
 
@@ -35,7 +34,7 @@ public class ResumeButton extends Tag {
     @Override
     public void update() {
         boolean prevVisible = visible;
-        visible = (Dungeon.hero.lastAction != null);
+//        visible = (Dungeon.hero.lastAction != null);
         if (visible && !prevVisible) {
             flash();
         }
@@ -43,8 +42,8 @@ public class ResumeButton extends Tag {
         super.update();
     }
 
-    @Override
-    protected void onClick() {
-        Dungeon.hero.resume();
-    }
+//    @Override
+//    protected void onClick() {
+//        Dungeon.hero.resume();
+//    }
 }

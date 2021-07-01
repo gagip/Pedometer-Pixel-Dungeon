@@ -11,7 +11,6 @@ import com.example.pedometerpixeldungeon.mainsrc.Statistics;
 import com.example.pedometerpixeldungeon.mainsrc.actors.Actor;
 import com.example.pedometerpixeldungeon.mainsrc.actors.Blobs.Blob;
 import com.example.pedometerpixeldungeon.mainsrc.actors.mobs.Mob;
-import com.example.pedometerpixeldungeon.mainsrc.effects.BannerSprites;
 import com.example.pedometerpixeldungeon.mainsrc.effects.BlobEmitter;
 import com.example.pedometerpixeldungeon.mainsrc.effects.EmoIcon;
 import com.example.pedometerpixeldungeon.mainsrc.effects.Flare;
@@ -26,13 +25,12 @@ import com.example.pedometerpixeldungeon.mainsrc.levels.RegularLevel;
 import com.example.pedometerpixeldungeon.mainsrc.levels.features.Chasm;
 import com.example.pedometerpixeldungeon.mainsrc.plants.Plant;
 import com.example.pedometerpixeldungeon.mainsrc.sprites.CharSprite;
+import com.example.pedometerpixeldungeon.mainsrc.sprites.itemsprites.DiscardedItemSprite;
 import com.example.pedometerpixeldungeon.mainsrc.sprites.HeroSprite;
 import com.example.pedometerpixeldungeon.mainsrc.sprites.ItemSprite;
 import com.example.pedometerpixeldungeon.mainsrc.sprites.PlantSprite;
 import com.example.pedometerpixeldungeon.mainsrc.sprites.SpellSprite;
-import com.example.pedometerpixeldungeon.mainsrc.sprites.itemsprites.DiscardedItemSprite;
 import com.example.pedometerpixeldungeon.mainsrc.ui.AttackIndicator;
-import com.example.pedometerpixeldungeon.mainsrc.ui.Banner;
 import com.example.pedometerpixeldungeon.mainsrc.ui.BusyIndicator;
 import com.example.pedometerpixeldungeon.mainsrc.ui.GameLog;
 import com.example.pedometerpixeldungeon.mainsrc.ui.HealthIndicator;
@@ -419,12 +417,12 @@ public class GameScene extends PixelScene {
         }
     }
 
-    private void showBanner( Banner banner ) {
-        banner.camera = uiCamera;
-        banner.x = align( uiCamera, (uiCamera.width - banner.width) / 2 );
-        banner.y = align( uiCamera, (uiCamera.height - banner.height) / 3 );
-        add( banner );
-    }
+//    private void showBanner( Banner banner ) {
+//        banner.camera = uiCamera;
+//        banner.x = align( uiCamera, (uiCamera.width - banner.width) / 2 );
+//        banner.y = align( uiCamera, (uiCamera.height - banner.height) / 3 );
+//        add( banner );
+//    }
 
     // -------------------------------------------------------
 
@@ -541,9 +539,9 @@ public class GameScene extends PixelScene {
     }
 
     public static void gameOver() {
-        Banner gameOver = new Banner( BannerSprites.get( BannerSprites.Type.GAME_OVER ) );
-        gameOver.show( 0x000000, 1f );
-        scene.showBanner( gameOver );
+//        Banner gameOver = new Banner( BannerSprites.get( BannerSprites.Type.GAME_OVER ) );
+//        gameOver.show( 0x000000, 1f );
+//        scene.showBanner( gameOver );
 
         Sample.INSTANCE.play( Assets.SND_DEATH );
     }

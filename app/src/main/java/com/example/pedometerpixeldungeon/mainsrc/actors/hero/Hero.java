@@ -16,7 +16,6 @@ import com.example.pedometerpixeldungeon.mainsrc.actors.buffs.Charm;
 import com.example.pedometerpixeldungeon.mainsrc.actors.buffs.Combo;
 import com.example.pedometerpixeldungeon.mainsrc.actors.buffs.Cripple;
 import com.example.pedometerpixeldungeon.mainsrc.actors.buffs.Fury;
-import com.example.pedometerpixeldungeon.mainsrc.actors.buffs.GasesImmunity;
 import com.example.pedometerpixeldungeon.mainsrc.actors.buffs.Hunger;
 import com.example.pedometerpixeldungeon.mainsrc.actors.buffs.Invisibility;
 import com.example.pedometerpixeldungeon.mainsrc.actors.buffs.Light;
@@ -49,12 +48,10 @@ import com.example.pedometerpixeldungeon.mainsrc.items.potions.PotionOfMight;
 import com.example.pedometerpixeldungeon.mainsrc.items.potions.PotionOfStrength;
 import com.example.pedometerpixeldungeon.mainsrc.items.rings.RingOfAccuracy;
 import com.example.pedometerpixeldungeon.mainsrc.items.rings.RingOfDetection;
-import com.example.pedometerpixeldungeon.mainsrc.items.rings.RingOfElements;
 import com.example.pedometerpixeldungeon.mainsrc.items.rings.RingOfHaste;
 import com.example.pedometerpixeldungeon.mainsrc.items.rings.RingOfShadows;
 import com.example.pedometerpixeldungeon.mainsrc.items.scrolls.Scroll;
 import com.example.pedometerpixeldungeon.mainsrc.items.scrolls.ScrollOfEnchantment;
-import com.example.pedometerpixeldungeon.mainsrc.items.scrolls.ScrollOfMagicMapping;
 import com.example.pedometerpixeldungeon.mainsrc.items.scrolls.ScrollOfRecharging;
 import com.example.pedometerpixeldungeon.mainsrc.items.scrolls.ScrollOfUpgrade;
 import com.example.pedometerpixeldungeon.mainsrc.items.wands.Wand;
@@ -73,7 +70,6 @@ import com.example.pedometerpixeldungeon.mainsrc.ui.AttackIndicator;
 import com.example.pedometerpixeldungeon.mainsrc.ui.BuffIndicator;
 import com.example.pedometerpixeldungeon.mainsrc.utils.GLog;
 import com.example.pedometerpixeldungeon.mainsrc.windows.WndMessage;
-import com.example.pedometerpixeldungeon.mainsrc.windows.WndResurrect;
 import com.example.pedometerpixeldungeon.mainsrc.windows.WndTradeItem;
 import com.example.pedometerpixeldungeon.noosa.Camera;
 import com.example.pedometerpixeldungeon.noosa.Game;
@@ -83,7 +79,6 @@ import com.example.pedometerpixeldungeon.utils.Random;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 
 public class Hero extends Char {
 
@@ -1137,7 +1132,7 @@ public class Hero extends Char {
         } else {
 
             Dungeon.deleteGame( Dungeon.hero.heroClass, false );
-            GameScene.show( new WndResurrect( ankh, cause ) );
+//            GameScene.show( new WndResurrect( ankh, cause ) );
 
         }
     }
@@ -1330,7 +1325,7 @@ public class Hero extends Char {
 
                         GameScene.updateMap( p );
 
-                        ScrollOfMagicMapping.discover( p );
+//                        ScrollOfMagicMapping.discover( p );
 
                         smthFound = true;
                     }
@@ -1378,17 +1373,17 @@ public class Hero extends Char {
         live();
     }
 
-    @Override
-    public HashSet<Class<?>> resistances() {
-        RingOfElements.Resistance r = buff( RingOfElements.Resistance.class );
-        return r == null ? super.resistances() : r.resistances();
-    }
-
-    @Override
-    public HashSet<Class<?>> immunities() {
-        GasesImmunity buff = buff( GasesImmunity.class );
-        return buff == null ? super.immunities() : GasesImmunity.IMMUNITIES;
-    }
+//    @Override
+//    public HashSet<Class<?>> resistances() {
+//        RingOfElements.Resistance r = buff( RingOfElements.Resistance.class );
+//        return r == null ? super.resistances() : r.resistances();
+//    }
+//
+//    @Override
+//    public HashSet<Class<?>> immunities() {
+//        GasesImmunity buff = buff( GasesImmunity.class );
+//        return buff == null ? super.immunities() : GasesImmunity.IMMUNITIES;
+//    }
 
     @Override
     public void next() {

@@ -5,11 +5,9 @@ import com.example.pedometerpixeldungeon.mainsrc.Dungeon;
 import com.example.pedometerpixeldungeon.mainsrc.actors.Actor;
 import com.example.pedometerpixeldungeon.mainsrc.actors.Char;
 import com.example.pedometerpixeldungeon.mainsrc.actors.hero.Hero;
-import com.example.pedometerpixeldungeon.mainsrc.effects.Speck;
 import com.example.pedometerpixeldungeon.mainsrc.items.bags.Bag;
 import com.example.pedometerpixeldungeon.mainsrc.mechanics.Ballistica;
 import com.example.pedometerpixeldungeon.mainsrc.scenes.CellSelector;
-import com.example.pedometerpixeldungeon.mainsrc.scenes.GameScene;
 import com.example.pedometerpixeldungeon.mainsrc.sprites.ItemSprite;
 import com.example.pedometerpixeldungeon.mainsrc.ui.QuickSlot;
 import com.example.pedometerpixeldungeon.mainsrc.utils.GLog;
@@ -76,26 +74,26 @@ public class Item implements Bundlable {
     }
 
     public boolean doPickUp( Hero hero ) {
-        if (collect( hero.belongings.backpack )) {
-
-            GameScene.pickUp( this );
-            Sample.INSTANCE.play( Assets.SND_ITEM );
-            hero.spendAndNext( TIME_TO_PICK_UP );
-            return true;
-
-        } else {
-            return false;
-        }
-
+//        if (collect( hero.belongings.backpack )) {
+//
+//            GameScene.pickUp( this );
+//            Sample.INSTANCE.play( Assets.SND_ITEM );
+//            hero.spendAndNext( TIME_TO_PICK_UP );
+//            return true;
+//
+//        } else {
+//            return false;
+//        }
+        return false;
     }
 
     public void doDrop( Hero hero ) {
-        hero.spendAndNext( TIME_TO_DROP );
-        Dungeon.level.drop( detachAll( hero.belongings.backpack ), hero.pos ).sprite.drop( hero.pos );
+//        hero.spendAndNext( TIME_TO_DROP );
+//        Dungeon.level.drop( detachAll( hero.belongings.backpack ), hero.pos ).sprite.drop( hero.pos );
     }
 
     public void doThrow( Hero hero ) {
-        GameScene.selectCell( thrower );
+//        GameScene.selectCell( thrower );
     }
 
     public void execute( Hero hero, String action ) {
@@ -360,7 +358,7 @@ public class Item implements Bundlable {
     }
 
     public static void evoke( Hero hero ) {
-        hero.sprite.emitter().burst( Speck.factory( Speck.EVOKE ), 5 );
+//        hero.sprite.emitter().burst( Speck.factory( Speck.EVOKE ), 5 );
     }
 
     @Override

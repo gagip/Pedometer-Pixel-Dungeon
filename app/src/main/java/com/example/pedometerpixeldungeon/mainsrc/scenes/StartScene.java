@@ -6,7 +6,6 @@ import com.example.pedometerpixeldungeon.mainsrc.GamesInProgress;
 import com.example.pedometerpixeldungeon.mainsrc.PedometerPixelDungeon;
 import com.example.pedometerpixeldungeon.mainsrc.actors.hero.HeroClass;
 import com.example.pedometerpixeldungeon.mainsrc.effects.BannerSprites;
-import com.example.pedometerpixeldungeon.mainsrc.effects.Speck;
 import com.example.pedometerpixeldungeon.mainsrc.ui.Archs;
 import com.example.pedometerpixeldungeon.mainsrc.ui.ExitButton;
 import com.example.pedometerpixeldungeon.mainsrc.ui.RedButton;
@@ -150,11 +149,11 @@ public class StartScene extends PixelScene {
                 shield.setRect( left + i * shieldW, top, shieldW, shieldH );
             }
 
-            ChallengeButton challenge = new ChallengeButton();
-            challenge.setPos(
-                    w / 2 - challenge.width() / 2,
-                    top + shieldH - challenge.height() / 2 );
-            add( challenge );
+//            ChallengeButton challenge = new ChallengeButton();
+//            challenge.setPos(
+//                    w / 2 - challenge.width() / 2,
+//                    top + shieldH - challenge.height() / 2 );
+//            add( challenge );
 
         } else {
             float shieldW = width / 2;
@@ -168,11 +167,11 @@ public class StartScene extends PixelScene {
                         shieldW, shieldH );
             }
 
-            ChallengeButton challenge = new ChallengeButton();
-            challenge.setPos(
-                    w / 2 - challenge.width() / 2,
-                    top + shieldH - challenge.height() / 2 );
-            add( challenge );
+//            ChallengeButton challenge = new ChallengeButton();
+//            challenge.setPos(
+//                    w / 2 - challenge.width() / 2,
+//                    top + shieldH - challenge.height() / 2 );
+//            add( challenge );
         }
 
 //        unlock = new Group();
@@ -414,8 +413,8 @@ public class StartScene extends PixelScene {
         protected void onTouchDown() {
 
             emitter.revive();
-            emitter.start( Speck.factory( Speck.LIGHT ), 0.05f, 7 );
-
+//            emitter.start( Speck.factory( Speck.LIGHT ), 0.05f, 7 );
+//
             Sample.INSTANCE.play( Assets.SND_CLICK, 1, 1, 1.2f );
             updateClass( cl );
         }

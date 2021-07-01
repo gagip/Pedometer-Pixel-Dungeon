@@ -16,9 +16,6 @@ import com.example.pedometerpixeldungeon.mainsrc.windows.WndBag;
 import com.example.pedometerpixeldungeon.mainsrc.windows.WndCatalogus;
 import com.example.pedometerpixeldungeon.mainsrc.windows.WndHero;
 import com.example.pedometerpixeldungeon.mainsrc.windows.WndInfoCell;
-import com.example.pedometerpixeldungeon.mainsrc.windows.WndInfoItem;
-import com.example.pedometerpixeldungeon.mainsrc.windows.WndMessage;
-import com.example.pedometerpixeldungeon.mainsrc.windows.WndTradeItem;
 import com.example.pedometerpixeldungeon.noosa.Game;
 import com.example.pedometerpixeldungeon.noosa.Gizmo;
 import com.example.pedometerpixeldungeon.noosa.Image;
@@ -164,7 +161,7 @@ public class Toolbar extends Component {
             }
 
             if (cell < 0 || cell > Level.LENGTH || (!Dungeon.level.visited[cell] && !Dungeon.level.mapped[cell])) {
-                GameScene.show( new WndMessage( "You don't know what is there." ) ) ;
+//                GameScene.show( new WndMessage( "You don't know what is there." ) ) ;
                 return;
             }
 
@@ -187,9 +184,9 @@ public class Toolbar extends Component {
             Heap heap = Dungeon.level.heaps.get( cell );
             if (heap != null && heap.type != Heap.Type.HIDDEN) {
                 if (heap.type == Heap.Type.FOR_SALE && heap.size() == 1 && heap.peek().price() > 0) {
-                    GameScene.show( new WndTradeItem( heap, false ) );
+//                    GameScene.show( new WndTradeItem( heap, false ) );
                 } else {
-                    GameScene.show( new WndInfoItem( heap ) );
+//                    GameScene.show( new WndInfoItem( heap ) );
                 }
                 return;
             }

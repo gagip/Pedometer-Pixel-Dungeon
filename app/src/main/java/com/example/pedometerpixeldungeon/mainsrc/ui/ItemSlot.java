@@ -1,10 +1,8 @@
 package com.example.pedometerpixeldungeon.mainsrc.ui;
 
-import com.example.pedometerpixeldungeon.mainsrc.Dungeon;
 import com.example.pedometerpixeldungeon.mainsrc.items.Item;
 import com.example.pedometerpixeldungeon.mainsrc.items.armors.Armor;
 import com.example.pedometerpixeldungeon.mainsrc.items.weapons.Weapon;
-import com.example.pedometerpixeldungeon.mainsrc.items.weapons.melee.MeleeWeapon;
 import com.example.pedometerpixeldungeon.mainsrc.scenes.PixelScene;
 import com.example.pedometerpixeldungeon.mainsrc.sprites.ItemSprite;
 import com.example.pedometerpixeldungeon.mainsrc.sprites.ItemSpriteSheet;
@@ -115,25 +113,25 @@ public class ItemSlot extends Button {
             boolean isWeapon = item instanceof Weapon;
             if (isArmor || isWeapon) {
 
-                if (item.levelKnown || (isWeapon && !(item instanceof MeleeWeapon))) {
-
-                    int str = isArmor ? ((Armor)item).STR : ((Weapon)item).STR;
-                    topRight.text( Utils.format( TXT_STRENGTH, str ) );
-                    if (str > Dungeon.hero.STR()) {
-                        topRight.hardlight( DEGRADED );
-                    } else {
-                        topRight.resetColor();
-                    }
-
-                } else {
-
-                    topRight.text( Utils.format( TXT_TYPICAL_STR, isArmor ?
-                            ((Armor)item).typicalSTR() :
-                            ((MeleeWeapon)item).typicalSTR() ) );
-                    topRight.hardlight( WARNING );
-
-                }
-                topRight.measure();
+//                if (item.levelKnown || (isWeapon && !(item instanceof MeleeWeapon))) {
+//
+//                    int str = isArmor ? ((Armor)item).STR : ((Weapon)item).STR;
+//                    topRight.text( Utils.format( TXT_STRENGTH, str ) );
+//                    if (str > Dungeon.hero.STR()) {
+//                        topRight.hardlight( DEGRADED );
+//                    } else {
+//                        topRight.resetColor();
+//                    }
+//
+//                } else {
+//
+//                    topRight.text( Utils.format( TXT_TYPICAL_STR, isArmor ?
+//                            ((Armor)item).typicalSTR() :
+//                            ((MeleeWeapon)item).typicalSTR() ) );
+//                    topRight.hardlight( WARNING );
+//
+//                }
+//                topRight.measure();
 
             } else {
 
