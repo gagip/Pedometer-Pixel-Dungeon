@@ -2,6 +2,7 @@ package com.example.pedometerpixeldungeon.mainsrc.levels;
 
 import com.example.pedometerpixeldungeon.mainsrc.Assets;
 import com.example.pedometerpixeldungeon.mainsrc.Challenges;
+import com.example.pedometerpixeldungeon.mainsrc.Cheat;
 import com.example.pedometerpixeldungeon.mainsrc.Dungeon;
 import com.example.pedometerpixeldungeon.mainsrc.Statistics;
 import com.example.pedometerpixeldungeon.mainsrc.actors.Actor;
@@ -811,8 +812,10 @@ public abstract class Level implements Bundlable {
         }
 
         // 맵핵
-        for (int i=0; i<LENGTH; i++){
-            fieldOfView[i] = true;
+        if (Cheat.mapCheat) {
+            for (int i=0; i<LENGTH; i++){
+                fieldOfView[i] = true;
+            }
         }
 
         if (c.isAlive()) {

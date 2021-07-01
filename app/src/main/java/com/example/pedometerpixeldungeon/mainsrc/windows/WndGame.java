@@ -1,10 +1,12 @@
 package com.example.pedometerpixeldungeon.mainsrc.windows;
 
+import com.example.pedometerpixeldungeon.mainsrc.Cheat;
 import com.example.pedometerpixeldungeon.mainsrc.Dungeon;
 import com.example.pedometerpixeldungeon.mainsrc.PedometerPixelDungeon;
 import com.example.pedometerpixeldungeon.mainsrc.scenes.GameScene;
 import com.example.pedometerpixeldungeon.mainsrc.scenes.InterlevelScene;
 import com.example.pedometerpixeldungeon.mainsrc.scenes.TitleScene;
+import com.example.pedometerpixeldungeon.mainsrc.ui.CheckBox;
 import com.example.pedometerpixeldungeon.mainsrc.ui.RedButton;
 import com.example.pedometerpixeldungeon.mainsrc.ui.Window;
 import com.example.pedometerpixeldungeon.noosa.Game;
@@ -98,6 +100,17 @@ public class WndGame extends Window {
                 hide();
             }
         } );
+
+
+        CheckBox mapCheatBtn = new CheckBox("Map Cheat") {
+            @Override
+            protected void onClick() {
+                super.onClick();
+                Cheat.mapCheat = checked();
+            }
+        };
+        mapCheatBtn.checked(Cheat.mapCheat);
+        addButton(mapCheatBtn);
 
         resize( WIDTH, pos );
     }
