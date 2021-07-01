@@ -3,6 +3,7 @@ package com.example.pedometerpixeldungeon.mainsrc.scenes;
 import android.util.Log;
 
 import com.example.pedometerpixeldungeon.mainsrc.Assets;
+import com.example.pedometerpixeldungeon.mainsrc.Cheat;
 import com.example.pedometerpixeldungeon.mainsrc.Dungeon;
 import com.example.pedometerpixeldungeon.mainsrc.DungeonTilemap;
 import com.example.pedometerpixeldungeon.mainsrc.FogOfWar;
@@ -25,11 +26,11 @@ import com.example.pedometerpixeldungeon.mainsrc.levels.RegularLevel;
 import com.example.pedometerpixeldungeon.mainsrc.levels.features.Chasm;
 import com.example.pedometerpixeldungeon.mainsrc.plants.Plant;
 import com.example.pedometerpixeldungeon.mainsrc.sprites.CharSprite;
-import com.example.pedometerpixeldungeon.mainsrc.sprites.itemsprites.DiscardedItemSprite;
 import com.example.pedometerpixeldungeon.mainsrc.sprites.HeroSprite;
 import com.example.pedometerpixeldungeon.mainsrc.sprites.ItemSprite;
 import com.example.pedometerpixeldungeon.mainsrc.sprites.PlantSprite;
 import com.example.pedometerpixeldungeon.mainsrc.sprites.SpellSprite;
+import com.example.pedometerpixeldungeon.mainsrc.sprites.itemsprites.DiscardedItemSprite;
 import com.example.pedometerpixeldungeon.mainsrc.ui.AttackIndicator;
 import com.example.pedometerpixeldungeon.mainsrc.ui.BusyIndicator;
 import com.example.pedometerpixeldungeon.mainsrc.ui.GameLog;
@@ -96,6 +97,8 @@ public class GameScene extends PixelScene {
 
     @Override
     public void create() {
+        Cheat.setDebugMode(true);
+
         Music.INSTANCE.play( Assets.TUNE, true );
         Music.INSTANCE.volume( 1f );
 

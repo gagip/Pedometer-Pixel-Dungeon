@@ -5,8 +5,18 @@ package com.example.pedometerpixeldungeon.mainsrc;
  * @author gagip
  */
 public class Cheat {
-    public static boolean cheatMode = false;
+    private static boolean debugMode = false;
     public static boolean mapCheat = false;
     public static boolean statCheat = false;
+    public static boolean destoryMobCheat = false;
+
+
+    public static boolean isDebugMode() {
+        return debugMode;
+    }
+
+    public static void setDebugMode(boolean debugMode) {
+        Cheat.debugMode = debugMode;
+    }
 }
 
