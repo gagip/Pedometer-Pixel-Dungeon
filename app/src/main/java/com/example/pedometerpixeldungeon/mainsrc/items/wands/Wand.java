@@ -52,18 +52,18 @@ public abstract class Wand extends KindOfWeapon {
     protected boolean hitChars = true;
 
     private static final Class<?>[] wands = {
-//            WandOfTeleportation.class,
-//            WandOfSlowness.class,
-//            WandOfFirebolt.class,
-//            WandOfPoison.class,
-//            WandOfRegrowth.class,
-//            WandOfBlink.class,
-//            WandOfLightning.class,
-//            WandOfAmok.class,
-//            WandOfReach.class,
-//            WandOfFlock.class,
-//            WandOfDisintegration.class,
-//            WandOfAvalanche.class
+            WandOfTeleportation.class,
+            WandOfSlowness.class,
+            WandOfFirebolt.class,
+            WandOfPoison.class,
+            WandOfRegrowth.class,
+            WandOfBlink.class,
+            WandOfLightning.class,
+            WandOfAmok.class,
+            WandOfReach.class,
+            WandOfFlock.class,
+            WandOfDisintegration.class,
+            WandOfAvalanche.class
     };
     private static final String[] woods =
             {"holly", "yew", "ebony", "cherry", "teak", "rowan", "willow", "mahogany", "bamboo", "purpleheart", "oak", "birch"};

@@ -31,18 +31,18 @@ public class Potion extends Item {
     private static final float TIME_TO_DRINK = 1f;
 
     private static final Class<?>[] potions = {
-//            PotionOfHealing.class,
-//            PotionOfExperience.class,
-//            PotionOfToxicGas.class,
-//            PotionOfLiquidFlame.class,
-//            PotionOfStrength.class,
-//            PotionOfParalyticGas.class,
-//            PotionOfLevitation.class,
-//            PotionOfMindVision.class,
-//            PotionOfPurity.class,
-//            PotionOfInvisibility.class,
-//            PotionOfMight.class,
-//            PotionOfFrost.class
+            PotionOfHealing.class,
+            PotionOfExperience.class,
+            PotionOfToxicGas.class,
+            PotionOfLiquidFlame.class,
+            PotionOfStrength.class,
+            PotionOfParalyticGas.class,
+            PotionOfLevitation.class,
+            PotionOfMindVision.class,
+            PotionOfPurity.class,
+            PotionOfInvisibility.class,
+            PotionOfMight.class,
+            PotionOfFrost.class
     };
     private static final String[] colors = {
             "turquoise", "crimson", "azure", "jade", "golden", "magenta",

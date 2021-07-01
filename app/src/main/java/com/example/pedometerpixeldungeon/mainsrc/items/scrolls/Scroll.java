@@ -19,18 +19,18 @@ public abstract class Scroll extends Item {
     protected static final float TIME_TO_READ	= 1f;
 
     private static final Class<?>[] scrolls = {
-//            ScrollOfIdentify.class,
-//            ScrollOfMagicMapping.class,
-//            ScrollOfRecharging.class,
-//            ScrollOfRemoveCurse.class,
-//            ScrollOfTeleportation.class,
-//            ScrollOfChallenge.class,
-//            ScrollOfTerror.class,
-//            ScrollOfLullaby.class,
-//            ScrollOfPsionicBlast.class,
-//            ScrollOfMirrorImage.class,
-//            ScrollOfUpgrade.class,
-//            ScrollOfEnchantment.class
+            ScrollOfIdentify.class,
+            ScrollOfMagicMapping.class,
+            ScrollOfRecharging.class,
+            ScrollOfRemoveCurse.class,
+            ScrollOfTeleportation.class,
+            ScrollOfChallenge.class,
+            ScrollOfTerror.class,
+            ScrollOfLullaby.class,
+            ScrollOfPsionicBlast.class,
+            ScrollOfMirrorImage.class,
+            ScrollOfUpgrade.class,
+            ScrollOfEnchantment.class
     };
     private static final String[] runes =
             {"KAUNAN", "SOWILO", "LAGUZ", "YNGVI", "GYFU", "RAIDO", "ISAZ", "MANNAZ", "NAUDIZ", "BERKANAN", "ODAL", "TIWAZ"};

@@ -35,18 +35,18 @@ public class Ring extends EquipableItem {
     protected Buff buff;
 
     private static final Class<?>[] rings = {
-//            RingOfMending.class,
-//            RingOfDetection.class,
-//            RingOfShadows.class,
-//            RingOfPower.class,
-//            RingOfHerbalism.class,
-//            RingOfAccuracy.class,
-//            RingOfEvasion.class,
+            RingOfMending.class,
+            RingOfDetection.class,
+            RingOfShadows.class,
+            RingOfPower.class,
+            RingOfHerbalism.class,
+            RingOfAccuracy.class,
+            RingOfEvasion.class,
             RingOfSatiety.class,
-//            RingOfHaste.class,
-//            RingOfHaggler.class,
-//            RingOfElements.class,
-//            RingOfThorns.class
+            RingOfHaste.class,
+            RingOfHaggler.class,
+            RingOfElements.class,
+            RingOfThorns.class
     };
     private static final String[] gems =
             {"diamond", "opal", "garnet", "ruby", "amethyst", "topaz", "onyx", "tourmaline", "emerald", "sapphire", "quartz", "agate"};

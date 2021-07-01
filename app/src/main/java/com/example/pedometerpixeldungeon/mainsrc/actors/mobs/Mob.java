@@ -1,8 +1,14 @@
 package com.example.pedometerpixeldungeon.mainsrc.actors.mobs;
 
+import com.example.pedometerpixeldungeon.mainsrc.Challenges;
 import com.example.pedometerpixeldungeon.mainsrc.Dungeon;
 import com.example.pedometerpixeldungeon.mainsrc.Statistics;
 import com.example.pedometerpixeldungeon.mainsrc.actors.Char;
+import com.example.pedometerpixeldungeon.mainsrc.actors.buffs.Amok;
+import com.example.pedometerpixeldungeon.mainsrc.actors.buffs.Buff;
+import com.example.pedometerpixeldungeon.mainsrc.actors.buffs.Sleep;
+import com.example.pedometerpixeldungeon.mainsrc.actors.buffs.Terror;
+import com.example.pedometerpixeldungeon.mainsrc.effects.Flare;
 import com.example.pedometerpixeldungeon.mainsrc.levels.Level;
 import com.example.pedometerpixeldungeon.mainsrc.sprites.CharSprite;
 import com.example.pedometerpixeldungeon.mainsrc.utils.GLog;
@@ -161,37 +167,36 @@ public class Mob extends Char {
         }
     }
 
-//    @Override
-//    public void add( Buff buff ) {
-//        super.add( buff );
-//        if (buff instanceof Amok) {
-//            if (sprite != null) {
-//                sprite.showStatus( CharSprite.NEGATIVE, TXT_RAGE );
-//            }
-//            state = HUNTING;
-//        } else if (buff instanceof Terror) {
-//            state = FLEEING;
-//        } else if (buff instanceof Sleep) {
-//            if (sprite != null) {
-//                new Flare( 4, 32 ).color( 0x44ffff, true ).show( sprite, 2f ) ;
-//            }
-//            state = SLEEPEING;
-//            postpone( Sleep.SWS );
-//        }
-//    }
+    @Override
+    public void add( Buff buff ) {
+        super.add( buff );
+        if (buff instanceof Amok) {
+            if (sprite != null) {
+                sprite.showStatus( CharSprite.NEGATIVE, TXT_RAGE );
+            }
+            state = HUNTING;
+        } else if (buff instanceof Terror) {
+            state = FLEEING;
+        } else if (buff instanceof Sleep) {
+            if (sprite != null) {
+                new Flare( 4, 32 ).color( 0x44ffff, true ).show( sprite, 2f ) ;
+            }
+            state = SLEEPEING;
+            postpone( Sleep.SWS );
+        }
+    }
 
-//    @Override
-//    public void remove( Buff buff ) {
-//        super.remove( buff );
-//        if (buff instanceof Terror) {
-//            sprite.showStatus( CharSprite.NEGATIVE, TXT_RAGE );
-//            state = HUNTING;
-//        }
-//    }
+    @Override
+    public void remove( Buff buff ) {
+        super.remove( buff );
+        if (buff instanceof Terror) {
+            sprite.showStatus( CharSprite.NEGATIVE, TXT_RAGE );
+            state = HUNTING;
+        }
+    }
 
     protected boolean canAttack( Char enemy ) {
-//        return Level.adjacent( pos, enemy.pos ) && !isCharmedBy( enemy );
-        return false;
+        return Level.adjacent( pos, enemy.pos ) && !isCharmedBy( enemy );
     }
 
     protected boolean getCloser( int target ) {
@@ -406,13 +411,13 @@ public class Mob extends Char {
                 state = HUNTING;
                 target = enemy.pos;
 
-//                if (Dungeon.isChallenged( Challenges.SWARM_INTELLIGENCE )) {
-//                    for (Mob mob : Dungeon.level.mobs) {
-//                        if (mob != Mob.this) {
-//                            mob.beckon( target );
-//                        }
-//                    }
-//                }
+                if (Dungeon.isChallenged( Challenges.SWARM_INTELLIGENCE )) {
+                    for (Mob mob : Dungeon.level.mobs) {
+                        if (mob != Mob.this) {
+                            mob.beckon( target );
+                        }
+                    }
+                }
 
                 spend( TIME_TO_WAKE_UP );
 
@@ -452,7 +457,7 @@ public class Mob extends Char {
 
                 int oldPos = pos;
                 if (target != -1 && getCloser( target )) {
-//                    spend( 1 / speed() );
+                    spend( 1 / speed() );
                     return moveSprite( oldPos, pos );
                 } else {
                     target = Dungeon.level.randomDestination();
@@ -489,7 +494,7 @@ public class Mob extends Char {
                 int oldPos = pos;
                 if (target != -1 && getCloser( target )) {
 
-//                    spend( 1 / speed() );
+                    spend( 1 / speed() );
                     return moveSprite( oldPos,  pos );
 
                 } else {
@@ -522,7 +527,7 @@ public class Mob extends Char {
             int oldPos = pos;
             if (target != -1 && getFurther( target )) {
 
-//                spend( 1 / speed() );
+                spend( 1 / speed() );
                 return moveSprite( oldPos, pos );
 
             } else {
