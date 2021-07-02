@@ -99,6 +99,14 @@ public class WndGame extends Window {
             }
         } );
 
+        addButton( new RedButton( "Game Cheat" ) {
+            @Override
+            protected void onClick() {
+                hide();
+                GameScene.show( new WndCheat() );
+            }
+        } );
+
         resize( WIDTH, pos );
     }
 

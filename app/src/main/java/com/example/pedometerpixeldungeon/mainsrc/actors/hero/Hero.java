@@ -50,8 +50,10 @@ import com.example.pedometerpixeldungeon.mainsrc.items.potions.PotionOfStrength;
 import com.example.pedometerpixeldungeon.mainsrc.items.rings.RingOfAccuracy;
 import com.example.pedometerpixeldungeon.mainsrc.items.rings.RingOfDetection;
 import com.example.pedometerpixeldungeon.mainsrc.items.rings.RingOfElements;
+import com.example.pedometerpixeldungeon.mainsrc.items.rings.RingOfEvasion;
 import com.example.pedometerpixeldungeon.mainsrc.items.rings.RingOfHaste;
 import com.example.pedometerpixeldungeon.mainsrc.items.rings.RingOfShadows;
+import com.example.pedometerpixeldungeon.mainsrc.items.rings.RingOfThorns;
 import com.example.pedometerpixeldungeon.mainsrc.items.scrolls.Scroll;
 import com.example.pedometerpixeldungeon.mainsrc.items.scrolls.ScrollOfEnchantment;
 import com.example.pedometerpixeldungeon.mainsrc.items.scrolls.ScrollOfMagicMapping;
@@ -64,6 +66,7 @@ import com.example.pedometerpixeldungeon.mainsrc.levels.Level;
 import com.example.pedometerpixeldungeon.mainsrc.levels.Terrain;
 import com.example.pedometerpixeldungeon.mainsrc.levels.features.Chasm;
 import com.example.pedometerpixeldungeon.mainsrc.levels.features.Sign;
+import com.example.pedometerpixeldungeon.mainsrc.plants.Earthroot;
 import com.example.pedometerpixeldungeon.mainsrc.scenes.GameScene;
 import com.example.pedometerpixeldungeon.mainsrc.scenes.InterlevelScene;
 import com.example.pedometerpixeldungeon.mainsrc.scenes.SurfaceScene;
@@ -248,36 +251,36 @@ public class Hero extends Char {
         }
     }
 
-//    @Override
-//    public int defenseSkill( Char enemy ) {
-//
-//        int bonus = 0;
-//        for (Buff buff : buffs( RingOfEvasion.Evasion.class )) {
-//            bonus += ((RingOfEvasion.Evasion)buff).level;
-//        }
-//        float evasion = bonus == 0 ? 1 : (float)Math.pow( 1.2, bonus );
-//        if (paralysed) {
-//            evasion /= 2;
-//        }
-//
-//        int aEnc = belongings.armor != null ? belongings.armor.STR - STR() : 0;
-//
-//        if (aEnc > 0) {
-//            return (int)(defenseSkill * evasion / Math.pow( 1.5, aEnc ));
-//        } else {
-//
-//            if (heroClass == HeroClass.ROGUE) {
-//
-//                if (curAction != null && subClass == HeroSubClass.FREERUNNER && !isStarving()) {
-//                    evasion *= 2;
-//                }
-//
-//                return (int)((defenseSkill - aEnc) * evasion);
-//            } else {
-//                return (int)(defenseSkill * evasion);
-//            }
-//        }
-//    }
+    @Override
+    public int defenseSkill( Char enemy ) {
+
+        int bonus = 0;
+        for (Buff buff : buffs( RingOfEvasion.Evasion.class )) {
+            bonus += ((RingOfEvasion.Evasion)buff).level;
+        }
+        float evasion = bonus == 0 ? 1 : (float)Math.pow( 1.2, bonus );
+        if (paralysed) {
+            evasion /= 2;
+        }
+
+        int aEnc = belongings.armor != null ? belongings.armor.STR - STR() : 0;
+
+        if (aEnc > 0) {
+            return (int)(defenseSkill * evasion / Math.pow( 1.5, aEnc ));
+        } else {
+
+            if (heroClass == HeroClass.ROGUE) {
+
+                if (curAction != null && subClass == HeroSubClass.FREERUNNER && !isStarving()) {
+                    evasion *= 2;
+                }
+
+                return (int)((defenseSkill - aEnc) * evasion);
+            } else {
+                return (int)(defenseSkill * evasion);
+            }
+        }
+    }
 
     @Override
     public int dr() {
@@ -823,22 +826,22 @@ public class Hero extends Char {
     @Override
     public int defenseProc( Char enemy, int damage ) {
 
-//        RingOfThorns.Thorns thorns = buff( RingOfThorns.Thorns.class );
-//        if (thorns != null) {
-//            int dmg = Random.IntRange( 0, damage );
-//            if (dmg > 0) {
-//                enemy.damage( dmg, thorns );
-//            }
-//        }
-//
-//        Earthroot.Armor armor = buff( Earthroot.Armor.class );
-//        if (armor != null) {
-//            damage = armor.absorb( damage );
-//        }
-//
-//        if (belongings.armor != null) {
-//            damage = belongings.armor.proc( enemy, this, damage );
-//        }
+        RingOfThorns.Thorns thorns = buff( RingOfThorns.Thorns.class );
+        if (thorns != null) {
+            int dmg = Random.IntRange( 0, damage );
+            if (dmg > 0) {
+                enemy.damage( dmg, thorns );
+            }
+        }
+
+        Earthroot.Armor armor = buff( Earthroot.Armor.class );
+        if (armor != null) {
+            damage = armor.absorb( damage );
+        }
+
+        if (belongings.armor != null) {
+            damage = belongings.armor.proc( enemy, this, damage );
+        }
 
         return damage;
     }

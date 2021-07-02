@@ -2,6 +2,7 @@ package com.example.pedometerpixeldungeon.mainsrc.levels;
 
 import com.example.pedometerpixeldungeon.mainsrc.Assets;
 import com.example.pedometerpixeldungeon.mainsrc.Challenges;
+import com.example.pedometerpixeldungeon.mainsrc.Cheat;
 import com.example.pedometerpixeldungeon.mainsrc.Dungeon;
 import com.example.pedometerpixeldungeon.mainsrc.Statistics;
 import com.example.pedometerpixeldungeon.mainsrc.actors.Actor;
@@ -522,7 +523,7 @@ public abstract class Level implements Bundlable {
         pit[cell]			= (flags & Terrain.PIT) != 0;
         water[cell]			= terrain == Terrain.WATER || terrain >= Terrain.WATER_TILES;
     }
-//
+
     public Heap drop(Item item, int cell ) {
 
         if (Dungeon.isChallenged( Challenges.NO_FOOD ) && item instanceof Food) {
@@ -773,6 +774,14 @@ public abstract class Level implements Bundlable {
     }
 
     public boolean[] updateFieldOfView( Char c ) {
+        // 맵핵
+        if (Cheat.isDebugMode() & Cheat.mapCheat) {
+            for (int i=0; i<LENGTH; i++){
+                fieldOfView[i] = true;
+            }
+            return fieldOfView;
+        }
+
 
         int cx = c.pos % WIDTH;
         int cy = c.pos / WIDTH;
@@ -808,11 +817,6 @@ public abstract class Level implements Bundlable {
             for (int i=0; i < LENGTH; i++) {
                 fieldOfView[i] &= discoverable[i];
             }
-        }
-
-        // 맵핵
-        for (int i=0; i<LENGTH; i++){
-            fieldOfView[i] = true;
         }
 
         if (c.isAlive()) {

@@ -3,6 +3,7 @@ package com.example.pedometerpixeldungeon.mainsrc.scenes;
 import android.util.Log;
 
 import com.example.pedometerpixeldungeon.mainsrc.Assets;
+import com.example.pedometerpixeldungeon.mainsrc.Cheat;
 import com.example.pedometerpixeldungeon.mainsrc.Dungeon;
 import com.example.pedometerpixeldungeon.mainsrc.DungeonTilemap;
 import com.example.pedometerpixeldungeon.mainsrc.FogOfWar;
@@ -98,6 +99,8 @@ public class GameScene extends PixelScene {
 
     @Override
     public void create() {
+        Cheat.setDebugMode(true);
+
         Music.INSTANCE.play( Assets.TUNE, true );
         Music.INSTANCE.volume( 1f );
 

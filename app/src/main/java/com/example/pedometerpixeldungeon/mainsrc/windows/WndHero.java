@@ -7,6 +7,7 @@ import com.example.pedometerpixeldungeon.mainsrc.Dungeon;
 import com.example.pedometerpixeldungeon.mainsrc.Statistics;
 import com.example.pedometerpixeldungeon.mainsrc.actors.buffs.Buff;
 import com.example.pedometerpixeldungeon.mainsrc.actors.hero.Hero;
+import com.example.pedometerpixeldungeon.mainsrc.scenes.GameScene;
 import com.example.pedometerpixeldungeon.mainsrc.scenes.PixelScene;
 import com.example.pedometerpixeldungeon.mainsrc.ui.BuffIndicator;
 import com.example.pedometerpixeldungeon.mainsrc.ui.RedButton;
@@ -96,7 +97,7 @@ public class WndHero extends WndTabbed {
                 @Override
                 protected void onClick() {
                     hide();
-//                    GameScene.show( new WndCatalogus() );
+                    GameScene.show( new WndCatalogus() );
                 }
             };
             btnCatalogus.setRect( 0, title.y + title.height(), btnCatalogus.reqWidth() + 2, btnCatalogus.reqHeight() + 2 );
@@ -106,7 +107,7 @@ public class WndHero extends WndTabbed {
                 @Override
                 protected void onClick() {
                     hide();
-//                    GameScene.show( new WndJournal() );
+                    GameScene.show( new WndJournal() );
                 }
             };
             btnJournal.setRect(
