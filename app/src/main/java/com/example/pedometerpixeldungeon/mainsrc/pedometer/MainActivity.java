@@ -21,6 +21,8 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import com.example.pedometerpixeldungeon.R;
+
 import java.util.ArrayList;
 import java.util.Date;
 

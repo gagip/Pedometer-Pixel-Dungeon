@@ -21,6 +21,31 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:id="@+id/moneyTag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="돈 :"
+        android:textSize="25dp"
+        app:layout_constraintEnd_toStartOf="@+id/stepCountView"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="@+id/title"
+        app:layout_constraintTop_toBottomOf="@+id/title" />
+
+    <TextView
+        android:id="@+id/moneyView"
+        android:layout_width="13dp"
+        android:layout_height="67dp"
+        android:text=""
+        android:textSize="25dp"
+        app:layout_constraintBottom_toBottomOf="@+id/stepCountTag"
+        app:layout_constraintEnd_toEndOf="@+id/title"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toEndOf="@+id/stepCountTag"
+        app:layout_constraintTop_toTopOf="@+id/stepCountTag"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
         android:id="@+id/stepCountTag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -42,14 +67,57 @@
         app:layout_constraintStart_toEndOf="@+id/stepCountTag"
         app:layout_constraintTop_toTopOf="@+id/stepCountTag" />
 
+    <TextView
+        android:id="@+id/DBView"
+        android:layout_width="wrap_content"
+        android:layout_height="100dp"
+        android:text="0"
+        android:textSize="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/randomButton"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/stepCountTag"
+        />
+
     <Button
-        android:id="@+id/resetButton"
+        android:id="@+id/randomButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Reset"
+        android:text="랜덤박스 사용"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/stepCountView"
         app:layout_constraintStart_toStartOf="@+id/stepCountTag"
         app:layout_constraintTop_toBottomOf="@+id/stepCountTag" />
+
+    <Button
+        android:id="@+id/rewardButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="보상받기"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/stepCountView"
+        app:layout_constraintStart_toStartOf="@+id/stepCountTag"
+        app:layout_constraintTop_toBottomOf="@+id/randomButton" />
+
+    <TextView
+        android:id="@+id/savedCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="저장된걸음수 :"
+        android:textSize="25dp"
+        app:layout_constraintEnd_toStartOf="@+id/stepCountView"
+        app:layout_constraintStart_toStartOf="@+id/title"
+        app:layout_constraintTop_toBottomOf="@+id/rewardButton" />
+
+    <TextView
+        android:id="@+id/saveView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:textSize="25dp"
+        app:layout_constraintLeft_toRightOf="@+id/savedCount"
+        app:layout_constraintTop_toBottomOf="@+id/rewardButton"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
