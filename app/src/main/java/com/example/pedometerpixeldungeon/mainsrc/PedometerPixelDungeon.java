@@ -2,11 +2,15 @@ package com.example.pedometerpixeldungeon.mainsrc;
 
 import android.annotation.SuppressLint;
 import android.content.pm.ActivityInfo;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 
+import androidx.annotation.RequiresApi;
+
+import com.example.pedometerpixeldungeon.mainsrc.pedometer.PedometerGame;
 import com.example.pedometerpixeldungeon.mainsrc.scenes.GameScene;
 import com.example.pedometerpixeldungeon.mainsrc.scenes.PixelScene;
 import com.example.pedometerpixeldungeon.mainsrc.scenes.TitleScene;
@@ -17,7 +21,7 @@ import com.example.pedometerpixeldungeon.noosa.audio.Sample;
 import javax.microedition.khronos.opengles.GL10;
 
 
-public class PedometerPixelDungeon extends Game {
+public class PedometerPixelDungeon extends PedometerGame {
 
     public PedometerPixelDungeon() {
         super( TitleScene.class );
@@ -107,6 +111,7 @@ public class PedometerPixelDungeon extends Game {
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
@@ -296,7 +301,7 @@ public class PedometerPixelDungeon extends Game {
     public static void brightness( boolean value ) {
         Preferences.INSTANCE.put( Preferences.KEY_BRIGHTNESS, value );
         if (scene() instanceof GameScene) {
-//            ((GameScene)scene()).brightness( value );
+            ((GameScene)scene()).brightness( value );
         }
     }
 

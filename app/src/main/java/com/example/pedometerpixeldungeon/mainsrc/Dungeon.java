@@ -330,16 +330,19 @@ public class Dungeon {
         try {
             Bundle bundle = new Bundle();
 
+            // User Info
             bundle.put( VERSION, Game.version );
             bundle.put( CHALLENGES, challenges );
             bundle.put( HERO, hero );
             bundle.put( GOLD, gold );
             bundle.put( DEPTH, depth );
 
+            // Item
             for (int d : droppedItems.keyArray()) {
                 bundle.put( String.format( DROPPED, d ), droppedItems.get( d ) );
             }
 
+            // Additional Properties
             bundle.put( POS, potionOfStrength );
             bundle.put( SOU, scrollsOfUpgrade );
             bundle.put( SOE, scrollsOfEnchantment );
@@ -352,6 +355,7 @@ public class Dungeon {
             }
             bundle.put( CHAPTERS, ids );
 
+            // Quest
             Bundle quests = new Bundle();
 //            Ghost		.Quest.storeInBundle( quests );
 //            Wandmaker	.Quest.storeInBundle( quests );
@@ -371,9 +375,9 @@ public class Dungeon {
             Wand.save( bundle );
             Ring.save( bundle );
 
-            Bundle badges = new Bundle();
+//            Bundle badges = new Bundle();
 //            Badges.saveLocal( badges );
-            bundle.put( BADGES, badges );
+//            bundle.put( BADGES, badges );
 
             OutputStream output = Game.instance.openFileOutput( fileName, Game.MODE_PRIVATE );
             Bundle.write( bundle, output );
@@ -423,9 +427,9 @@ public class Dungeon {
     public static void loadGame( String fileName, boolean fullLoad ) throws IOException {
 
         Bundle bundle = gameBundle( fileName );
-//
-//        Dungeon.challenges = bundle.getInt( CHALLENGES );
-//
+
+        Dungeon.challenges = bundle.getInt( CHALLENGES );
+
         Dungeon.level = null;
         Dungeon.depth = -1;
 

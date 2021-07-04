@@ -12,8 +12,6 @@ public class DBOpenHelper extends SQLiteOpenHelper {
     public static final String CULCOUNT = "culCount";
 
 
-
-
     public DBOpenHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
     }
