@@ -32,6 +32,7 @@ public class StatusPane extends Component {
 
     private Image hp;
     private Image exp;
+    private Image PD;
 
     private int lastLvl = -1;
     private int lastKeys = -1;
@@ -39,6 +40,7 @@ public class StatusPane extends Component {
     private BitmapText level;
     private BitmapText depth;
     private BitmapText keys;
+    private BitmapText pd;
 
     private DangerIndicator danger;
     private LootIndicator loot;
@@ -95,6 +97,18 @@ public class StatusPane extends Component {
         depth.measure();
         add( depth );
 
+//        PD = new BitmapText( Integer.toString( // 기입 필요), PixelScene.font1x); 픽셀 폰트 받아서 데이터 호출 라인
+//        PD.hardlight( 0xCACFC2); - 폰트 색상
+
+        // gold로 임시 대체중 대체 클래스 필요
+        pd = new BitmapText( Integer.toString( Dungeon.gold), PixelScene.font1x);
+        pd.hardlight( 0xCACFC2 );
+        pd.measure();
+        add( pd );
+
+
+        add( level);
+
         Dungeon.hero.belongings.countIronKeys();
         keys = new BitmapText( PixelScene.font1x );
         keys.hardlight( 0xCACFC2 );
@@ -129,8 +143,14 @@ public class StatusPane extends Component {
         hp.x = 30;
         hp.y = 3;
 
+
+
         depth.x = width - 24 - depth.width()    - 18;
         depth.y = 6;
+
+        //걸음수 임시 표기 - Dungeon.gold로 임시 호출상태
+        pd.x = width - 32 - pd.width() - 18;
+        pd.y = 6;
 
         keys.y = 6;
 
