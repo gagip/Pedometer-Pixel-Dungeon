@@ -133,7 +133,6 @@ public class Dungeon {
         Arrays.fill( visible, false );
 
         Level level;
-        depth = 5;
         switch (depth) {
             case 1:
             case 2:

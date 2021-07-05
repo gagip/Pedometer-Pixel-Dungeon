@@ -2,6 +2,7 @@ package com.example.pedometerpixeldungeon.mainsrc.actors.hero;
 
 import com.example.pedometerpixeldungeon.mainsrc.Assets;
 import com.example.pedometerpixeldungeon.mainsrc.Bones;
+import com.example.pedometerpixeldungeon.mainsrc.Cheat;
 import com.example.pedometerpixeldungeon.mainsrc.Dungeon;
 import com.example.pedometerpixeldungeon.mainsrc.GamesInProgress;
 import com.example.pedometerpixeldungeon.mainsrc.ResultDescriptions;
@@ -44,6 +45,7 @@ import com.example.pedometerpixeldungeon.mainsrc.items.armors.Armor;
 import com.example.pedometerpixeldungeon.mainsrc.items.keys.GoldenKey;
 import com.example.pedometerpixeldungeon.mainsrc.items.keys.IronKey;
 import com.example.pedometerpixeldungeon.mainsrc.items.keys.Key;
+import com.example.pedometerpixeldungeon.mainsrc.items.keys.SkeletonKey;
 import com.example.pedometerpixeldungeon.mainsrc.items.potions.Potion;
 import com.example.pedometerpixeldungeon.mainsrc.items.potions.PotionOfMight;
 import com.example.pedometerpixeldungeon.mainsrc.items.potions.PotionOfStrength;
@@ -655,7 +657,7 @@ public class Hero extends Char {
 
             } else if (door == Terrain.LOCKED_EXIT) {
 
-//                theKey = belongings.getKey( SkeletonKey.class, Dungeon.depth );
+                theKey = belongings.getKey( SkeletonKey.class, Dungeon.depth );
 
             }
 

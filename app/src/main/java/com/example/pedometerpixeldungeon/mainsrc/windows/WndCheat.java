@@ -1,6 +1,7 @@
 package com.example.pedometerpixeldungeon.mainsrc.windows;
 
 import com.example.pedometerpixeldungeon.mainsrc.Cheat;
+import com.example.pedometerpixeldungeon.mainsrc.Dungeon;
 import com.example.pedometerpixeldungeon.mainsrc.ui.CheckBox;
 import com.example.pedometerpixeldungeon.mainsrc.ui.RedButton;
 import com.example.pedometerpixeldungeon.mainsrc.ui.Window;
@@ -42,7 +43,7 @@ public class WndCheat extends Window {
             protected void onClick() {
                 super.onClick();
                 Cheat.statCheat = checked();
-                // TODO 스텟 무한
+                Cheat.onStatCheat(Dungeon.hero);
             }
         };
         btnStatCheat.checked(Cheat.statCheat);
