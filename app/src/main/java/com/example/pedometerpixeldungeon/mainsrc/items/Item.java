@@ -5,11 +5,17 @@ import com.example.pedometerpixeldungeon.mainsrc.Dungeon;
 import com.example.pedometerpixeldungeon.mainsrc.actors.Actor;
 import com.example.pedometerpixeldungeon.mainsrc.actors.Char;
 import com.example.pedometerpixeldungeon.mainsrc.actors.hero.Hero;
+import com.example.pedometerpixeldungeon.mainsrc.effects.Degradation;
 import com.example.pedometerpixeldungeon.mainsrc.effects.Speck;
+import com.example.pedometerpixeldungeon.mainsrc.items.armors.Armor;
 import com.example.pedometerpixeldungeon.mainsrc.items.bags.Bag;
+import com.example.pedometerpixeldungeon.mainsrc.items.rings.Ring;
+import com.example.pedometerpixeldungeon.mainsrc.items.wands.Wand;
+import com.example.pedometerpixeldungeon.mainsrc.items.weapons.Weapon;
 import com.example.pedometerpixeldungeon.mainsrc.mechanics.Ballistica;
 import com.example.pedometerpixeldungeon.mainsrc.scenes.CellSelector;
 import com.example.pedometerpixeldungeon.mainsrc.scenes.GameScene;
+import com.example.pedometerpixeldungeon.mainsrc.sprites.CharSprite;
 import com.example.pedometerpixeldungeon.mainsrc.sprites.ItemSprite;
 import com.example.pedometerpixeldungeon.mainsrc.ui.QuickSlot;
 import com.example.pedometerpixeldungeon.mainsrc.utils.GLog;
@@ -17,6 +23,7 @@ import com.example.pedometerpixeldungeon.mainsrc.utils.Utils;
 import com.example.pedometerpixeldungeon.noosa.audio.Sample;
 import com.example.pedometerpixeldungeon.utils.Bundlable;
 import com.example.pedometerpixeldungeon.utils.Bundle;
+import com.example.pedometerpixeldungeon.utils.PointF;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -271,32 +278,32 @@ public class Item implements Bundlable {
     }
 
     public void use() {
-//        if (level > 0 && !isBroken()) {
-//            int threshold = (int)(maxDurability() * DURABILITY_WARNING_LEVEL);
-//            if (durability-- >= threshold && threshold > durability && levelKnown) {
-//                GLog.w( TXT_GONNA_BREAK, name() );
-//            }
-//            if (isBroken()) {
-//                getBroken();
-//                if (levelKnown) {
-//                    GLog.n( TXT_BROKEN, name() );
-//                    Dungeon.hero.interrupt();
-//
-//                    CharSprite sprite = Dungeon.hero.sprite;
-//                    PointF point = sprite.center().offset( 0, -16 );
-//                    if (this instanceof Weapon) {
-//                        sprite.parent.add( Degradation.weapon( point ) );
-//                    } else if (this instanceof Armor) {
-//                        sprite.parent.add( Degradation.armor( point ) );
-//                    } else if (this instanceof Ring) {
-//                        sprite.parent.add( Degradation.ring( point ) );
-//                    } else if (this instanceof Wand) {
-//                        sprite.parent.add( Degradation.wand( point ) );
-//                    }
-//                    Sample.INSTANCE.play( Assets.SND_DEGRADE );
-//                }
-//            }
-//        }
+        if (level > 0 && !isBroken()) {
+            int threshold = (int)(maxDurability() * DURABILITY_WARNING_LEVEL);
+            if (durability-- >= threshold && threshold > durability && levelKnown) {
+                GLog.w( TXT_GONNA_BREAK, name() );
+            }
+            if (isBroken()) {
+                getBroken();
+                if (levelKnown) {
+                    GLog.n( TXT_BROKEN, name() );
+                    Dungeon.hero.interrupt();
+
+                    CharSprite sprite = Dungeon.hero.sprite;
+                    PointF point = sprite.center().offset( 0, -16 );
+                    if (this instanceof Weapon) {
+                        sprite.parent.add( Degradation.weapon( point ) );
+                    } else if (this instanceof Armor) {
+                        sprite.parent.add( Degradation.armor( point ) );
+                    } else if (this instanceof Ring) {
+                        sprite.parent.add( Degradation.ring( point ) );
+                    } else if (this instanceof Wand) {
+                        sprite.parent.add( Degradation.wand( point ) );
+                    }
+                    Sample.INSTANCE.play( Assets.SND_DEGRADE );
+                }
+            }
+        }
     }
 
     public boolean isBroken() {
