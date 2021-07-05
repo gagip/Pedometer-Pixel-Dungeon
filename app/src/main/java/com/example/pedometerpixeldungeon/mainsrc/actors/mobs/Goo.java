@@ -23,7 +23,9 @@ import com.example.pedometerpixeldungeon.mainsrc.actors.Blobs.ToxicGas;
 import com.example.pedometerpixeldungeon.mainsrc.actors.Char;
 import com.example.pedometerpixeldungeon.mainsrc.actors.buffs.Buff;
 import com.example.pedometerpixeldungeon.mainsrc.actors.buffs.Ooze;
+import com.example.pedometerpixeldungeon.mainsrc.actors.hero.Hero;
 import com.example.pedometerpixeldungeon.mainsrc.effects.Speck;
+import com.example.pedometerpixeldungeon.mainsrc.items.Item;
 import com.example.pedometerpixeldungeon.mainsrc.items.LloydsBeacon;
 import com.example.pedometerpixeldungeon.mainsrc.items.keys.SkeletonKey;
 import com.example.pedometerpixeldungeon.mainsrc.items.scrolls.ScrollOfPsionicBlast;
@@ -43,6 +45,8 @@ import java.util.HashSet;
 public class Goo extends Mob {
 
 	private static final float PUMP_UP_DELAY	= 2f;
+
+
 	
 	{
 		name = Dungeon.depth == Statistics.deepestFloor ? "Goo" : "spawn of Goo";
@@ -203,8 +207,9 @@ public class Goo extends Mob {
 //		Badges.validateBossSlain();
 		
 		yell( "glurp... glurp..." );
+
 	}
-	
+
 	@Override
 	public void notice() {
 		super.notice();

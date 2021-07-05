@@ -23,6 +23,7 @@ import com.example.pedometerpixeldungeon.mainsrc.Dungeon;
 import com.example.pedometerpixeldungeon.mainsrc.actors.Actor;
 import com.example.pedometerpixeldungeon.mainsrc.actors.mobs.Bestiary;
 import com.example.pedometerpixeldungeon.mainsrc.actors.mobs.Mob;
+import com.example.pedometerpixeldungeon.mainsrc.items.Amulet;
 import com.example.pedometerpixeldungeon.mainsrc.items.Heap;
 import com.example.pedometerpixeldungeon.mainsrc.items.Item;
 import com.example.pedometerpixeldungeon.mainsrc.levels.Room.Type;
@@ -45,6 +46,9 @@ public class SewerBossLevel extends RegularLevel {
 	}
 	
 	private int stairs = 0;
+
+//	private static final int SIZE = 7;
+//	private int pedestal;
 	
 	@Override
 	public String tilesTex() {
@@ -58,6 +62,10 @@ public class SewerBossLevel extends RegularLevel {
 	
 	@Override
 	protected boolean build() {
+
+//		pedestal = (SIZE / 2 + 1) * (WIDTH + 1);
+//		map[pedestal] = Terrain.PEDESTAL;
+//		map[pedestal-1] = map[pedestal+1] = Terrain.STATUE_SP;
 		
 		initRooms();
 	
@@ -197,6 +205,7 @@ public class SewerBossLevel extends RegularLevel {
 				pos = roomEntrance.random();
 			} while (pos == entrance || map[pos] == Terrain.SIGN);
 			drop( item, pos ).type = Heap.Type.SKELETON;
+//			drop( new Amulet(), pedestal );
 		}
 	}
 	

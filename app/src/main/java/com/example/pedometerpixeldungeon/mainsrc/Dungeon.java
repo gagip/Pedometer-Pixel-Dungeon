@@ -15,6 +15,7 @@ import com.example.pedometerpixeldungeon.mainsrc.items.wands.Wand;
 import com.example.pedometerpixeldungeon.mainsrc.levels.DeadEndLevel;
 import com.example.pedometerpixeldungeon.mainsrc.levels.Level;
 import com.example.pedometerpixeldungeon.mainsrc.levels.Room;
+import com.example.pedometerpixeldungeon.mainsrc.levels.SewerBossLevel;
 import com.example.pedometerpixeldungeon.mainsrc.levels.SewerLevel;
 import com.example.pedometerpixeldungeon.mainsrc.scenes.GameScene;
 import com.example.pedometerpixeldungeon.mainsrc.scenes.StartScene;
@@ -106,6 +107,9 @@ public class Dungeon {
 //        Badges.reset();
 //
         StartScene.curClass.initHero( hero );
+
+        // FIXME
+        depth = 4;
     }
 
     public static boolean isChallenged( int mask ) {
@@ -138,9 +142,9 @@ public class Dungeon {
             case 4:
                 level = new SewerLevel();
                 break;
-//            case 5:
-//                level = new SewerBossLevel();
-//                break;
+            case 5:
+                level = new SewerBossLevel();
+                break;
 //            case 6:
 //            case 7:
 //            case 8:

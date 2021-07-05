@@ -1,6 +1,8 @@
 package com.example.pedometerpixeldungeon.mainsrc.actors.mobs;
 
 import com.example.pedometerpixeldungeon.mainsrc.actors.Char;
+import com.example.pedometerpixeldungeon.mainsrc.actors.hero.Hero;
+import com.example.pedometerpixeldungeon.mainsrc.items.Item;
 import com.example.pedometerpixeldungeon.mainsrc.sprites.mobsprites.RatSprite;
 import com.example.pedometerpixeldungeon.utils.Random;
 
