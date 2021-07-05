@@ -108,9 +108,7 @@ public class Dungeon {
 //        Badges.reset();
 //
         StartScene.curClass.initHero( hero );
-
-        // FIXME
-        depth = 4;
+        
     }
 
     public static boolean isChallenged( int mask ) {
