@@ -43,7 +43,7 @@ public class Item implements Bundlable {
     public static final String AC_DROP		= "DROP";
     public static final String AC_THROW		= "THROW";
 
-    public String defaultAction;+
+    public String defaultAction;
 
     protected String name = "smth";
     protected int image = 0;
