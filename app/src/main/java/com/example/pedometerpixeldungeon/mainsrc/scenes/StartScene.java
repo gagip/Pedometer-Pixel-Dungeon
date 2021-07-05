@@ -9,9 +9,11 @@ import com.example.pedometerpixeldungeon.mainsrc.effects.BannerSprites;
 import com.example.pedometerpixeldungeon.mainsrc.effects.Speck;
 import com.example.pedometerpixeldungeon.mainsrc.ui.Archs;
 import com.example.pedometerpixeldungeon.mainsrc.ui.ExitButton;
+import com.example.pedometerpixeldungeon.mainsrc.ui.Icons;
 import com.example.pedometerpixeldungeon.mainsrc.ui.RedButton;
 import com.example.pedometerpixeldungeon.mainsrc.utils.Utils;
 import com.example.pedometerpixeldungeon.mainsrc.windows.WndClass;
+import com.example.pedometerpixeldungeon.mainsrc.windows.WndMessage;
 import com.example.pedometerpixeldungeon.mainsrc.windows.WndOptions;
 import com.example.pedometerpixeldungeon.noosa.BitmapText;
 import com.example.pedometerpixeldungeon.noosa.Camera;
@@ -150,11 +152,11 @@ public class StartScene extends PixelScene {
                 shield.setRect( left + i * shieldW, top, shieldW, shieldH );
             }
 
-            ChallengeButton challenge = new ChallengeButton();
-            challenge.setPos(
-                    w / 2 - challenge.width() / 2,
-                    top + shieldH - challenge.height() / 2 );
-            add( challenge );
+//            ChallengeButton challenge = new ChallengeButton();
+//            challenge.setPos(
+//                    w / 2 - challenge.width() / 2,
+//                    top + shieldH - challenge.height() / 2 );
+//            add( challenge );
 
         } else {
             float shieldW = width / 2;
@@ -168,11 +170,11 @@ public class StartScene extends PixelScene {
                         shieldW, shieldH );
             }
 
-            ChallengeButton challenge = new ChallengeButton();
-            challenge.setPos(
-                    w / 2 - challenge.width() / 2,
-                    top + shieldH - challenge.height() / 2 );
-            add( challenge );
+//            ChallengeButton challenge = new ChallengeButton();
+//            challenge.setPos(
+//                    w / 2 - challenge.width() / 2,
+//                    top + shieldH - challenge.height() / 2 );
+//            add( challenge );
         }
 
 //        unlock = new Group();
