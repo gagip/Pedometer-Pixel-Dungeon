@@ -13,8 +13,10 @@ import com.example.pedometerpixeldungeon.mainsrc.items.rings.Ring;
 import com.example.pedometerpixeldungeon.mainsrc.items.scrolls.Scroll;
 import com.example.pedometerpixeldungeon.mainsrc.items.wands.Wand;
 import com.example.pedometerpixeldungeon.mainsrc.levels.DeadEndLevel;
+import com.example.pedometerpixeldungeon.mainsrc.levels.LastLevel;
 import com.example.pedometerpixeldungeon.mainsrc.levels.Level;
 import com.example.pedometerpixeldungeon.mainsrc.levels.Room;
+import com.example.pedometerpixeldungeon.mainsrc.levels.SewerBossLevel;
 import com.example.pedometerpixeldungeon.mainsrc.levels.SewerLevel;
 import com.example.pedometerpixeldungeon.mainsrc.scenes.GameScene;
 import com.example.pedometerpixeldungeon.mainsrc.scenes.StartScene;
@@ -131,6 +133,7 @@ public class Dungeon {
         Arrays.fill( visible, false );
 
         Level level;
+        depth = 5;
         switch (depth) {
             case 1:
             case 2:
@@ -138,10 +141,12 @@ public class Dungeon {
             case 4:
                 level = new SewerLevel();
                 break;
-//            case 5:
-//                level = new SewerBossLevel();
-//                break;
-//            case 6:
+            case 5:
+                level = new SewerBossLevel();
+                break;
+            case 6:
+                level = new LastLevel();
+                break;
 //            case 7:
 //            case 8:
 //            case 9:

@@ -1,13 +1,33 @@
 package com.example.pedometerpixeldungeon.mainsrc.items;
 
+import com.example.pedometerpixeldungeon.mainsrc.Assets;
 import com.example.pedometerpixeldungeon.mainsrc.Dungeon;
+import com.example.pedometerpixeldungeon.mainsrc.Statistics;
+import com.example.pedometerpixeldungeon.mainsrc.actors.buffs.Buff;
+import com.example.pedometerpixeldungeon.mainsrc.actors.buffs.Burning;
+import com.example.pedometerpixeldungeon.mainsrc.actors.buffs.Frost;
 import com.example.pedometerpixeldungeon.mainsrc.actors.hero.Hero;
+import com.example.pedometerpixeldungeon.mainsrc.actors.mobs.Mimic;
+import com.example.pedometerpixeldungeon.mainsrc.actors.mobs.Wraith;
+import com.example.pedometerpixeldungeon.mainsrc.effects.CellEmitter;
+import com.example.pedometerpixeldungeon.mainsrc.effects.Speck;
+import com.example.pedometerpixeldungeon.mainsrc.effects.Splash;
+import com.example.pedometerpixeldungeon.mainsrc.effects.particles.ElmoParticle;
+import com.example.pedometerpixeldungeon.mainsrc.effects.particles.FlameParticle;
+import com.example.pedometerpixeldungeon.mainsrc.effects.particles.ShadowParticle;
+import com.example.pedometerpixeldungeon.mainsrc.items.foods.ChargrilledMeat;
+import com.example.pedometerpixeldungeon.mainsrc.items.foods.FrozenCarpaccio;
+import com.example.pedometerpixeldungeon.mainsrc.items.foods.MysteryMeat;
 import com.example.pedometerpixeldungeon.mainsrc.items.scrolls.Scroll;
+import com.example.pedometerpixeldungeon.mainsrc.plants.Plant;
 import com.example.pedometerpixeldungeon.mainsrc.sprites.ItemSprite;
 import com.example.pedometerpixeldungeon.mainsrc.sprites.ItemSpriteSheet;
+import com.example.pedometerpixeldungeon.mainsrc.utils.GLog;
+import com.example.pedometerpixeldungeon.noosa.audio.Sample;
 import com.example.pedometerpixeldungeon.noosa.tweeners.AlphaTweener;
 import com.example.pedometerpixeldungeon.utils.Bundlable;
 import com.example.pedometerpixeldungeon.utils.Bundle;
+import com.example.pedometerpixeldungeon.utils.Random;
 
 import java.util.Collection;
 import java.util.LinkedList;
@@ -68,30 +88,30 @@ public class Heap implements Bundlable {
 
     public void open( Hero hero ) {
         switch (type) {
-//            case MIMIC:
-//                if (Mimic.spawnAt( pos, items ) != null) {
-//                    GLog.n( TXT_MIMIC );
-//                    destroy();
-//                } else {
-//                    type = Type.CHEST;
-//                }
-//                break;
-//            case TOMB:
-//                Wraith.spawnAround( hero.pos );
-//                break;
-//            case SKELETON:
-//                CellEmitter.center( pos ).start( Speck.factory( Speck.RATTLE ), 0.1f, 3 );
-//                for (Item item : items) {
-//                    if (item.cursed) {
-//                        if (Wraith.spawnAt( pos ) == null) {
-//                            hero.sprite.emitter().burst( ShadowParticle.CURSE, 6 );
-//                            hero.damage( hero.HP / 2, this );
-//                        }
-//                        Sample.INSTANCE.play( Assets.SND_CURSED );
-//                        break;
-//                    }
-//                }
-//                break;
+            case MIMIC:
+                if (Mimic.spawnAt( pos, items ) != null) {
+                    GLog.n( TXT_MIMIC );
+                    destroy();
+                } else {
+                    type = Type.CHEST;
+                }
+                break;
+            case TOMB:
+                Wraith.spawnAround( hero.pos );
+                break;
+            case SKELETON:
+                CellEmitter.center( pos ).start( Speck.factory( Speck.RATTLE ), 0.1f, 3 );
+                for (Item item : items) {
+                    if (item.cursed) {
+                        if (Wraith.spawnAt( pos ) == null) {
+                            hero.sprite.emitter().burst( ShadowParticle.CURSE, 6 );
+                            hero.damage( hero.HP / 2, this );
+                        }
+                        Sample.INSTANCE.play( Assets.SND_CURSED );
+                        break;
+                    }
+                }
+                break;
             case HIDDEN:
                 sprite.alpha( 0 );
                 sprite.parent.add( new AlphaTweener( sprite, 1, FADE_TIME ) );
@@ -142,11 +162,11 @@ public class Heap implements Bundlable {
 
         }
 
-//        if (item instanceof Dewdrop) {
-//            items.add( item );
-//        } else {
-//            items.addFirst( item );
-//        }
+        if (item instanceof Dewdrop) {
+            items.add( item );
+        } else {
+            items.addFirst( item );
+        }
 
         if (sprite != null) {
             sprite.view( image(), glowing() );
@@ -164,12 +184,12 @@ public class Heap implements Bundlable {
     public void burn() {
 
         if (type == Type.MIMIC) {
-//            Mimic m = Mimic.spawnAt( pos, items );
-//            if (m != null) {
-//                Buff.affect( m, Burning.class ).reignite( m );
-//                m.sprite.emitter().burst( FlameParticle.FACTORY, 5 );
-//                destroy();
-//            }
+            Mimic m = Mimic.spawnAt( pos, items );
+            if (m != null) {
+                Buff.affect( m, Burning.class ).reignite( m );
+                m.sprite.emitter().burst( FlameParticle.FACTORY, 5 );
+                destroy();
+            }
         }
         if (type != Type.HEAP) {
             return;
@@ -183,13 +203,13 @@ public class Heap implements Bundlable {
                 items.remove( item );
                 burnt = true;
             }
-//            else if (item instanceof Dewdrop) {
-//                items.remove( item );
-//                evaporated = true;
-//            } else if (item instanceof MysteryMeat) {
-//                replace( item, ChargrilledMeat.cook( (MysteryMeat)item ) );
-//                burnt = true;
-//            }
+            else if (item instanceof Dewdrop) {
+                items.remove( item );
+                evaporated = true;
+            } else if (item instanceof MysteryMeat) {
+                replace( item, ChargrilledMeat.cook( (MysteryMeat)item ) );
+                burnt = true;
+            }
         }
 
         if (burnt || evaporated) {
@@ -214,11 +234,11 @@ public class Heap implements Bundlable {
     public void freeze() {
 
         if (type == Type.MIMIC) {
-//            Mimic m = Mimic.spawnAt( pos, items );
-//            if (m != null) {
-//                Buff.prolong( m, Frost.class, Frost.duration( m ) * Random.Float( 1.0f, 1.5f ) );
-//                destroy();
-//            }
+            Mimic m = Mimic.spawnAt( pos, items );
+            if (m != null) {
+                Buff.prolong( m, Frost.class, Frost.duration( m ) * Random.Float( 1.0f, 1.5f ) );
+                destroy();
+            }
         }
         if (type != Type.HEAP) {
             return;
@@ -226,10 +246,10 @@ public class Heap implements Bundlable {
 
         boolean frozen = false;
         for (Item item : items.toArray( new Item[0] )) {
-//            if (item instanceof MysteryMeat) {
-//                replace( item, FrozenCarpaccio.cook( (MysteryMeat)item ) );
-//                frozen = true;
-//            }
+            if (item instanceof MysteryMeat) {
+                replace( item, FrozenCarpaccio.cook( (MysteryMeat)item ) );
+                frozen = true;
+            }
         }
 
         if (frozen) {
@@ -243,73 +263,72 @@ public class Heap implements Bundlable {
 
     public Item transmute() {
 
-//        CellEmitter.get( pos ).burst( Speck.factory( Speck.BUBBLE ), 3 );
-//        Splash.at( pos, 0xFFFFFF, 3 );
-//
-//        float chances[] = new float[items.size()];
-//        int count = 0;
-//
-//        int index = 0;
-//        for (Item item : items) {
-//            if (item instanceof Seed) {
-//                count += item.quantity;
-//                chances[index++] = item.quantity;
-//            } else {
-//                count = 0;
-//                break;
-//            }
-//        }
-//
-//        if (count >= SEEDS_TO_POTION) {
-//
-//            CellEmitter.get( pos ).burst( Speck.factory( Speck.WOOL ), 6 );
-//            Sample.INSTANCE.play( Assets.SND_PUFF );
-//
-//            if (Random.Int( count ) == 0) {
-//
-//                CellEmitter.center( pos ).burst( Speck.factory( Speck.EVOKE ), 3 );
-//
-//                destroy();
-//
-//                Statistics.potionsCooked++;
+        CellEmitter.get( pos ).burst( Speck.factory( Speck.BUBBLE ), 3 );
+        Splash.at( pos, 0xFFFFFF, 3 );
+
+        float chances[] = new float[items.size()];
+        int count = 0;
+
+        int index = 0;
+        for (Item item : items) {
+            if (item instanceof Plant.Seed) {
+                count += item.quantity;
+                chances[index++] = item.quantity;
+            } else {
+                count = 0;
+                break;
+            }
+        }
+
+        if (count >= SEEDS_TO_POTION) {
+
+            CellEmitter.get( pos ).burst( Speck.factory( Speck.WOOL ), 6 );
+            Sample.INSTANCE.play( Assets.SND_PUFF );
+
+            if (Random.Int( count ) == 0) {
+
+                CellEmitter.center( pos ).burst( Speck.factory( Speck.EVOKE ), 3 );
+
+                destroy();
+
+                Statistics.potionsCooked++;
 //                Badges.validatePotionsCooked();
-//
-//                return Generator.random( Generator.Category.POTION );
-//
-//            } else {
-//
-//                Seed proto = (Seed)items.get( Random.chances( chances ) );
-//                Class<? extends Item> itemClass = proto.alchemyClass;
-//
-//                destroy();
-//
-//                Statistics.potionsCooked++;
+
+                return Generator.random( Generator.Category.POTION );
+
+            } else {
+
+                Plant.Seed proto = (Plant.Seed) items.get( Random.chances( chances ) );
+                Class<? extends Item> itemClass = proto.alchemyClass;
+
+                destroy();
+
+                Statistics.potionsCooked++;
 //                Badges.validatePotionsCooked();
-//
-//                if (itemClass == null) {
-//                    return Generator.random( Generator.Category.POTION );
-//                } else {
-//                    try {
-//                        return itemClass.newInstance();
-//                    } catch (Exception e) {
-//                        return null;
-//                    }
-//                }
-//            }
-//
-//        } else {
-//            return null;
-//        }
-        return null;
+
+                if (itemClass == null) {
+                    return Generator.random( Generator.Category.POTION );
+                } else {
+                    try {
+                        return itemClass.newInstance();
+                    } catch (Exception e) {
+                        return null;
+                    }
+                }
+            }
+
+        } else {
+            return null;
+        }
     }
 
     public static void burnFX( int pos ) {
-//        CellEmitter.get( pos ).burst( ElmoParticle.FACTORY, 6 );
-//        Sample.INSTANCE.play( Assets.SND_BURNING );
+        CellEmitter.get( pos ).burst( ElmoParticle.FACTORY, 6 );
+        Sample.INSTANCE.play( Assets.SND_BURNING );
     }
 
     public static void evaporateFX( int pos ) {
-//        CellEmitter.get( pos ).burst( Speck.factory( Speck.STEAM ), 5 );
+        CellEmitter.get( pos ).burst( Speck.factory( Speck.STEAM ), 5 );
     }
 
     public boolean isEmpty() {

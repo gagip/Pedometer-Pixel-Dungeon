@@ -20,7 +20,9 @@ package com.example.pedometerpixeldungeon.mainsrc.items;
 import com.example.pedometerpixeldungeon.mainsrc.Dungeon;
 import com.example.pedometerpixeldungeon.mainsrc.Statistics;
 import com.example.pedometerpixeldungeon.mainsrc.actors.hero.Hero;
+import com.example.pedometerpixeldungeon.mainsrc.scenes.AmuletScene;
 import com.example.pedometerpixeldungeon.mainsrc.sprites.ItemSpriteSheet;
+import com.example.pedometerpixeldungeon.noosa.Game;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -76,8 +78,8 @@ public class Amulet extends Item {
 	private void showAmuletScene( boolean showText ) {
 		try {
 			Dungeon.saveAll();
-//			AmuletScene.noText = !showText;
-//			Game.switchScene( AmuletScene.class );
+			AmuletScene.noText = !showText;
+			Game.switchScene( AmuletScene.class );
 		} catch (IOException e) {
 		}
 	}
