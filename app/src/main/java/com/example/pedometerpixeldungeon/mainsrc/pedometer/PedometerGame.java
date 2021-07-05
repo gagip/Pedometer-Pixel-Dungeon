@@ -37,8 +37,8 @@ public class PedometerGame extends Game implements SensorEventListener {
     private DBOpenHelper openHelper;
 
     // custom
-    public static int sensorValue;                      // 센서 걸음 수
-    public static int culValue;                         // 누적 걸음 수
+    private static int sensorValue;                      // 센서 걸음 수
+    private static int culValue;                         // 누적 걸음 수
     boolean isSaved;                                    // 저장 여부
 
     public PedometerGame(Class<? extends Scene> c) {
@@ -141,5 +141,13 @@ public class PedometerGame extends Game implements SensorEventListener {
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
+    }
+
+    public static int getSensorValue() {
+        return sensorValue;
+    }
+
+    public static int getCulValue() {
+        return culValue;
     }
 }

@@ -570,7 +570,7 @@ public class GameScene extends PixelScene {
         scene.prompt( listener.prompt() );
     }
 
-    private static boolean cancelCellSelector() {
+    public static boolean cancelCellSelector() {
         if (cellSelector.listener != null && cellSelector.listener != defaultCellListener) {
             cellSelector.cancel();
             return true;
