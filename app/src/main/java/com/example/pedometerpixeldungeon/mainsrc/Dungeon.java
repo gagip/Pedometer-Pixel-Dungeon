@@ -13,6 +13,7 @@ import com.example.pedometerpixeldungeon.mainsrc.items.rings.Ring;
 import com.example.pedometerpixeldungeon.mainsrc.items.scrolls.Scroll;
 import com.example.pedometerpixeldungeon.mainsrc.items.wands.Wand;
 import com.example.pedometerpixeldungeon.mainsrc.levels.DeadEndLevel;
+import com.example.pedometerpixeldungeon.mainsrc.levels.LastLevel;
 import com.example.pedometerpixeldungeon.mainsrc.levels.Level;
 import com.example.pedometerpixeldungeon.mainsrc.levels.Room;
 import com.example.pedometerpixeldungeon.mainsrc.levels.SewerBossLevel;
@@ -145,7 +146,9 @@ public class Dungeon {
             case 5:
                 level = new SewerBossLevel();
                 break;
-//            case 6:
+            case 6:
+                level = new LastLevel();
+                break;
 //            case 7:
 //            case 8:
 //            case 9:
@@ -334,16 +337,19 @@ public class Dungeon {
         try {
             Bundle bundle = new Bundle();
 
+            // User Info
             bundle.put( VERSION, Game.version );
             bundle.put( CHALLENGES, challenges );
             bundle.put( HERO, hero );
             bundle.put( GOLD, gold );
             bundle.put( DEPTH, depth );
 
+            // Item
             for (int d : droppedItems.keyArray()) {
                 bundle.put( String.format( DROPPED, d ), droppedItems.get( d ) );
             }
 
+            // Additional Properties
             bundle.put( POS, potionOfStrength );
             bundle.put( SOU, scrollsOfUpgrade );
             bundle.put( SOE, scrollsOfEnchantment );
@@ -356,6 +362,7 @@ public class Dungeon {
             }
             bundle.put( CHAPTERS, ids );
 
+            // Quest
             Bundle quests = new Bundle();
 //            Ghost		.Quest.storeInBundle( quests );
 //            Wandmaker	.Quest.storeInBundle( quests );
@@ -375,9 +382,9 @@ public class Dungeon {
             Wand.save( bundle );
             Ring.save( bundle );
 
-            Bundle badges = new Bundle();
+//            Bundle badges = new Bundle();
 //            Badges.saveLocal( badges );
-            bundle.put( BADGES, badges );
+//            bundle.put( BADGES, badges );
 
             OutputStream output = Game.instance.openFileOutput( fileName, Game.MODE_PRIVATE );
             Bundle.write( bundle, output );
@@ -427,9 +434,9 @@ public class Dungeon {
     public static void loadGame( String fileName, boolean fullLoad ) throws IOException {
 
         Bundle bundle = gameBundle( fileName );
-//
-//        Dungeon.challenges = bundle.getInt( CHALLENGES );
-//
+
+        Dungeon.challenges = bundle.getInt( CHALLENGES );
+
         Dungeon.level = null;
         Dungeon.depth = -1;
 

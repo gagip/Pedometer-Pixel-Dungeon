@@ -52,7 +52,10 @@ public class Bestiary {
                 chances = new float[]{ 1 };
                 classes = new Class<?>[]{ Rat.class };
                 break;
-
+            case 5:
+                chances = new float[]{ 1 };
+                classes = new Class<?>[]{ Goo.class };
+                break;
 //            case 2:
 //                chances = new float[]{ 1, 1 };
 //                classes = new Class<?>[]{ Rat.class, Gnoll.class };
@@ -66,10 +69,7 @@ public class Bestiary {
 //                classes = new Class<?>[]{ Rat.class, Gnoll.class, Crab.class,   Swarm.class, Skeleton.class, Thief.class };
 //                break;
 //
-            case 5:
-                chances = new float[]{ 1 };
-                classes = new Class<?>[]{ Goo.class };
-                break;
+
 //
 //            case 6:
 //                chances = new float[]{ 4, 2, 1,   0.2f };

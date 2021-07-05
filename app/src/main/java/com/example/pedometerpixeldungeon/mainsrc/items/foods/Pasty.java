@@ -15,21 +15,26 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
-package com.example.pedometerpixeldungeon.mainsrc.items.keys;
+package com.example.pedometerpixeldungeon.mainsrc.items.foods;
 
+import com.example.pedometerpixeldungeon.mainsrc.actors.buffs.Hunger;
 import com.example.pedometerpixeldungeon.mainsrc.sprites.ItemSpriteSheet;
 
-public class SkeletonKey extends Key {
-	
+public class Pasty extends Food {
+
 	{
-		name = "skeleton key";
-		image = ItemSpriteSheet.SKELETON_KEY;
+		name = "pasty";
+		image = ItemSpriteSheet.PASTY;
+		energy = Hunger.STARVING;
 	}
 	
 	@Override
 	public String info() {
-		return 
-			"This key looks serious: its head is shaped like a skull. " +
-			"Probably it can open some serious door.";
+		return "This is authentic Cornish pasty with traditional filling of beef and potato.";
+	}
+	
+	@Override
+	public int price() {
+		return 20 * quantity;
 	}
 }
