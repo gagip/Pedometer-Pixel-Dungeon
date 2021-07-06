@@ -31,6 +31,7 @@ public class Toolbar extends Component {
     private Tool btnInfo;
     private Tool btnInventory;
     private Tool btnPBox;
+    private Tool btnPBox2;
     private Tool btnQuick1;
     private Tool btnQuick2;
 
@@ -83,6 +84,14 @@ public class Toolbar extends Component {
             }
         } );
 
+        add( btnPBox2 = new Tool( 127, 7, 21, 25 ) {
+            @Override
+            protected void onClick() {
+                Dungeon.hero.getReward();
+            }
+        } );
+
+
 
         add( btnInventory = new Tool( 60, 7, 23, 25 ) {
             private GoldIndicator gold;
@@ -120,6 +129,8 @@ public class Toolbar extends Component {
         btnSearch.setPos( btnWait.right(), y );
         btnInfo.setPos( btnSearch.right(), y );
         btnPBox.setPos( btnInfo.right(), y);
+        btnPBox2.setPos( btnPBox.right(), y);
+
         btnQuick1.setPos( width - btnQuick1.width(), y );
         if (btnQuick2.visible) {
             btnQuick2.setPos(btnQuick1.left() - btnQuick2.width(), y );
