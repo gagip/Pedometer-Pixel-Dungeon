@@ -79,7 +79,7 @@ public class Toolbar extends Component {
         add( btnPBox = new Tool( 105, 7, 21, 25 ) {
             @Override
             protected void onClick() {
-                Dungeon.hero.search( true );
+                Dungeon.hero.getReward();
             }
         } );
 

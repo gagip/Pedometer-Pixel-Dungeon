@@ -31,7 +31,7 @@ public class PedometerGame extends Game implements SensorEventListener {
     private Sensor stepCountSensor;
 
     // DB
-    private static final String DB_NAME = "MyDB";
+    private static final String DB_NAME = "PedometerDB";
     private static final int DB_VERSION = 1;
     private PedometerDAO dao;
     private DBOpenHelper openHelper;
@@ -141,10 +141,4 @@ public class PedometerGame extends Game implements SensorEventListener {
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
     }
-
-    public static int getSensorValue() {
-        return sensorValue;
-    }
-
-    public static int getPreValue() { return preValue; }
 }

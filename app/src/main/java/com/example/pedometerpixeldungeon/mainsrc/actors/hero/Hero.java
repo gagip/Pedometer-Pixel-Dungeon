@@ -1440,12 +1440,14 @@ public class Hero extends Char {
      */
     public void getReward() {
         // 데이터 가져오기
-        int curValue = PedometerGame.getSensorValue();
-        int preValue = PedometerGame.getPreValue();
+        PedometerDAO dao = PedometerDAO.getInstance();
+        Pedometer data = dao.selectLeastPedometer();
+        int curValue = data.getCurCount();
+        int preValue = data.getPreCount();
         int reward = 0;
 
         // 보상 계산
-        if (curValue > preValue) {
+        if (curValue >= preValue) {
             reward = curValue - preValue;
         } else {
             reward = curValue;
@@ -1457,8 +1459,6 @@ public class Hero extends Char {
             GLog.i(String.format("You get %d footsteps", reward));
 
             // DB 갱신
-            PedometerDAO dao = PedometerDAO.getInstance();
-            Pedometer data = dao.selectLeastPedometer();
             data.setPreCount(data.getCurCount());
             dao.insertPedometer(data);
         }
