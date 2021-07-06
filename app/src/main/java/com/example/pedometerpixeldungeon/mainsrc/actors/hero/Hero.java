@@ -401,8 +401,8 @@ public class Hero extends Char {
             ready = false;
 
             if (curAction instanceof HeroAction.Move) {
-
-                return actMove( (HeroAction.Move)curAction );
+                if (spendFootstep(1))
+                    return actMove( (HeroAction.Move)curAction );
 
             } else
             if (curAction instanceof HeroAction.Interact) {
@@ -416,8 +416,8 @@ public class Hero extends Char {
 
             }else
             if (curAction instanceof HeroAction.PickUp) {
-
-                return actPickUp( (HeroAction.PickUp)curAction );
+                if (spendFootstep(1))
+                    return actPickUp( (HeroAction.PickUp)curAction );
 
             } else
             if (curAction instanceof HeroAction.OpenChest) {
@@ -426,27 +426,26 @@ public class Hero extends Char {
 
             } else
             if (curAction instanceof HeroAction.Unlock) {
-
-                return actUnlock( (HeroAction.Unlock)curAction );
+                if (spendFootstep(3))
+                    return actUnlock( (HeroAction.Unlock)curAction );
 
             } else
             if (curAction instanceof HeroAction.Descend) {
-
-                return actDescend( (HeroAction.Descend)curAction );
+                if (spendFootstep(5))
+                    return actDescend( (HeroAction.Descend)curAction );
 
             } else
             if (curAction instanceof HeroAction.Ascend) {
-
-                return actAscend( (HeroAction.Ascend)curAction );
+                if (spendFootstep(5))
+                    return actAscend( (HeroAction.Ascend)curAction );
 
             } else
             if (curAction instanceof HeroAction.Attack) {
-
-                return actAttack( (HeroAction.Attack)curAction );
+                if (spendFootstep(3))
+                    return actAttack( (HeroAction.Attack)curAction );
 
             } else
             if (curAction instanceof HeroAction.Cook) {
-
                 return actCook( (HeroAction.Cook)curAction );
 
             }
@@ -481,9 +480,8 @@ public class Hero extends Char {
     }
 
     private boolean actMove( HeroAction.Move action ) {
-
         if (getCloser( action.dst )) {
-            return spendFootstep(1);
+            return true;
         } else {
             if (Dungeon.level.map[pos] == Terrain.SIGN) {
                 Sign.read( pos );
@@ -1427,6 +1425,8 @@ public class Hero extends Char {
         if (spendAmt > footstep) {
             GLog.w(TXT_CANNOT_SPEND_FOOTSTEP);
             // TODO 행동 제한
+            curAction = null;
+            spendAndNext(TICK);
             return false;
         } else {
             footstep -= spendAmt;
