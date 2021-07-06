@@ -87,7 +87,7 @@ public class Toolbar extends Component {
         add( btnPBox2 = new Tool( 127, 7, 21, 25 ) {
             @Override
             protected void onClick() {
-                Dungeon.hero.getReward();
+               // PBox2 와 연결 필요 부분
             }
         } );
 
