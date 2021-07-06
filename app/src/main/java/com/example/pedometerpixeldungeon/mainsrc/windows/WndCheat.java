@@ -2,9 +2,16 @@ package com.example.pedometerpixeldungeon.mainsrc.windows;
 
 import com.example.pedometerpixeldungeon.mainsrc.Cheat;
 import com.example.pedometerpixeldungeon.mainsrc.Dungeon;
+import com.example.pedometerpixeldungeon.mainsrc.actors.hero.Hero;
+import com.example.pedometerpixeldungeon.mainsrc.actors.mobs.Mob;
 import com.example.pedometerpixeldungeon.mainsrc.ui.CheckBox;
 import com.example.pedometerpixeldungeon.mainsrc.ui.RedButton;
 import com.example.pedometerpixeldungeon.mainsrc.ui.Window;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 
 /**
  * 치트창
@@ -67,8 +74,10 @@ public class WndCheat extends Window {
             @Override
             protected void onClick() {
                 super.onClick();
-                // TODO 필드 위 몬스터 제거
-//                Dungeon.level.reset();
+
+                for (Mob mob : new HashSet<Mob>(Dungeon.level.mobs)){
+                    mob.damage(9999, Dungeon.hero);
+                }
             }
         };
         add( btnDestroyMobCheat.setRect( 0, btnFootprintCheat.bottom() + GAP, WIDTH, BTN_HEIGHT) );
