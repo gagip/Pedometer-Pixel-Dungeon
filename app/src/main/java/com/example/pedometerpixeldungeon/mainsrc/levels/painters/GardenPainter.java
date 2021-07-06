@@ -6,6 +6,7 @@ import com.example.pedometerpixeldungeon.mainsrc.levels.Level;
 import com.example.pedometerpixeldungeon.mainsrc.levels.Painter;
 import com.example.pedometerpixeldungeon.mainsrc.levels.Room;
 import com.example.pedometerpixeldungeon.mainsrc.levels.Terrain;
+import com.example.pedometerpixeldungeon.mainsrc.plants.Sungrass;
 import com.example.pedometerpixeldungeon.utils.Random;
 
 public class GardenPainter extends Painter {
@@ -25,7 +26,7 @@ public class GardenPainter extends Painter {
             for (int i=0; i < bushes; i++) {
                 int pos = room.random();
                 set( level, pos, Terrain.GRASS );
-//                level.plant( new Sungrass.Seed(), pos );
+                level.plant( new Sungrass.Seed(), pos );
             }
         }
 
