@@ -68,6 +68,9 @@ import com.example.pedometerpixeldungeon.mainsrc.levels.Level;
 import com.example.pedometerpixeldungeon.mainsrc.levels.Terrain;
 import com.example.pedometerpixeldungeon.mainsrc.levels.features.Chasm;
 import com.example.pedometerpixeldungeon.mainsrc.levels.features.Sign;
+import com.example.pedometerpixeldungeon.mainsrc.pedometer.Pedometer;
+import com.example.pedometerpixeldungeon.mainsrc.pedometer.PedometerDAO;
+import com.example.pedometerpixeldungeon.mainsrc.pedometer.PedometerGame;
 import com.example.pedometerpixeldungeon.mainsrc.plants.Earthroot;
 import com.example.pedometerpixeldungeon.mainsrc.scenes.CellSelector;
 import com.example.pedometerpixeldungeon.mainsrc.scenes.GameScene;
@@ -89,6 +92,7 @@ import com.example.pedometerpixeldungeon.utils.Random;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashSet;
 
 public class Hero extends Char {
@@ -147,7 +151,7 @@ public class Hero extends Char {
     public int lvl = 1;
     public int exp = 0;
 
-    public int footstep;
+    public static int footstep;
 
     private ArrayList<Mob> visibleEnemies;
 
@@ -1426,8 +1430,37 @@ public class Hero extends Char {
             return false;
         } else {
             footstep -= spendAmt;
-            GLog.i(String.format("You spend %d footstep", spendAmt));
+            GLog.i(String.format("You spend %d footsteps", spendAmt));
             return true;
+        }
+    }
+
+    /**
+     * 만보기 수에 따른 발자국 보상 받기
+     */
+    public void getReward() {
+        // 데이터 가져오기
+        int curValue = PedometerGame.getSensorValue();
+        int preValue = PedometerGame.getPreValue();
+        int reward = 0;
+
+        // 보상 계산
+        if (curValue > preValue) {
+            reward = curValue - preValue;
+        } else {
+            reward = curValue;
+        }
+
+        // 보상 받기
+        if (reward > 0) {
+            footstep += reward;
+            GLog.i(String.format("You get %d footsteps", reward));
+
+            // DB 갱신
+            PedometerDAO dao = PedometerDAO.getInstance();
+            Pedometer data = dao.selectLeastPedometer();
+            data.setPreCount(data.getCurCount());
+            dao.insertPedometer(data);
         }
     }
 

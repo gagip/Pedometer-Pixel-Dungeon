@@ -5,8 +5,8 @@ import java.util.Date;
 public class Pedometer {
     private int id;
     private Date time;
-    private int count;
-    private int culCount;
+    private int curCount;
+    private int preCount;
 
     public int getId() {
         return id;
@@ -24,20 +24,20 @@ public class Pedometer {
         this.time = time;
     }
 
-    public int getCount() {
-        return count;
+    public int getCurCount() {
+        return curCount;
     }
 
-    public void setCount(int count) {
-        this.count = count;
+    public void setCurCount(int curCount) {
+        this.curCount = curCount;
     }
 
-    public int getCulCount() {
-        return culCount;
+    public int getPreCount() {
+        return preCount;
     }
 
-    public void setCulCount(int culCount) {
-        this.culCount = culCount;
+    public void setPreCount(int preCount) {
+        this.preCount = preCount;
     }
 }
 

@@ -37,8 +37,8 @@ public class PedometerGame extends Game implements SensorEventListener {
     private DBOpenHelper openHelper;
 
     // custom
-    private static int sensorValue;                      // 센서 걸음 수
-    private static int culValue;                         // 누적 걸음 수
+    private static int sensorValue;                      // 센서 걸음 수 = 현재 걸음 수
+    private static int preValue;                         // 이전 걸음 수
     boolean isSaved;                                    // 저장 여부
 
     public PedometerGame(Class<? extends Scene> c) {
@@ -121,13 +121,12 @@ public class PedometerGame extends Game implements SensorEventListener {
                 // DB Load
                 Pedometer loadPedometer = dao.selectLeastPedometer();
                 sensorValue = (int) event.values[0];
-                culValue  = loadPedometer==null ? 0 : loadPedometer.getCulCount();
-                culValue += sensorValue;
+                preValue  = loadPedometer==null ? 0 : loadPedometer.getPreCount();
 
                 // DB에 저장
                 Pedometer pedometer = new Pedometer();
-                pedometer.setCount(sensorValue);
-                pedometer.setCulCount(culValue);
+                pedometer.setCurCount(sensorValue);
+                pedometer.setPreCount(preValue);
 
                 dao.insertPedometer(pedometer);
                 isSaved = !isSaved;
@@ -147,7 +146,5 @@ public class PedometerGame extends Game implements SensorEventListener {
         return sensorValue;
     }
 
-    public static int getCulValue() {
-        return culValue;
-    }
+    public static int getPreValue() { return preValue; }
 }

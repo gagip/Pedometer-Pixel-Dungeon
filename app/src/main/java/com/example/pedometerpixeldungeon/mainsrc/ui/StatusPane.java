@@ -3,6 +3,7 @@ package com.example.pedometerpixeldungeon.mainsrc.ui;
 import com.example.pedometerpixeldungeon.input.Touchscreen;
 import com.example.pedometerpixeldungeon.mainsrc.Assets;
 import com.example.pedometerpixeldungeon.mainsrc.Dungeon;
+import com.example.pedometerpixeldungeon.mainsrc.actors.hero.Hero;
 import com.example.pedometerpixeldungeon.mainsrc.effects.Speck;
 import com.example.pedometerpixeldungeon.mainsrc.effects.particles.BloodParticle;
 import com.example.pedometerpixeldungeon.mainsrc.items.keys.IronKey;
@@ -36,11 +37,13 @@ public class StatusPane extends Component {
 
     private int lastLvl = -1;
     private int lastKeys = -1;
+    private int lastFootstep = -1;
+
 
     private BitmapText level;
     private BitmapText depth;
     private BitmapText keys;
-    private BitmapText pd;
+    private BitmapText footstep;
 
     private DangerIndicator danger;
     private LootIndicator loot;
@@ -101,10 +104,10 @@ public class StatusPane extends Component {
 //        PD.hardlight( 0xCACFC2); - 폰트 색상
 
         // gold로 임시 대체중 대체 클래스 필요
-        pd = new BitmapText( Integer.toString( Dungeon.gold), PixelScene.font1x);
-        pd.hardlight( 0xCACFC2 );
-        pd.measure();
-        add( pd );
+        footstep = new BitmapText( Integer.toString(Hero.footstep), PixelScene.font1x);
+        footstep.hardlight( 0xCACFC2 );
+        footstep.measure();
+        add(footstep);
 
 
         add( level);
@@ -149,8 +152,8 @@ public class StatusPane extends Component {
         depth.y = 6;
 
         //걸음수 임시 표기 - Dungeon.gold로 임시 호출상태
-        pd.x = width - 32 - pd.width() - 18;
-        pd.y = 6;
+        footstep.x = width - 32 - footstep.width() - 18;
+        footstep.y = 6;
 
         keys.y = 6;
 
@@ -241,6 +244,13 @@ public class StatusPane extends Component {
         if (tier != lastTier) {
             lastTier = tier;
             avatar.copy( HeroSprite.avatar( Dungeon.hero.heroClass, tier ) );
+        }
+
+        int f = Hero.footstep;
+        if (f != lastFootstep) {
+            lastFootstep = f;
+            footstep.text(Integer.toString(lastFootstep));
+            footstep.measure();
         }
     }
 

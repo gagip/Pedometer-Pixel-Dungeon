@@ -38,8 +38,8 @@ public class PedometerDAO {
         ContentValues values = new ContentValues();
 
         values.put(TIME, System.currentTimeMillis());
-        values.put(COUNT, pedometer.getCount());
-        values.put(CULCOUNT, pedometer.getCulCount());
+        values.put(CUR_COUNT, pedometer.getCurCount());
+        values.put(PRE_COUNT, pedometer.getPreCount());
 
         db.insertOrThrow(TABLE_NAME, null, values);
     }
@@ -57,8 +57,8 @@ public class PedometerDAO {
             pedometer = new Pedometer();
             pedometer.setId(cursor.getInt(0));
             pedometer.setTime(new Date(cursor.getLong(1)));
-            pedometer.setCount(cursor.getInt(2));
-            pedometer.setCulCount(cursor.getInt(3));
+            pedometer.setCurCount(cursor.getInt(2));
+            pedometer.setPreCount(cursor.getInt(3));
         }
 
         return pedometer;
