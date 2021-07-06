@@ -1421,6 +1421,7 @@ public class Hero extends Char {
         if (spendAmt > footprint) {
             GLog.w(TXT_CANNOT_SPEND_FOOTPRINT);
             curAction = null;
+            spendAndNext(TICK);
             return false;
         } else {
             footprint -= spendAmt;
