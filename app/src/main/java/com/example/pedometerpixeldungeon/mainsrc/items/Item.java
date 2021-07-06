@@ -491,37 +491,37 @@ public class Item implements Bundlable {
 
     @Override
     public void storeInBundle( Bundle bundle ) {
-//        bundle.put( QUANTITY, quantity );
-//        bundle.put( LEVEL, level );
-//        bundle.put( LEVEL_KNOWN, levelKnown );
-//        bundle.put( CURSED, cursed );
-//        bundle.put( CURSED_KNOWN, cursedKnown );
-//        if (isUpgradable()) {
-//            bundle.put( DURABILITY, durability );
-//        }
-//        QuickSlot.save( bundle, this );
+        bundle.put( QUANTITY, quantity );
+        bundle.put( LEVEL, level );
+        bundle.put( LEVEL_KNOWN, levelKnown );
+        bundle.put( CURSED, cursed );
+        bundle.put( CURSED_KNOWN, cursedKnown );
+        if (isUpgradable()) {
+            bundle.put( DURABILITY, durability );
+        }
+        QuickSlot.save( bundle, this );
     }
 
     @Override
     public void restoreFromBundle( Bundle bundle ) {
-//        quantity	= bundle.getInt( QUANTITY );
-//        levelKnown	= bundle.getBoolean( LEVEL_KNOWN );
-//        cursedKnown	= bundle.getBoolean( CURSED_KNOWN );
-//
-//        int level = bundle.getInt( LEVEL );
-//        if (level > 0) {
-//            upgrade( level );
-//        } else if (level < 0) {
-//            degrade( -level );
-//        }
-//
-//        cursed	= bundle.getBoolean( CURSED );
-//
-//        if (isUpgradable()) {
-//            durability = bundle.getInt( DURABILITY );
-//        }
-//
-//        QuickSlot.restore( bundle, this );
+        quantity	= bundle.getInt( QUANTITY );
+        levelKnown	= bundle.getBoolean( LEVEL_KNOWN );
+        cursedKnown	= bundle.getBoolean( CURSED_KNOWN );
+
+        int level = bundle.getInt( LEVEL );
+        if (level > 0) {
+            upgrade( level );
+        } else if (level < 0) {
+            degrade( -level );
+        }
+
+        cursed	= bundle.getBoolean( CURSED );
+
+        if (isUpgradable()) {
+            durability = bundle.getInt( DURABILITY );
+        }
+
+        QuickSlot.restore( bundle, this );
     }
 
     public void cast( final Hero user, int dst ) {
