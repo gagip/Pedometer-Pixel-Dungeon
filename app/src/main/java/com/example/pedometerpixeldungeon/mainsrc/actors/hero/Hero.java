@@ -2,7 +2,6 @@ package com.example.pedometerpixeldungeon.mainsrc.actors.hero;
 
 import com.example.pedometerpixeldungeon.mainsrc.Assets;
 import com.example.pedometerpixeldungeon.mainsrc.Bones;
-import com.example.pedometerpixeldungeon.mainsrc.Cheat;
 import com.example.pedometerpixeldungeon.mainsrc.Dungeon;
 import com.example.pedometerpixeldungeon.mainsrc.GamesInProgress;
 import com.example.pedometerpixeldungeon.mainsrc.ResultDescriptions;
@@ -70,9 +69,7 @@ import com.example.pedometerpixeldungeon.mainsrc.levels.features.Chasm;
 import com.example.pedometerpixeldungeon.mainsrc.levels.features.Sign;
 import com.example.pedometerpixeldungeon.mainsrc.pedometer.Pedometer;
 import com.example.pedometerpixeldungeon.mainsrc.pedometer.PedometerDAO;
-import com.example.pedometerpixeldungeon.mainsrc.pedometer.PedometerGame;
 import com.example.pedometerpixeldungeon.mainsrc.plants.Earthroot;
-import com.example.pedometerpixeldungeon.mainsrc.scenes.CellSelector;
 import com.example.pedometerpixeldungeon.mainsrc.scenes.GameScene;
 import com.example.pedometerpixeldungeon.mainsrc.scenes.InterlevelScene;
 import com.example.pedometerpixeldungeon.mainsrc.scenes.SurfaceScene;
@@ -92,7 +89,6 @@ import com.example.pedometerpixeldungeon.utils.Random;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashSet;
 
 public class Hero extends Char {
@@ -110,7 +106,7 @@ public class Hero extends Char {
     private static final String TXT_LOCKED_CHEST = "This chest is locked and you don't have matching key";
     private static final String TXT_LOCKED_DOOR = "You don't have a matching key";
     private static final String TXT_NOTICED_SMTH = "You noticed something";
-    private static final String TXT_CANNOT_SPEND_FOOTSTEP = "You don't have enough footstep to spend";
+    private static final String TXT_CANNOT_SPEND_FOOTPRINT = "You don't have enough footprint to spend";
 
     private static final String TXT_WAIT = "...";
     private static final String TXT_SEARCH = "search";
@@ -151,7 +147,7 @@ public class Hero extends Char {
     public int lvl = 1;
     public int exp = 0;
 
-    public static int footstep;
+    public static int footprint;
 
     private ArrayList<Mob> visibleEnemies;
 
@@ -163,7 +159,7 @@ public class Hero extends Char {
         STR = STARTING_STR;
         awareness = 0.1f;
 
-        footstep = 100;
+        footprint = 100;
 
         belongings = new Belongings(this);
 
@@ -179,7 +175,7 @@ public class Hero extends Char {
     private static final String STRENGTH = "STR";
     private static final String LEVEL = "lvl";
     private static final String EXPERIENCE = "exp";
-    private static final String FOOTSTEP = "footstep";
+    private static final String FOOTPRINT = "footprint";
 
     @Override
     public void storeInBundle(Bundle bundle) {
@@ -196,7 +192,7 @@ public class Hero extends Char {
         bundle.put(LEVEL, lvl);
         bundle.put(EXPERIENCE, exp);
 
-        bundle.put(FOOTSTEP, footstep);
+        bundle.put(FOOTPRINT, footprint);
 
         belongings.storeInBundle(bundle);
     }
@@ -217,7 +213,7 @@ public class Hero extends Char {
         lvl = bundle.getInt(LEVEL);
         exp = bundle.getInt(EXPERIENCE);
 
-        footstep = bundle.getInt(FOOTSTEP);
+        footprint = bundle.getInt(FOOTPRINT);
 
         belongings.restoreFromBundle(bundle);
     }
@@ -401,7 +397,7 @@ public class Hero extends Char {
             ready = false;
 
             if (curAction instanceof HeroAction.Move) {
-                if (spendFootstep(1))
+                if (spendFootprint(1))
                     return actMove( (HeroAction.Move)curAction );
 
             } else
@@ -416,7 +412,7 @@ public class Hero extends Char {
 
             }else
             if (curAction instanceof HeroAction.PickUp) {
-                if (spendFootstep(1))
+                if (spendFootprint(1))
                     return actPickUp( (HeroAction.PickUp)curAction );
 
             } else
@@ -426,22 +422,22 @@ public class Hero extends Char {
 
             } else
             if (curAction instanceof HeroAction.Unlock) {
-                if (spendFootstep(3))
+                if (spendFootprint(3))
                     return actUnlock( (HeroAction.Unlock)curAction );
 
             } else
             if (curAction instanceof HeroAction.Descend) {
-                if (spendFootstep(5))
+                if (spendFootprint(5))
                     return actDescend( (HeroAction.Descend)curAction );
 
             } else
             if (curAction instanceof HeroAction.Ascend) {
-                if (spendFootstep(5))
+                if (spendFootprint(5))
                     return actAscend( (HeroAction.Ascend)curAction );
 
             } else
             if (curAction instanceof HeroAction.Attack) {
-                if (spendFootstep(3))
+                if (spendFootprint(3))
                     return actAttack( (HeroAction.Attack)curAction );
 
             } else
@@ -1421,16 +1417,14 @@ public class Hero extends Char {
      * @param spendAmt 소모하는 발자국 수
      * @return 액션 가능 여부
      */
-    public boolean spendFootstep(int spendAmt) {
-        if (spendAmt > footstep) {
-            GLog.w(TXT_CANNOT_SPEND_FOOTSTEP);
-            // TODO 행동 제한
+    public boolean spendFootprint(int spendAmt) {
+        if (spendAmt > footprint) {
+            GLog.w(TXT_CANNOT_SPEND_FOOTPRINT);
             curAction = null;
-            spendAndNext(TICK);
             return false;
         } else {
-            footstep -= spendAmt;
-            GLog.i(String.format("You spend %d footsteps", spendAmt));
+            footprint -= spendAmt;
+            GLog.i(String.format("You spend %d footprints", spendAmt));
             return true;
         }
     }
@@ -1455,8 +1449,8 @@ public class Hero extends Char {
 
         // 보상 받기
         if (reward > 0) {
-            footstep += reward;
-            GLog.i(String.format("You get %d footsteps", reward));
+            footprint += reward;
+            GLog.i(String.format("You get %d footprints", reward));
 
             // DB 갱신
             data.setPreCount(data.getCurCount());
@@ -1468,15 +1462,15 @@ public class Hero extends Char {
      * 발자국 수를 추가
      * @param addAmt 추가되는 발자국 수
      */
-    public void addFootstep(int addAmt) {
-        footstep += addAmt;
+    public void addFootprint(int addAmt) {
+        footprint += addAmt;
     }
 
     /**
      * 발자국 수를 반환
      * @return 남은 발자국 수
      */
-    public int getFootstep() {
-        return footstep;
+    public int getFootprint() {
+        return footprint;
     }
 }

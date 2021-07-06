@@ -104,7 +104,7 @@ public class StatusPane extends Component {
 //        PD.hardlight( 0xCACFC2); - 폰트 색상
 
         // gold로 임시 대체중 대체 클래스 필요
-        footstep = new BitmapText( Integer.toString(Hero.footstep), PixelScene.font1x);
+        footstep = new BitmapText( Integer.toString(Hero.footprint), PixelScene.font1x);
         footstep.hardlight( 0xCACFC2 );
         footstep.measure();
         add(footstep);
@@ -246,7 +246,7 @@ public class StatusPane extends Component {
             avatar.copy( HeroSprite.avatar( Dungeon.hero.heroClass, tier ) );
         }
 
-        int f = Hero.footstep;
+        int f = Hero.footprint;
         if (f != lastFootstep) {
             lastFootstep = f;
             footstep.text(Integer.toString(lastFootstep));
