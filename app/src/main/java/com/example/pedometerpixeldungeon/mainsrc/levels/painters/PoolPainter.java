@@ -1,5 +1,7 @@
 package com.example.pedometerpixeldungeon.mainsrc.levels.painters;
 
+import com.example.pedometerpixeldungeon.mainsrc.actors.Actor;
+import com.example.pedometerpixeldungeon.mainsrc.items.Generator;
 import com.example.pedometerpixeldungeon.mainsrc.items.Heap;
 import com.example.pedometerpixeldungeon.mainsrc.items.Item;
 import com.example.pedometerpixeldungeon.mainsrc.items.potions.PotionOfInvisibility;
@@ -69,20 +71,20 @@ public class PoolPainter extends Painter {
                     return prize;
                 }
 
-//                prize = Generator.random( Random.oneOf(
-//                        Generator.Category.WEAPON,
-//                        Generator.Category.ARMOR
-//                ) );
-//
-//                for (int i=0; i < 4; i++) {
-//                    Item another = Generator.random( Random.oneOf(
-//                            Generator.Category.WEAPON,
-//                            Generator.Category.ARMOR
-//            ) );
-//            if (another.level() > prize.level()) {
-//                prize = another;
-//            }
-//        }
+                prize = Generator.random( Random.oneOf(
+                        Generator.Category.WEAPON,
+                        Generator.Category.ARMOR
+                ) );
+
+                for (int i=0; i < 4; i++) {
+                    Item another = Generator.random( Random.oneOf(
+                            Generator.Category.WEAPON,
+                            Generator.Category.ARMOR
+            ) );
+            if (another.level() > prize.level()) {
+                prize = another;
+            }
+        }
 
         return prize;
     }

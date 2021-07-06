@@ -69,6 +69,7 @@ import com.example.pedometerpixeldungeon.mainsrc.levels.Terrain;
 import com.example.pedometerpixeldungeon.mainsrc.levels.features.Chasm;
 import com.example.pedometerpixeldungeon.mainsrc.levels.features.Sign;
 import com.example.pedometerpixeldungeon.mainsrc.plants.Earthroot;
+import com.example.pedometerpixeldungeon.mainsrc.scenes.CellSelector;
 import com.example.pedometerpixeldungeon.mainsrc.scenes.GameScene;
 import com.example.pedometerpixeldungeon.mainsrc.scenes.InterlevelScene;
 import com.example.pedometerpixeldungeon.mainsrc.scenes.SurfaceScene;
@@ -105,6 +106,7 @@ public class Hero extends Char {
     private static final String TXT_LOCKED_CHEST = "This chest is locked and you don't have matching key";
     private static final String TXT_LOCKED_DOOR = "You don't have a matching key";
     private static final String TXT_NOTICED_SMTH = "You noticed something";
+    private static final String TXT_CANNOT_SPEND_FOOTSTEP = "You don't have enough footstep to spend";
 
     private static final String TXT_WAIT = "...";
     private static final String TXT_SEARCH = "search";
@@ -145,6 +147,8 @@ public class Hero extends Char {
     public int lvl = 1;
     public int exp = 0;
 
+    public int footstep;
+
     private ArrayList<Mob> visibleEnemies;
 
     public Hero() {
@@ -154,6 +158,8 @@ public class Hero extends Char {
         HP = HT = 20;
         STR = STARTING_STR;
         awareness = 0.1f;
+
+        footstep = 100;
 
         belongings = new Belongings(this);
 
@@ -169,6 +175,7 @@ public class Hero extends Char {
     private static final String STRENGTH = "STR";
     private static final String LEVEL = "lvl";
     private static final String EXPERIENCE = "exp";
+    private static final String FOOTSTEP = "footstep";
 
     @Override
     public void storeInBundle(Bundle bundle) {
@@ -184,6 +191,8 @@ public class Hero extends Char {
 
         bundle.put(LEVEL, lvl);
         bundle.put(EXPERIENCE, exp);
+
+        bundle.put(FOOTSTEP, footstep);
 
         belongings.storeInBundle(bundle);
     }
@@ -203,6 +212,8 @@ public class Hero extends Char {
 
         lvl = bundle.getInt(LEVEL);
         exp = bundle.getInt(EXPERIENCE);
+
+        footstep = bundle.getInt(FOOTSTEP);
 
         belongings.restoreFromBundle(bundle);
     }
@@ -468,9 +479,7 @@ public class Hero extends Char {
     private boolean actMove( HeroAction.Move action ) {
 
         if (getCloser( action.dst )) {
-
-            return true;
-
+            return spendFootstep(1);
         } else {
             if (Dungeon.level.map[pos] == Terrain.SIGN) {
                 Sign.read( pos );
@@ -1402,5 +1411,39 @@ public class Hero extends Char {
 
     public static interface Doom {
         public void onDeath();
+    }
+
+
+    /**
+     * 발자국을 소모하여 액션을 진행
+     * @param spendAmt 소모하는 발자국 수
+     * @return 액션 가능 여부
+     */
+    public boolean spendFootstep(int spendAmt) {
+        if (spendAmt > footstep) {
+            GLog.w(TXT_CANNOT_SPEND_FOOTSTEP);
+            // TODO 행동 제한
+            return false;
+        } else {
+            footstep -= spendAmt;
+            GLog.i(String.format("You spend %d footstep", spendAmt));
+            return true;
+        }
+    }
+
+    /**
+     * 발자국 수를 추가
+     * @param addAmt 추가되는 발자국 수
+     */
+    public void addFootstep(int addAmt) {
+        footstep += addAmt;
+    }
+
+    /**
+     * 발자국 수를 반환
+     * @return 남은 발자국 수
+     */
+    public int getFootstep() {
+        return footstep;
     }
 }
