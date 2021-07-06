@@ -218,3 +218,4 @@ fabric.properties
 .idea/misc.xml
 .idea/compiler.xml
 build.gradle
+app/release/output-metadata.json
