@@ -1,5 +1,6 @@
 package com.example.pedometerpixeldungeon.mainsrc.items.wands;
 
+import com.example.pedometerpixeldungeon.mainsrc.Assets;
 import com.example.pedometerpixeldungeon.mainsrc.Dungeon;
 import com.example.pedometerpixeldungeon.mainsrc.actors.Actor;
 import com.example.pedometerpixeldungeon.mainsrc.actors.Char;
@@ -7,6 +8,7 @@ import com.example.pedometerpixeldungeon.mainsrc.actors.buffs.Buff;
 import com.example.pedometerpixeldungeon.mainsrc.actors.buffs.Invisibility;
 import com.example.pedometerpixeldungeon.mainsrc.actors.hero.Hero;
 import com.example.pedometerpixeldungeon.mainsrc.actors.hero.HeroClass;
+import com.example.pedometerpixeldungeon.mainsrc.effects.MagicMissile;
 import com.example.pedometerpixeldungeon.mainsrc.items.Item;
 import com.example.pedometerpixeldungeon.mainsrc.items.ItemStatusHandler;
 import com.example.pedometerpixeldungeon.mainsrc.items.KindOfWeapon;
@@ -17,6 +19,7 @@ import com.example.pedometerpixeldungeon.mainsrc.scenes.GameScene;
 import com.example.pedometerpixeldungeon.mainsrc.sprites.ItemSpriteSheet;
 import com.example.pedometerpixeldungeon.mainsrc.ui.QuickSlot;
 import com.example.pedometerpixeldungeon.mainsrc.utils.GLog;
+import com.example.pedometerpixeldungeon.noosa.audio.Sample;
 import com.example.pedometerpixeldungeon.utils.Bundle;
 import com.example.pedometerpixeldungeon.utils.Callback;
 import com.example.pedometerpixeldungeon.utils.Random;
@@ -321,8 +324,8 @@ public abstract class Wand extends KindOfWeapon {
     }
 
     protected void fx( int cell, Callback callback ) {
-//        MagicMissile.blueLight( curUser.sprite.parent, curUser.pos, cell, callback );
-//        Sample.INSTANCE.play( Assets.SND_ZAP );
+        MagicMissile.blueLight( curUser.sprite.parent, curUser.pos, cell, callback );
+        Sample.INSTANCE.play( Assets.SND_ZAP );
     }
 
     protected void wandUsed() {

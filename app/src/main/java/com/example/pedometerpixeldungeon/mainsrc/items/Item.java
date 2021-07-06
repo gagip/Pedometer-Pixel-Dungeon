@@ -4,6 +4,7 @@ import com.example.pedometerpixeldungeon.mainsrc.Assets;
 import com.example.pedometerpixeldungeon.mainsrc.Dungeon;
 import com.example.pedometerpixeldungeon.mainsrc.actors.Actor;
 import com.example.pedometerpixeldungeon.mainsrc.actors.Char;
+import com.example.pedometerpixeldungeon.mainsrc.actors.buffs.SnipersMark;
 import com.example.pedometerpixeldungeon.mainsrc.actors.hero.Hero;
 import com.example.pedometerpixeldungeon.mainsrc.effects.Degradation;
 import com.example.pedometerpixeldungeon.mainsrc.effects.Speck;
@@ -12,17 +13,20 @@ import com.example.pedometerpixeldungeon.mainsrc.items.bags.Bag;
 import com.example.pedometerpixeldungeon.mainsrc.items.rings.Ring;
 import com.example.pedometerpixeldungeon.mainsrc.items.wands.Wand;
 import com.example.pedometerpixeldungeon.mainsrc.items.weapons.Weapon;
+import com.example.pedometerpixeldungeon.mainsrc.items.weapons.missiles.MissileWeapon;
 import com.example.pedometerpixeldungeon.mainsrc.mechanics.Ballistica;
 import com.example.pedometerpixeldungeon.mainsrc.scenes.CellSelector;
 import com.example.pedometerpixeldungeon.mainsrc.scenes.GameScene;
 import com.example.pedometerpixeldungeon.mainsrc.sprites.CharSprite;
 import com.example.pedometerpixeldungeon.mainsrc.sprites.ItemSprite;
+import com.example.pedometerpixeldungeon.mainsrc.sprites.itemsprites.MissileSprite;
 import com.example.pedometerpixeldungeon.mainsrc.ui.QuickSlot;
 import com.example.pedometerpixeldungeon.mainsrc.utils.GLog;
 import com.example.pedometerpixeldungeon.mainsrc.utils.Utils;
 import com.example.pedometerpixeldungeon.noosa.audio.Sample;
 import com.example.pedometerpixeldungeon.utils.Bundlable;
 import com.example.pedometerpixeldungeon.utils.Bundle;
+import com.example.pedometerpixeldungeon.utils.Callback;
 import com.example.pedometerpixeldungeon.utils.PointF;
 
 import java.util.ArrayList;
@@ -533,28 +537,28 @@ public class Item implements Bundlable {
 
         // FIXME!!!
         float delay = TIME_TO_THROW;
-//        if (this instanceof MissileWeapon) {
-//            delay *= ((MissileWeapon)this).speedFactor( user );
-//            if (enemy != null) {
-//                SnipersMark mark = user.buff( SnipersMark.class );
-//                if (mark != null) {
-//                    if (mark.object == enemy.id()) {
-//                        delay *= 0.5f;
-//                    }
-//                    user.remove( mark );
-//                }
-//            }
-//        }
-//        final float finalDelay = delay;
-//
-//        ((MissileSprite)user.sprite.parent.recycle( MissileSprite.class )).
-//                reset( user.pos, cell, this, new Callback() {
-//                    @Override
-//                    public void call() {
-//                        Item.this.detach( user.belongings.backpack ).onThrow( cell );
-//                        user.spendAndNext( finalDelay );
-//                    }
-//                } );
+        if (this instanceof MissileWeapon) {
+            delay *= ((MissileWeapon)this).speedFactor( user );
+            if (enemy != null) {
+                SnipersMark mark = user.buff( SnipersMark.class );
+                if (mark != null) {
+                    if (mark.object == enemy.id()) {
+                        delay *= 0.5f;
+                    }
+                    user.remove( mark );
+                }
+            }
+        }
+        final float finalDelay = delay;
+
+        ((MissileSprite)user.sprite.parent.recycle( MissileSprite.class )).
+                reset( user.pos, cell, this, new Callback() {
+                    @Override
+                    public void call() {
+                        Item.this.detach( user.belongings.backpack ).onThrow( cell );
+                        user.spendAndNext( finalDelay );
+                    }
+                } );
     }
 
     protected static Hero curUser = null;
