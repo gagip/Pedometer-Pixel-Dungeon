@@ -4,8 +4,14 @@ import com.example.pedometerpixeldungeon.mainsrc.Dungeon;
 import com.example.pedometerpixeldungeon.mainsrc.actors.hero.Hero;
 import com.example.pedometerpixeldungeon.mainsrc.items.armors.Armor;
 import com.example.pedometerpixeldungeon.mainsrc.items.armors.ClothArmor;
+import com.example.pedometerpixeldungeon.mainsrc.items.armors.LeatherArmor;
+import com.example.pedometerpixeldungeon.mainsrc.items.armors.MailArmor;
+import com.example.pedometerpixeldungeon.mainsrc.items.armors.PlateArmor;
+import com.example.pedometerpixeldungeon.mainsrc.items.armors.ScaleArmor;
 import com.example.pedometerpixeldungeon.mainsrc.items.bags.Bag;
 import com.example.pedometerpixeldungeon.mainsrc.items.foods.Food;
+import com.example.pedometerpixeldungeon.mainsrc.items.foods.MysteryMeat;
+import com.example.pedometerpixeldungeon.mainsrc.items.foods.Pasty;
 import com.example.pedometerpixeldungeon.mainsrc.items.potions.Potion;
 import com.example.pedometerpixeldungeon.mainsrc.items.potions.PotionOfExperience;
 import com.example.pedometerpixeldungeon.mainsrc.items.potions.PotionOfFrost;
@@ -78,8 +84,15 @@ import com.example.pedometerpixeldungeon.mainsrc.items.weapons.missiles.Incendia
 import com.example.pedometerpixeldungeon.mainsrc.items.weapons.missiles.Javelin;
 import com.example.pedometerpixeldungeon.mainsrc.items.weapons.missiles.Shuriken;
 import com.example.pedometerpixeldungeon.mainsrc.items.weapons.missiles.Tamahawk;
+import com.example.pedometerpixeldungeon.mainsrc.plants.Dreamweed;
 import com.example.pedometerpixeldungeon.mainsrc.plants.Earthroot;
+import com.example.pedometerpixeldungeon.mainsrc.plants.Fadeleaf;
+import com.example.pedometerpixeldungeon.mainsrc.plants.Firebloom;
+import com.example.pedometerpixeldungeon.mainsrc.plants.Icecap;
 import com.example.pedometerpixeldungeon.mainsrc.plants.Plant;
+import com.example.pedometerpixeldungeon.mainsrc.plants.Rotberry;
+import com.example.pedometerpixeldungeon.mainsrc.plants.Sorrowmoss;
+import com.example.pedometerpixeldungeon.mainsrc.plants.Sungrass;
 import com.example.pedometerpixeldungeon.utils.Random;
 
 import java.util.HashMap;
@@ -197,17 +210,17 @@ public class Generator {
 
         Category.ARMOR.classes = new Class<?>[]{
                 ClothArmor.class,
-//                LeatherArmor.class,
-//                MailArmor.class,
-//                ScaleArmor.class,
-//                PlateArmor.class
+                LeatherArmor.class,
+                MailArmor.class,
+                ScaleArmor.class,
+                PlateArmor.class
                 };
         Category.ARMOR.probs = new float[]{ 1, 1, 1, 1, 1 };
 
         Category.FOOD.classes = new Class<?>[]{
                 Food.class,
-//                Pasty.class,
-//                MysteryMeat.class
+                Pasty.class,
+                MysteryMeat.class
         };
         Category.FOOD.probs = new float[]{ 4, 1, 0 };
 
@@ -227,14 +240,14 @@ public class Generator {
         Category.RING.probs = new float[]{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0 };
 
         Category.SEED.classes = new Class<?>[]{
-//                Firebloom.Seed.class,
-//                Icecap.Seed.class,
-//                Sorrowmoss.Seed.class,
-//                Dreamweed.Seed.class,
-//                Sungrass.Seed.class,
+                Firebloom.Seed.class,
+                Icecap.Seed.class,
+                Sorrowmoss.Seed.class,
+                Dreamweed.Seed.class,
+                Sungrass.Seed.class,
                 Earthroot.Seed.class,
-//                Fadeleaf.Seed.class,
-//                Rotberry.Seed.class
+                Fadeleaf.Seed.class,
+                Rotberry.Seed.class
         };
         Category.SEED.probs = new float[]{ 1, 1, 1, 1, 1, 1, 1, 0 };
 
