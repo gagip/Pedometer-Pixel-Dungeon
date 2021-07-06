@@ -7,8 +7,10 @@ import com.example.pedometerpixeldungeon.mainsrc.items.Item;
 import com.example.pedometerpixeldungeon.mainsrc.items.ItemStatusHandler;
 import com.example.pedometerpixeldungeon.mainsrc.levels.Level;
 import com.example.pedometerpixeldungeon.mainsrc.levels.Terrain;
+import com.example.pedometerpixeldungeon.mainsrc.scenes.GameScene;
 import com.example.pedometerpixeldungeon.mainsrc.sprites.ItemSpriteSheet;
 import com.example.pedometerpixeldungeon.mainsrc.utils.GLog;
+import com.example.pedometerpixeldungeon.mainsrc.windows.WndOptions;
 import com.example.pedometerpixeldungeon.noosa.audio.Sample;
 import com.example.pedometerpixeldungeon.utils.Bundle;
 
@@ -101,25 +103,25 @@ public class Potion extends Item {
     public void execute( final Hero hero, String action ) {
         if (action.equals( AC_DRINK )) {
 
-//            if (isKnown() && (
-//                    this instanceof PotionOfLiquidFlame ||
-//                            this instanceof PotionOfToxicGas ||
-//                            this instanceof PotionOfParalyticGas)) {
-//
-//                GameScene.show(
-//                        new WndOptions( TXT_HARMFUL, TXT_R_U_SURE_DRINK, TXT_YES, TXT_NO ) {
-//                            @Override
-//                            protected void onSelect(int index) {
-//                                if (index == 0) {
-//                                    drink( hero );
-//                                }
-//                            };
-//                        }
-//                );
-//
-//            } else {
-//                drink( hero );
-//            }
+            if (isKnown() && (
+                    this instanceof PotionOfLiquidFlame ||
+                            this instanceof PotionOfToxicGas ||
+                            this instanceof PotionOfParalyticGas)) {
+
+                GameScene.show(
+                        new WndOptions( TXT_HARMFUL, TXT_R_U_SURE_DRINK, TXT_YES, TXT_NO ) {
+                            @Override
+                            protected void onSelect(int index) {
+                                if (index == 0) {
+                                    drink( hero );
+                                }
+                            };
+                        }
+                );
+
+            } else {
+                drink( hero );
+            }
 
         } else {
 
@@ -131,29 +133,29 @@ public class Potion extends Item {
     @Override
     public void doThrow( final Hero hero ) {
 
-//        if (isKnown() && (
-//                this instanceof PotionOfExperience ||
-//                        this instanceof PotionOfHealing ||
-//                        this instanceof PotionOfLevitation ||
-//                        this instanceof PotionOfMindVision ||
-//                        this instanceof PotionOfStrength ||
-//                        this instanceof PotionOfInvisibility ||
-//                        this instanceof PotionOfMight)) {
-//
-//            GameScene.show(
-//                    new WndOptions( TXT_BENEFICIAL, TXT_R_U_SURE_THROW, TXT_YES, TXT_NO ) {
-//                        @Override
-//                        protected void onSelect(int index) {
-//                            if (index == 0) {
-//                                Potion.super.doThrow( hero );
-//                            }
-//                        };
-//                    }
-//            );
-//
-//        } else {
-//            super.doThrow( hero );
-//        }
+        if (isKnown() && (
+                this instanceof PotionOfExperience ||
+                        this instanceof PotionOfHealing ||
+                        this instanceof PotionOfLevitation ||
+                        this instanceof PotionOfMindVision ||
+                        this instanceof PotionOfStrength ||
+                        this instanceof PotionOfInvisibility ||
+                        this instanceof PotionOfMight)) {
+
+            GameScene.show(
+                    new WndOptions( TXT_BENEFICIAL, TXT_R_U_SURE_THROW, TXT_YES, TXT_NO ) {
+                        @Override
+                        protected void onSelect(int index) {
+                            if (index == 0) {
+                                Potion.super.doThrow( hero );
+                            }
+                        };
+                    }
+            );
+
+        } else {
+            super.doThrow( hero );
+        }
     }
 
     protected void drink( Hero hero ) {
