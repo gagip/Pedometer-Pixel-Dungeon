@@ -417,8 +417,7 @@ public class Hero extends Char {
 
             } else
             if (curAction instanceof HeroAction.Unlock) {
-                if (spendFootprint(3))
-                    return actUnlock( (HeroAction.Unlock)curAction );
+                return actUnlock( (HeroAction.Unlock)curAction );
 
             } else
             if (curAction instanceof HeroAction.Descend) {
@@ -430,8 +429,7 @@ public class Hero extends Char {
 
             } else
             if (curAction instanceof HeroAction.Attack) {
-                if (spendFootprint(3))
-                    return actAttack( (HeroAction.Attack)curAction );
+                return actAttack( (HeroAction.Attack)curAction );
 
             } else
             if (curAction instanceof HeroAction.Cook) {

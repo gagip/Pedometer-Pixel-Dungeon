@@ -7,6 +7,7 @@ import com.example.pedometerpixeldungeon.mainsrc.actors.buffs.Light;
 import com.example.pedometerpixeldungeon.mainsrc.actors.buffs.Rage;
 import com.example.pedometerpixeldungeon.mainsrc.actors.hero.Hero;
 import com.example.pedometerpixeldungeon.mainsrc.actors.hero.HeroClass;
+import com.example.pedometerpixeldungeon.mainsrc.items.Ankh;
 import com.example.pedometerpixeldungeon.mainsrc.items.Item;
 import com.example.pedometerpixeldungeon.mainsrc.items.potions.Potion;
 import com.example.pedometerpixeldungeon.mainsrc.items.rings.Ring;
@@ -97,7 +98,6 @@ public class Dungeon {
 //        Wandmaker.Quest.reset();
 //        Blacksmith.Quest.reset();
 //        Imp.Quest.reset();
-//
         Room.shuffleTypes();
 
         QuickSlot.primaryValue = null;
@@ -189,7 +189,7 @@ public class Dungeon {
 //                break;
             default:
                 level = new DeadEndLevel();
-//                Statistics.deepestFloor--;
+                Statistics.deepestFloor--;
         }
 
         level.create();
@@ -461,7 +461,7 @@ public class Dungeon {
                 }
             }
 
-            Bundle quests = bundle.getBundle( QUESTS );
+//            Bundle quests = bundle.getBundle( QUESTS );
 //            if (!quests.isNull()) {
 //                Ghost.Quest.restoreFromBundle( quests );
 //                Wandmaker.Quest.restoreFromBundle( quests );
