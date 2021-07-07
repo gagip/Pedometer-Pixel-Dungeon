@@ -397,8 +397,7 @@ public class Hero extends Char {
             ready = false;
 
             if (curAction instanceof HeroAction.Move) {
-                if (spendFootprint(1))
-                    return actMove( (HeroAction.Move)curAction );
+                return actMove( (HeroAction.Move)curAction );
 
             } else
             if (curAction instanceof HeroAction.Interact) {
@@ -934,8 +933,10 @@ public class Hero extends Char {
         if (step != -1) {
 
             int oldPos = pos;
-            move( step );
-            sprite.move( oldPos, pos );
+            if (spendFootprint(1)){
+                move( step );
+                sprite.move( oldPos, pos );
+            }
             spend( 1 / speed() );
 
             return true;
