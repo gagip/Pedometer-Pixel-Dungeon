@@ -5,6 +5,12 @@ import com.example.pedometerpixeldungeon.mainsrc.items.armors.ClothArmor;
 import com.example.pedometerpixeldungeon.mainsrc.items.bags.Keyring;
 import com.example.pedometerpixeldungeon.mainsrc.items.foods.Food;
 import com.example.pedometerpixeldungeon.mainsrc.items.potions.PotionOfStrength;
+import com.example.pedometerpixeldungeon.mainsrc.items.rings.RingOfShadows;
+import com.example.pedometerpixeldungeon.mainsrc.items.scrolls.ScrollOfIdentify;
+import com.example.pedometerpixeldungeon.mainsrc.items.scrolls.ScrollOfMagicMapping;
+import com.example.pedometerpixeldungeon.mainsrc.items.wands.WandOfMagicMissile;
+import com.example.pedometerpixeldungeon.mainsrc.items.weapons.melee.Dagger;
+import com.example.pedometerpixeldungeon.mainsrc.items.weapons.melee.Knuckles;
 import com.example.pedometerpixeldungeon.mainsrc.items.weapons.melee.ShortSword;
 import com.example.pedometerpixeldungeon.mainsrc.items.weapons.missiles.Dart;
 import com.example.pedometerpixeldungeon.mainsrc.ui.QuickSlot;
@@ -64,11 +70,11 @@ public enum  HeroClass {
                 break;
 
             case MAGE:
-//                initMage( hero );
+                initMage( hero );
                 break;
 
             case ROGUE:
-//                initRogue( hero );
+                initRogue( hero );
                 break;
 
             case HUNTRESS:
@@ -115,29 +121,29 @@ public enum  HeroClass {
         new PotionOfStrength().setKnown();
     }
 
-//    private static void initMage( Hero hero ) {
-//        (hero.belongings.weapon = new Knuckles()).identify();
-//
-//        WandOfMagicMissile wand = new WandOfMagicMissile();
-//        wand.identify().collect();
-//
-//        QuickSlot.primaryValue = wand;
-//
-//        new ScrollOfIdentify().setKnown();
-//    }
-//
-//    private static void initRogue( Hero hero ) {
-//        (hero.belongings.weapon = new Dagger()).identify();
-//        (hero.belongings.ring1 = new RingOfShadows()).upgrade().identify();
-//        new Dart( 8 ).identify().collect();
-//
-//        hero.belongings.ring1.activate( hero );
-//
-//        QuickSlot.primaryValue = Dart.class;
-//
-//        new ScrollOfMagicMapping().setKnown();
-//    }
-//
+    private static void initMage( Hero hero ) {
+        (hero.belongings.weapon = new Knuckles()).identify();
+
+        WandOfMagicMissile wand = new WandOfMagicMissile();
+        wand.identify().collect();
+
+        QuickSlot.primaryValue = wand;
+
+        new ScrollOfIdentify().setKnown();
+    }
+
+    private static void initRogue( Hero hero ) {
+        (hero.belongings.weapon = new Dagger()).identify();
+        (hero.belongings.ring1 = new RingOfShadows()).upgrade().identify();
+        new Dart( 8 ).identify().collect();
+
+        hero.belongings.ring1.activate( hero );
+
+        QuickSlot.primaryValue = Dart.class;
+
+        new ScrollOfMagicMapping().setKnown();
+    }
+
 //    private static void initHuntress( Hero hero ) {
 //
 //        hero.HP = (hero.HT -= 5);
