@@ -401,22 +401,18 @@ public class Hero extends Char {
 
             } else
             if (curAction instanceof HeroAction.Interact) {
-
                 return actInteract( (HeroAction.Interact)curAction );
 
             } else
             if (curAction instanceof HeroAction.Buy) {
-
                 return actBuy( (HeroAction.Buy)curAction );
 
             }else
             if (curAction instanceof HeroAction.PickUp) {
-                if (spendFootprint(1))
-                    return actPickUp( (HeroAction.PickUp)curAction );
+                return actPickUp( (HeroAction.PickUp)curAction );
 
             } else
             if (curAction instanceof HeroAction.OpenChest) {
-
                 return actOpenChest( (HeroAction.OpenChest)curAction );
 
             } else
@@ -426,13 +422,11 @@ public class Hero extends Char {
 
             } else
             if (curAction instanceof HeroAction.Descend) {
-                if (spendFootprint(5))
-                    return actDescend( (HeroAction.Descend)curAction );
+                return actDescend( (HeroAction.Descend)curAction );
 
             } else
             if (curAction instanceof HeroAction.Ascend) {
-                if (spendFootprint(5))
-                    return actAscend( (HeroAction.Ascend)curAction );
+                return actAscend( (HeroAction.Ascend)curAction );
 
             } else
             if (curAction instanceof HeroAction.Attack) {
@@ -491,7 +485,7 @@ public class Hero extends Char {
 
         NPC npc = action.npc;
 
-        if (Level.adjacent( pos, npc.pos )) {
+        if (Level.adjacent( pos, npc.pos ) && spendFootprint(3)) {
 
             ready();
             sprite.turnTo( pos, npc.pos );
@@ -561,7 +555,7 @@ public class Hero extends Char {
             Heap heap = Dungeon.level.heaps.get( pos );
             if (heap != null) {
                 Item item = heap.pickUp();
-                if (item.doPickUp( this )) {
+                if (spendFootprint(1) && item.doPickUp( this )) {
 
                     if (item instanceof Dewdrop) {
                         // Do nothing
@@ -620,20 +614,21 @@ public class Hero extends Char {
                     }
                 }
 
-                switch (heap.type) {
-                    case TOMB:
-                        Sample.INSTANCE.play( Assets.SND_TOMB );
-                        Camera.main.shake( 1, 0.5f );
-                        break;
-                    case SKELETON:
-                        break;
-                    default:
-                        Sample.INSTANCE.play( Assets.SND_UNLOCK );
+                if (spendFootprint(3)) {
+                    switch (heap.type) {
+                        case TOMB:
+                            Sample.INSTANCE.play( Assets.SND_TOMB );
+                            Camera.main.shake( 1, 0.5f );
+                            break;
+                        case SKELETON:
+                            break;
+                        default:
+                            Sample.INSTANCE.play( Assets.SND_UNLOCK );
+                    }
+
+                    spend( Key.TIME_TO_UNLOCK );
+                    sprite.operate( dst );
                 }
-
-                spend( Key.TIME_TO_UNLOCK );
-                sprite.operate( dst );
-
             } else {
                 ready();
             }
@@ -667,7 +662,7 @@ public class Hero extends Char {
 
             }
 
-            if (theKey != null) {
+            if (theKey != null && spendFootprint(3)) {
 
                 spend( Key.TIME_TO_UNLOCK );
                 sprite.operate( doorCell );
@@ -693,7 +688,7 @@ public class Hero extends Char {
 
     private boolean actDescend( HeroAction.Descend action ) {
         int stairs = action.dst;
-        if (pos == stairs && pos == Dungeon.level.exit) {
+        if (pos == stairs && pos == Dungeon.level.exit && spendFootprint(5)) {
 
             curAction = null;
 
@@ -733,16 +728,18 @@ public class Hero extends Char {
                 }
 
             } else {
+                if (spendFootprint(5)){
+                    curAction = null;
 
-                curAction = null;
+                    Hunger hunger = buff( Hunger.class );
+                    if (hunger != null && !hunger.isStarving()) {
+                        hunger.satisfy( -Hunger.STARVING / 10 );
+                    }
 
-                Hunger hunger = buff( Hunger.class );
-                if (hunger != null && !hunger.isStarving()) {
-                    hunger.satisfy( -Hunger.STARVING / 10 );
+
+                    InterlevelScene.mode = InterlevelScene.Mode.ASCEND;
+                    Game.switchScene( InterlevelScene.class );
                 }
-
-                InterlevelScene.mode = InterlevelScene.Mode.ASCEND;
-                Game.switchScene( InterlevelScene.class );
             }
 
             return false;
@@ -761,7 +758,7 @@ public class Hero extends Char {
 
         enemy = action.target;
 
-        if (Level.adjacent( pos, enemy.pos ) && enemy.isAlive() && !isCharmedBy( enemy )) {
+        if (Level.adjacent( pos, enemy.pos ) && enemy.isAlive() && !isCharmedBy( enemy ) && spendFootprint(3)) {
 
             spend( attackDelay() );
             sprite.attack( enemy.pos );
