@@ -6,7 +6,10 @@ import android.util.Log;
 import com.example.pedometerpixeldungeon.mainsrc.Assets;
 import com.example.pedometerpixeldungeon.mainsrc.PedometerPixelDungeon;
 import com.example.pedometerpixeldungeon.mainsrc.effects.BannerSprites;
+import com.example.pedometerpixeldungeon.mainsrc.effects.Fireball;
 import com.example.pedometerpixeldungeon.mainsrc.ui.Archs;
+import com.example.pedometerpixeldungeon.mainsrc.ui.ExitButton;
+import com.example.pedometerpixeldungeon.mainsrc.ui.PrefsButton;
 import com.example.pedometerpixeldungeon.noosa.BitmapText;
 import com.example.pedometerpixeldungeon.noosa.Camera;
 import com.example.pedometerpixeldungeon.noosa.Game;
@@ -51,8 +54,8 @@ public class TitleScene extends PixelScene {
         title.x = (w - title.width()) / 2;
         title.y = (h - height) / 2;
 
-//        placeTorch( title.x + 18, title.y + 20 );
-//        placeTorch( title.x + title.width - 18, title.y + 20 );
+        placeTorch( title.x + 18, title.y + 20 );
+        placeTorch( title.x + title.width - 18, title.y + 20 );
 
 
         Image signs = new Image( BannerSprites.get( BannerSprites.Type.PIXEL_DUNGEON_SIGNS ) ) {
@@ -125,22 +128,22 @@ public class TitleScene extends PixelScene {
         version.y = h - version.height();
         add( version );
 
-//        PrefsButton btnPrefs = new PrefsButton();
-//        btnPrefs.setPos( 0, 0 );
-//        add( btnPrefs );
+        PrefsButton btnPrefs = new PrefsButton();
+        btnPrefs.setPos( 0, 0 );
+        add( btnPrefs );
 
-//        ExitButton btnExit = new ExitButton();
-//        btnExit.setPos( w - btnExit.width(), 0 );
-//        add( btnExit );
+        ExitButton btnExit = new ExitButton();
+        btnExit.setPos( w - btnExit.width(), 0 );
+        add( btnExit );
 
         fadeIn();
     }
 
-//    private void placeTorch( float x, float y ) {
-//        Fireball fb = new Fireball();
-//        fb.setPos( x, y );
-//        add( fb );
-//    }
+    private void placeTorch( float x, float y ) {
+        Fireball fb = new Fireball();
+        fb.setPos( x, y );
+        add( fb );
+    }
 
     private static class DashboardItem extends Button {
 
