@@ -53,81 +53,84 @@ public class StatusPane extends Component {
 
     private MenuButton btnMenu;
 
+
     @Override
     protected void createChildren() {
 
-        shield = new NinePatch( Assets.STATUS, 80, 0, 30   + 18, 0 );
-        add( shield );
+        shield = new NinePatch(Assets.STATUS, 80, 0, 30 + 18, 0);
+        add(shield);
 
-        add( new TouchArea( 0, 1, 30, 30 ) {
+        add(new TouchArea(0, 1, 30, 30) {
             @Override
-            protected void onClick( Touchscreen.Touch touch ) {
+            protected void onClick(Touchscreen.Touch touch) {
                 Image sprite = Dungeon.hero.sprite;
                 if (!sprite.isVisible()) {
-                    Camera.main.focusOn( sprite );
+                    Camera.main.focusOn(sprite);
                 }
-                GameScene.show( new WndHero() );
-            };
-        } );
+                GameScene.show(new WndHero());
+            }
+
+            ;
+        });
 
         btnMenu = new MenuButton();
-        add( btnMenu );
+        add(btnMenu);
 
-        avatar = HeroSprite.avatar( Dungeon.hero.heroClass, lastTier );
-        add( avatar );
+        avatar = HeroSprite.avatar(Dungeon.hero.heroClass, lastTier);
+        add(avatar);
 
-        blood = new BitmaskEmitter( avatar );
-        blood.pour( BloodParticle.FACTORY, 0.3f );
+        blood = new BitmaskEmitter(avatar);
+        blood.pour(BloodParticle.FACTORY, 0.3f);
         blood.autoKill = false;
         blood.on = false;
-        add( blood );
+        add(blood);
 
-        compass = new Compass( Dungeon.level.exit );
-        add( compass );
+        compass = new Compass(Dungeon.level.exit);
+        add(compass);
 
-        hp = new Image( Assets.HP_BAR );
-        add( hp );
+        hp = new Image(Assets.HP_BAR);
+        add(hp);
 
-        exp = new Image( Assets.XP_BAR );
-        add( exp );
+        exp = new Image(Assets.XP_BAR);
+        add(exp);
 
-        level = new BitmapText( PixelScene.font1x );
-        level.hardlight( 0xFFEBA4 );
-        add( level );
+        level = new BitmapText(PixelScene.font1x);
+        level.hardlight(0xFFEBA4);
+        add(level);
 
-        depth = new BitmapText( Integer.toString( Dungeon.depth ), PixelScene.font1x );
-        depth.hardlight( 0xCACFC2 );
+        depth = new BitmapText(Integer.toString(Dungeon.depth), PixelScene.font1x);
+        depth.hardlight(0xCACFC2);
         depth.measure();
-        add( depth );
+        add(depth);
 
 //        PD = new BitmapText( Integer.toString( // 기입 필요), PixelScene.font1x); 픽셀 폰트 받아서 데이터 호출 라인
 //        PD.hardlight( 0xCACFC2); - 폰트 색상
 
-        // gold로 임시 대체중 대체 클래스 필요
-        footstep = new BitmapText( Integer.toString(Hero.footprint), PixelScene.font1x);
-        footstep.hardlight( 0xCACFC2 );
+        // footstep - 만보기 시스템으로 행동력 재화가 되는 발걸음 수
+        footstep = new BitmapText(Integer.toString(Hero.footprint), PixelScene.font2x);
+        footstep.hardlight(0xCACFC2);
         footstep.measure();
         add(footstep);
 
 
-        add( level);
+        add(level);
 
         Dungeon.hero.belongings.countIronKeys();
-        keys = new BitmapText( PixelScene.font1x );
-        keys.hardlight( 0xCACFC2 );
-        add( keys );
+        keys = new BitmapText(PixelScene.font1x);
+        keys.hardlight(0xCACFC2);
+        add(keys);
 
         danger = new DangerIndicator();
-        add( danger );
+        add(danger);
 
         loot = new LootIndicator();
-        add( loot );
+        add(loot);
 
         resume = new ResumeButton();
-        add( resume );
+        add(resume);
 
-        buffs = new BuffIndicator( Dungeon.hero );
-        add( buffs );
+        buffs = new BuffIndicator(Dungeon.hero);
+        add(buffs);
     }
 
     @Override
@@ -135,10 +138,10 @@ public class StatusPane extends Component {
 
         height = 32;
 
-        shield.size( width, shield.height );
+        shield.size(width, shield.height);
 
-        avatar.x = PixelScene.align( camera(), shield.x + 15 - avatar.width / 2 );
-        avatar.y = PixelScene.align( camera(), shield.y + 16 - avatar.height / 2 );
+        avatar.x = PixelScene.align(camera(), shield.x + 15 - avatar.width / 2);
+        avatar.y = PixelScene.align(camera(), shield.y + 16 - avatar.height / 2);
 
         compass.x = avatar.x + avatar.width / 2 - compass.origin.x;
         compass.y = avatar.y + avatar.height / 2 - compass.origin.y;
@@ -147,21 +150,21 @@ public class StatusPane extends Component {
         hp.y = 3;
 
 
-
-        depth.x = width - 24 - depth.width()    - 18;
+        depth.x = width - 24 - depth.width() - 18;
         depth.y = 6;
 
         //걸음수 임시 표기 - Dungeon.gold로 임시 호출상태
-        footstep.x = width - 32 - footstep.width() - 18;
+
+        footstep.x = width - 50 - footstep.width() - 18;
         footstep.y = 6;
 
         keys.y = 6;
 
         layoutTags();
 
-        buffs.setPos( 32, 11 );
+        buffs.setPos(32, 11);
 
-        btnMenu.setPos( width - btnMenu.width(), 1 );
+        btnMenu.setPos(width - btnMenu.width(), 1);
     }
 
     private void layoutTags() {
@@ -169,23 +172,24 @@ public class StatusPane extends Component {
         float pos = 18;
 
         if (tagDanger) {
-            danger.setPos( width - danger.width(), pos );
+            danger.setPos(width - danger.width(), pos);
             pos = danger.bottom() + 1;
+
         }
 
         if (tagLoot) {
-            loot.setPos( width - loot.width(), pos );
+            loot.setPos(width - loot.width(), pos);
             pos = loot.bottom() + 1;
         }
 
         if (tagResume) {
-            resume.setPos( width - resume.width(), pos );
+            resume.setPos(width - resume.width(), pos);
         }
     }
 
-    private boolean tagDanger	= false;
-    private boolean tagLoot		= false;
-    private boolean tagResume	= false;
+    private boolean tagDanger = false;
+    private boolean tagLoot = false;
+    private boolean tagResume = false;
 
     @Override
     public void update() {
@@ -200,13 +204,13 @@ public class StatusPane extends Component {
             layoutTags();
         }
 
-        float health = (float)Dungeon.hero.HP / Dungeon.hero.HT;
+        float health = (float) Dungeon.hero.HP / Dungeon.hero.HT;
 
         if (health == 0) {
-            avatar.tint( 0x000000, 0.6f );
+            avatar.tint(0x000000, 0.6f);
             blood.on = false;
         } else if (health < 0.25f) {
-            avatar.tint( 0xcc0000, 0.4f );
+            avatar.tint(0xcc0000, 0.4f);
             blood.on = true;
         } else {
             avatar.resetColor();
@@ -219,31 +223,31 @@ public class StatusPane extends Component {
         if (Dungeon.hero.lvl != lastLvl) {
 
             if (lastLvl != -1) {
-                Emitter emitter = (Emitter)recycle( Emitter.class );
+                Emitter emitter = (Emitter) recycle(Emitter.class);
                 emitter.revive();
-                emitter.pos( 27, 27 );
-                emitter.burst( Speck.factory( Speck.STAR ), 12 );
+                emitter.pos(50, 50);
+                emitter.burst(Speck.factory(Speck.STAR), 12);
             }
 
             lastLvl = Dungeon.hero.lvl;
-            level.text( Integer.toString( lastLvl ) );
+            level.text(Integer.toString(lastLvl));
             level.measure();
-            level.x = PixelScene.align( 27.5f - level.width() / 2 );
-            level.y = PixelScene.align( 28.0f - level.baseLine() / 2 );
+            level.x = PixelScene.align(27.5f - level.width() / 2);
+            level.y = PixelScene.align(28.0f - level.baseLine() / 2);
         }
 
         int k = IronKey.curDepthQuantity;
         if (k != lastKeys) {
             lastKeys = k;
-            keys.text( Integer.toString( lastKeys ) );
+            keys.text(Integer.toString(lastKeys));
             keys.measure();
-            keys.x = width - 8 - keys.width()    - 18;
+            keys.x = width - 8 - keys.width() - 18;
         }
 
         int tier = Dungeon.hero.tier();
         if (tier != lastTier) {
             lastTier = tier;
-            avatar.copy( HeroSprite.avatar( Dungeon.hero.heroClass, tier ) );
+            avatar.copy(HeroSprite.avatar(Dungeon.hero.heroClass, tier));
         }
 
         int f = Hero.footprint;
@@ -269,9 +273,12 @@ public class StatusPane extends Component {
         protected void createChildren() {
             super.createChildren();
 
-            image = new Image( Assets.STATUS, 114, 3, 12, 11 );
-            add( image );
+            image = new Image(Assets.STATUS, 114, 3, 12, 11);
+            add(image);
+
+
         }
+
 
         @Override
         protected void layout() {
@@ -283,8 +290,8 @@ public class StatusPane extends Component {
 
         @Override
         protected void onTouchDown() {
-            image.brightness( 1.5f );
-            Sample.INSTANCE.play( Assets.SND_CLICK );
+            image.brightness(1.5f);
+            Sample.INSTANCE.play(Assets.SND_CLICK);
         }
 
         @Override
@@ -294,7 +301,16 @@ public class StatusPane extends Component {
 
         @Override
         protected void onClick() {
-            GameScene.show( new WndGame() );
+            GameScene.show(new WndGame());
         }
+
+
+
+
+
+
+        }
+
+
     }
-}
+
