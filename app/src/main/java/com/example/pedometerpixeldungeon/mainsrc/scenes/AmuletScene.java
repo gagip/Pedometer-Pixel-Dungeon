@@ -31,8 +31,7 @@ import com.example.pedometerpixeldungeon.utils.Random;
 
 public class AmuletScene extends PixelScene {
 
-	private static final String TXT_EXIT	= "Let's call it a day";
-	private static final String TXT_STAY	= "I'm not done yet";
+	private static final String TXT_EXIT	= "Game Clear";
 	
 	private static final int WIDTH			= 120;
 	private static final int BTN_HEIGHT		= 18;
@@ -69,33 +68,23 @@ public class AmuletScene extends PixelScene {
 			protected void onClick() {
 				Dungeon.win( ResultDescriptions.WIN );
 				Dungeon.deleteGame( Dungeon.hero.heroClass, true );
-//				Game.switchScene( noText ? TitleScene.class : RankingsScene.class );
+				Game.switchScene( noText ? TitleScene.class : TitleScene.class );
 			}
 		};
 		btnExit.setSize( WIDTH, BTN_HEIGHT );
 		add( btnExit );
 		
-		RedButton btnStay = new RedButton( TXT_STAY ) {
-			@Override
-			protected void onClick() {
-				onBackPressed();
-			}
-		};
-		btnStay.setSize( WIDTH, BTN_HEIGHT );
-		add( btnStay );
-		
 		float height;
 		if (noText) {
-			height = amulet.height + LARGE_GAP + btnExit.height() + SMALL_GAP + btnStay.height();
+			height = amulet.height + LARGE_GAP + btnExit.height() + SMALL_GAP;
 			
 			amulet.x = align( (Camera.main.width - amulet.width) / 2 );
 			amulet.y = align( (Camera.main.height - height) / 2 );
 			
 			btnExit.setPos( (Camera.main.width - btnExit.width()) / 2, amulet.y + amulet.height + LARGE_GAP );
-			btnStay.setPos( btnExit.left(), btnExit.bottom() + SMALL_GAP );
 			
 		} else {
-			height = amulet.height + LARGE_GAP + text.height() + LARGE_GAP + btnExit.height() + SMALL_GAP + btnStay.height();
+			height = amulet.height + LARGE_GAP + text.height() + LARGE_GAP + btnExit.height();
 			
 			amulet.x = align( (Camera.main.width - amulet.width) / 2 );
 			amulet.y = align( (Camera.main.height - height) / 2 );
@@ -104,7 +93,6 @@ public class AmuletScene extends PixelScene {
 			text.y = amulet.y + amulet.height + LARGE_GAP;
 			
 			btnExit.setPos( (Camera.main.width - btnExit.width()) / 2, text.y + text.height() + LARGE_GAP );
-			btnStay.setPos( btnExit.left(), btnExit.bottom() + SMALL_GAP );
 		}
 
 		new Flare( 8, 48 ).color( 0xFFDDBB, true ).show( amulet, 0 ).angularSpeed = +30;

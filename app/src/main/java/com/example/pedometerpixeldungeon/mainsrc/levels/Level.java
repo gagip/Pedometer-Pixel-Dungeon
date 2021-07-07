@@ -30,10 +30,13 @@ import com.example.pedometerpixeldungeon.mainsrc.items.bags.ScrollHolder;
 import com.example.pedometerpixeldungeon.mainsrc.items.bags.SeedPouch;
 import com.example.pedometerpixeldungeon.mainsrc.items.foods.Food;
 import com.example.pedometerpixeldungeon.mainsrc.items.potions.PotionOfHealing;
+import com.example.pedometerpixeldungeon.mainsrc.items.potions.PotionOfStrength;
 import com.example.pedometerpixeldungeon.mainsrc.items.scrolls.Scroll;
+import com.example.pedometerpixeldungeon.mainsrc.items.scrolls.ScrollOfEnchantment;
 import com.example.pedometerpixeldungeon.mainsrc.items.scrolls.ScrollOfUpgrade;
 import com.example.pedometerpixeldungeon.mainsrc.levels.features.Chasm;
 import com.example.pedometerpixeldungeon.mainsrc.levels.features.Door;
+import com.example.pedometerpixeldungeon.mainsrc.levels.features.HighGrass;
 import com.example.pedometerpixeldungeon.mainsrc.levels.traps.AlarmTrap;
 import com.example.pedometerpixeldungeon.mainsrc.levels.traps.FireTrap;
 import com.example.pedometerpixeldungeon.mainsrc.levels.traps.GrippingTrap;
@@ -148,18 +151,18 @@ public abstract class Level implements Bundlable {
 
         if (!Dungeon.bossLevel()) {
             addItemToSpawn( Generator.random( Generator.Category.FOOD ) );
-//            if (Dungeon.posNeeded()) {
-//                addItemToSpawn( new PotionOfStrength() );
-//                Dungeon.potionOfStrength++;
-//            }
-//            if (Dungeon.souNeeded()) {
-//                addItemToSpawn( new ScrollOfUpgrade() );
-//                Dungeon.scrollsOfUpgrade++;
-//            }
-//            if (Dungeon.soeNeeded()) {
-//                addItemToSpawn( new ScrollOfEnchantment() );
-//                Dungeon.scrollsOfEnchantment++;
-//            }
+            if (Dungeon.posNeeded()) {
+                addItemToSpawn( new PotionOfStrength() );
+                Dungeon.potionOfStrength++;
+            }
+            if (Dungeon.souNeeded()) {
+                addItemToSpawn( new ScrollOfUpgrade() );
+                Dungeon.scrollsOfUpgrade++;
+            }
+            if (Dungeon.soeNeeded()) {
+                addItemToSpawn( new ScrollOfEnchantment() );
+                Dungeon.scrollsOfEnchantment++;
+            }
 
             if (Dungeon.depth > 1) {
                 switch (Random.Int( 10 )) {
@@ -675,7 +678,7 @@ public abstract class Level implements Bundlable {
                 break;
 
             case Terrain.HIGH_GRASS:
-//                HighGrass.trample( this, cell, ch );
+                HighGrass.trample( this, cell, ch );
                 break;
 
             case Terrain.WELL:

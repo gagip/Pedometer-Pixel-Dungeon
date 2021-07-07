@@ -1,10 +1,12 @@
 package com.example.pedometerpixeldungeon.mainsrc.items.scrolls;
 
+import com.example.pedometerpixeldungeon.mainsrc.actors.buffs.Blindness;
 import com.example.pedometerpixeldungeon.mainsrc.actors.hero.Hero;
 import com.example.pedometerpixeldungeon.mainsrc.items.Item;
 import com.example.pedometerpixeldungeon.mainsrc.items.ItemStatusHandler;
 import com.example.pedometerpixeldungeon.mainsrc.sprites.HeroSprite;
 import com.example.pedometerpixeldungeon.mainsrc.sprites.ItemSpriteSheet;
+import com.example.pedometerpixeldungeon.mainsrc.utils.GLog;
 import com.example.pedometerpixeldungeon.utils.Bundle;
 
 import java.util.ArrayList;
@@ -88,13 +90,13 @@ public abstract class Scroll extends Item {
     public void execute( Hero hero, String action ) {
         if (action.equals( AC_READ )) {
 
-//            if (hero.buff( Blindness.class ) != null) {
-//                GLog.w( TXT_BLINDED );
-//            } else {
-//                curUser = hero;
-//                curItem = detach( hero.belongings.backpack );
-//                doRead();
-//            }
+            if (hero.buff( Blindness.class ) != null) {
+                GLog.w( TXT_BLINDED );
+            } else {
+                curUser = hero;
+                curItem = detach( hero.belongings.backpack );
+                doRead();
+            }
             curUser = hero;
             curItem = detach( hero.belongings.backpack );
             doRead();
