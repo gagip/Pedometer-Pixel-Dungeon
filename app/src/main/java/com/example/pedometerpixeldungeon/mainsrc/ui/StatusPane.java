@@ -91,6 +91,9 @@ public class StatusPane extends Component {
         hp = new Image(Assets.HP_BAR);
         add(hp);
 
+        PD = new Image(Assets.PD);
+        add(PD);
+
         exp = new Image(Assets.XP_BAR);
         add(exp);
 
@@ -149,11 +152,14 @@ public class StatusPane extends Component {
         hp.x = 30;
         hp.y = 3;
 
+        // 발걸음 수 태두리 및 아이콘으로 쓸 사진 좌표
+        PD.x = 120;
+        PD.y = 4;
 
         depth.x = width - 24 - depth.width() - 18;
         depth.y = 6;
 
-        //걸음수 임시 표기 - Dungeon.gold로 임시 호출상태
+        //걸음수 임시 표기
 
         footstep.x = width - 50 - footstep.width() - 18;
         footstep.y = 6;
