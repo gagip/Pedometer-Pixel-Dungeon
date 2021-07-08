@@ -1,6 +1,7 @@
 package com.example.pedometerpixeldungeon.mainsrc.levels.painters;
 
 import com.example.pedometerpixeldungeon.mainsrc.actors.Actor;
+import com.example.pedometerpixeldungeon.mainsrc.actors.mobs.Piranha;
 import com.example.pedometerpixeldungeon.mainsrc.items.Generator;
 import com.example.pedometerpixeldungeon.mainsrc.items.Heap;
 import com.example.pedometerpixeldungeon.mainsrc.items.Item;
@@ -55,12 +56,12 @@ public class PoolPainter extends Painter {
         level.addItemToSpawn( new PotionOfInvisibility() );
 
         for (int i=0; i < NPIRANHAS; i++) {
-//            Piranha piranha = new Piranha();
-//            do {
-//                piranha.pos = room.random();
-//            } while (level.map[piranha.pos] != Terrain.WATER|| Actor.findChar( piranha.pos ) != null);
-//            level.mobs.add( piranha );
-//            Actor.occupyCell( piranha );
+            Piranha piranha = new Piranha();
+            do {
+                piranha.pos = room.random();
+            } while (level.map[piranha.pos] != Terrain.WATER|| Actor.findChar( piranha.pos ) != null);
+            level.mobs.add( piranha );
+            Actor.occupyCell( piranha );
         }
     }
 

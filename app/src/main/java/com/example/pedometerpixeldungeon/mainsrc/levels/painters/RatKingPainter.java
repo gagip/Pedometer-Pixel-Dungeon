@@ -1,5 +1,6 @@
 package com.example.pedometerpixeldungeon.mainsrc.levels.painters;
 
+import com.example.pedometerpixeldungeon.mainsrc.actors.mobs.npcs.RatKing;
 import com.example.pedometerpixeldungeon.mainsrc.items.Generator;
 import com.example.pedometerpixeldungeon.mainsrc.items.Gold;
 import com.example.pedometerpixeldungeon.mainsrc.items.Heap;
@@ -40,9 +41,9 @@ public class RatKingPainter extends Painter {
             }
         }
 
-//        RatKing king = new RatKing();
-//        king.pos = room.random( 1 );
-//        level.mobs.add( king );
+        RatKing king = new RatKing();
+        king.pos = room.random( 1 );
+        level.mobs.add( king );
     }
 
     private static void addChest( Level level, int pos, int door ) {

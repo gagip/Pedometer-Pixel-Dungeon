@@ -26,6 +26,7 @@ import com.example.pedometerpixeldungeon.mainsrc.actors.Char;
 import com.example.pedometerpixeldungeon.mainsrc.actors.buffs.Buff;
 import com.example.pedometerpixeldungeon.mainsrc.actors.buffs.Paralysis;
 import com.example.pedometerpixeldungeon.mainsrc.actors.buffs.Roots;
+import com.example.pedometerpixeldungeon.mainsrc.actors.mobs.CursePersonification;
 import com.example.pedometerpixeldungeon.mainsrc.actors.mobs.Mob;
 import com.example.pedometerpixeldungeon.mainsrc.effects.CellEmitter;
 import com.example.pedometerpixeldungeon.mainsrc.effects.Speck;
@@ -34,12 +35,16 @@ import com.example.pedometerpixeldungeon.mainsrc.items.Generator;
 import com.example.pedometerpixeldungeon.mainsrc.items.Item;
 import com.example.pedometerpixeldungeon.mainsrc.items.armors.Armor;
 import com.example.pedometerpixeldungeon.mainsrc.items.armors.ClothArmor;
+import com.example.pedometerpixeldungeon.mainsrc.items.quests.DriedRose;
+import com.example.pedometerpixeldungeon.mainsrc.items.quests.RatSkull;
 import com.example.pedometerpixeldungeon.mainsrc.items.weapons.Weapon;
 import com.example.pedometerpixeldungeon.mainsrc.items.weapons.missiles.MissileWeapon;
 import com.example.pedometerpixeldungeon.mainsrc.levels.SewerLevel;
 import com.example.pedometerpixeldungeon.mainsrc.scenes.GameScene;
 import com.example.pedometerpixeldungeon.mainsrc.sprites.mobsprites.GhostSprite;
+import com.example.pedometerpixeldungeon.mainsrc.ui.WndQuest;
 import com.example.pedometerpixeldungeon.mainsrc.utils.Utils;
+import com.example.pedometerpixeldungeon.mainsrc.windows.WndSadGhost;
 import com.example.pedometerpixeldungeon.noosa.audio.Sample;
 import com.example.pedometerpixeldungeon.noosa.tweeners.AlphaTweener;
 import com.example.pedometerpixeldungeon.utils.Bundle;
@@ -361,22 +366,22 @@ public class Ghost extends NPC {
 			"will be useful to you in your journey...";
 
 		public void interact( Ghost ghost ) {
-//			if (Quest.given) {
-//
-//				Item item = Dungeon.hero.belongings.getItem( DriedRose.class );
-//				if (item != null) {
-//					GameScene.show( new WndSadGhost( ghost, item, TXT_ROSE3 ) );
-//				} else {
-//					GameScene.show( new WndQuest( ghost, TXT_ROSE2 ) );
-//					relocate( ghost );
-//				}
-//
-//			} else {
-//				GameScene.show( new WndQuest( ghost, TXT_ROSE1 ) );
-//				Quest.given = true;
-//
-//				Journal.add( Journal.Feature.GHOST );
-//			}
+			if (Quest.given) {
+
+				Item item = Dungeon.hero.belongings.getItem( DriedRose.class );
+				if (item != null) {
+					GameScene.show( new WndSadGhost( ghost, item, TXT_ROSE3 ) );
+				} else {
+					GameScene.show( new WndQuest( ghost, TXT_ROSE2 ) );
+					relocate( ghost );
+				}
+
+			} else {
+				GameScene.show( new WndQuest( ghost, TXT_ROSE1 ) );
+				Quest.given = true;
+
+				Journal.add( Journal.Feature.GHOST );
+			}
 		}
 	};
 	
@@ -395,22 +400,22 @@ public class Ghost extends NPC {
 			"will be useful to you in your journey...";
 		
 		public void interact( Ghost ghost ) {
-//			if (Quest.given) {
-//
-//				Item item = Dungeon.hero.belongings.getItem( RatSkull.class );
-//				if (item != null) {
-//					GameScene.show( new WndSadGhost( ghost, item, TXT_RAT3 ) );
-//				} else {
-//					GameScene.show( new WndQuest( ghost, TXT_RAT2 ) );
-//					relocate( ghost );
-//				}
-//
-//			} else {
-//				GameScene.show( new WndQuest( ghost, TXT_RAT1 ) );
-//				Quest.given = true;
-//
-//				Journal.add( Journal.Feature.GHOST );
-//			}
+			if (Quest.given) {
+
+				Item item = Dungeon.hero.belongings.getItem( RatSkull.class );
+				if (item != null) {
+					GameScene.show( new WndSadGhost( ghost, item, TXT_RAT3 ) );
+				} else {
+					GameScene.show( new WndQuest( ghost, TXT_RAT2 ) );
+					relocate( ghost );
+				}
+
+			} else {
+				GameScene.show( new WndQuest( ghost, TXT_RAT1 ) );
+				Quest.given = true;
+
+				Journal.add( Journal.Feature.GHOST );
+			}
 		}
 	};
 	
@@ -428,31 +433,31 @@ public class Ghost extends NPC {
 		private static final String TXT_NO	= "No, I can't help you";
 		
 		public void interact( final Ghost ghost ) {
-//			if (Quest.given) {
-//
-//				GameScene.show( new WndSadGhost( ghost, null, Utils.format( TXT_CURSE2, Dungeon.hero.className() ) ) );
-//
-//			} else {
-//				GameScene.show( new WndQuest( ghost, TXT_CURSE1, TXT_YES, TXT_NO ) {
-//					protected void onSelect( int index ) {
-//						if (index == 0) {
-//							Quest.given = true;
-//
-//							CursePersonification d = new CursePersonification();
-//							Ghost.replace( ghost, d );
-//
-//							d.sprite.emitter().burst( ShadowParticle.CURSE, 5 );
-//							Sample.INSTANCE.play( Assets.SND_GHOST );
-//
-//							Dungeon.hero.next();
-//						} else {
-//							relocate( ghost );
-//						}
-//					};
-//				} );
-//
-//				Journal.add( Journal.Feature.GHOST );
-//			}
+			if (Quest.given) {
+
+				GameScene.show( new WndSadGhost( ghost, null, Utils.format( TXT_CURSE2, Dungeon.hero.className() ) ) );
+
+			} else {
+				GameScene.show( new WndQuest( ghost, TXT_CURSE1, TXT_YES, TXT_NO ) {
+					protected void onSelect( int index ) {
+						if (index == 0) {
+							Quest.given = true;
+
+							CursePersonification d = new CursePersonification();
+							Ghost.replace( ghost, d );
+
+							d.sprite.emitter().burst( ShadowParticle.CURSE, 5 );
+							Sample.INSTANCE.play( Assets.SND_GHOST );
+
+							Dungeon.hero.next();
+						} else {
+							relocate( ghost );
+						}
+					};
+				} );
+
+				Journal.add( Journal.Feature.GHOST );
+			}
 		}
 	};
 }

@@ -7,15 +7,28 @@ import com.example.pedometerpixeldungeon.mainsrc.actors.buffs.Light;
 import com.example.pedometerpixeldungeon.mainsrc.actors.buffs.Rage;
 import com.example.pedometerpixeldungeon.mainsrc.actors.hero.Hero;
 import com.example.pedometerpixeldungeon.mainsrc.actors.hero.HeroClass;
+import com.example.pedometerpixeldungeon.mainsrc.actors.mobs.npcs.Blacksmith;
+import com.example.pedometerpixeldungeon.mainsrc.actors.mobs.npcs.Ghost;
+import com.example.pedometerpixeldungeon.mainsrc.actors.mobs.npcs.Imp;
+import com.example.pedometerpixeldungeon.mainsrc.actors.mobs.npcs.Wandmaker;
 import com.example.pedometerpixeldungeon.mainsrc.items.Ankh;
 import com.example.pedometerpixeldungeon.mainsrc.items.Item;
 import com.example.pedometerpixeldungeon.mainsrc.items.potions.Potion;
 import com.example.pedometerpixeldungeon.mainsrc.items.rings.Ring;
 import com.example.pedometerpixeldungeon.mainsrc.items.scrolls.Scroll;
 import com.example.pedometerpixeldungeon.mainsrc.items.wands.Wand;
+import com.example.pedometerpixeldungeon.mainsrc.levels.CavesBossLevel;
+import com.example.pedometerpixeldungeon.mainsrc.levels.CavesLevel;
+import com.example.pedometerpixeldungeon.mainsrc.levels.CityBossLevel;
+import com.example.pedometerpixeldungeon.mainsrc.levels.CityLevel;
 import com.example.pedometerpixeldungeon.mainsrc.levels.DeadEndLevel;
+import com.example.pedometerpixeldungeon.mainsrc.levels.HallsBossLevel;
+import com.example.pedometerpixeldungeon.mainsrc.levels.HallsLevel;
 import com.example.pedometerpixeldungeon.mainsrc.levels.LastLevel;
+import com.example.pedometerpixeldungeon.mainsrc.levels.LastShopLevel;
 import com.example.pedometerpixeldungeon.mainsrc.levels.Level;
+import com.example.pedometerpixeldungeon.mainsrc.levels.PrisonBossLevel;
+import com.example.pedometerpixeldungeon.mainsrc.levels.PrisonLevel;
 import com.example.pedometerpixeldungeon.mainsrc.levels.Room;
 import com.example.pedometerpixeldungeon.mainsrc.levels.SewerBossLevel;
 import com.example.pedometerpixeldungeon.mainsrc.levels.SewerLevel;
@@ -94,10 +107,10 @@ public class Dungeon {
 
         chapters = new HashSet<Integer>();
 
-//        Ghost.Quest.reset();
-//        Wandmaker.Quest.reset();
-//        Blacksmith.Quest.reset();
-//        Imp.Quest.reset();
+        Ghost.Quest.reset();
+        Wandmaker.Quest.reset();
+        Blacksmith.Quest.reset();
+        Imp.Quest.reset();
         Room.shuffleTypes();
 
         QuickSlot.primaryValue = null;
@@ -145,48 +158,46 @@ public class Dungeon {
                 level = new SewerBossLevel();
                 break;
             case 6:
+            case 7:
+            case 8:
+            case 9:
+                level = new PrisonLevel();
+                break;
+            case 10:
+                level = new PrisonBossLevel();
+                break;
+            case 11:
+            case 12:
+            case 13:
+            case 14:
+                level = new CavesLevel();
+                break;
+            case 15:
+                level = new CavesBossLevel();
+                break;
+            case 16:
+            case 17:
+            case 18:
+            case 19:
+                level = new CityLevel();
+                break;
+            case 20:
+                level = new CityBossLevel();
+                break;
+            case 21:
+                level = new LastShopLevel();
+                break;
+            case 22:
+            case 23:
+            case 24:
+                level = new HallsLevel();
+                break;
+            case 25:
+                level = new HallsBossLevel();
+                break;
+            case 26:
                 level = new LastLevel();
                 break;
-//            case 7:
-//            case 8:
-//            case 9:
-//                level = new PrisonLevel();
-//                break;
-//            case 10:
-//                level = new PrisonBossLevel();
-//                break;
-//            case 11:
-//            case 12:
-//            case 13:
-//            case 14:
-//                level = new CavesLevel();
-//                break;
-//            case 15:
-//                level = new CavesBossLevel();
-//                break;
-//            case 16:
-//            case 17:
-//            case 18:
-//            case 19:
-//                level = new CityLevel();
-//                break;
-//            case 20:
-//                level = new CityBossLevel();
-//                break;
-//            case 21:
-//                level = new LastShopLevel();
-//                break;
-//            case 22:
-//            case 23:
-//            case 24:
-//                level = new HallsLevel();
-//                break;
-//            case 25:
-//                level = new HallsBossLevel();
-//                break;
-//            case 26:
-//                level = new LastLevel();
-//                break;
             default:
                 level = new DeadEndLevel();
                 Statistics.deepestFloor--;
@@ -362,10 +373,10 @@ public class Dungeon {
 
             // Quest
             Bundle quests = new Bundle();
-//            Ghost		.Quest.storeInBundle( quests );
-//            Wandmaker	.Quest.storeInBundle( quests );
-//            Blacksmith	.Quest.storeInBundle( quests );
-//            Imp			.Quest.storeInBundle( quests );
+            Ghost		.Quest.storeInBundle( quests );
+            Wandmaker	.Quest.storeInBundle( quests );
+            Blacksmith	.Quest.storeInBundle( quests );
+            Imp			.Quest.storeInBundle( quests );
             bundle.put( QUESTS, quests );
 
             Room.storeRoomsInBundle( bundle );
@@ -461,20 +472,20 @@ public class Dungeon {
                 }
             }
 
-//            Bundle quests = bundle.getBundle( QUESTS );
-//            if (!quests.isNull()) {
-//                Ghost.Quest.restoreFromBundle( quests );
-//                Wandmaker.Quest.restoreFromBundle( quests );
-//                Blacksmith.Quest.restoreFromBundle( quests );
-//                Imp.Quest.restoreFromBundle( quests );
-//            } else {
-//                Ghost.Quest.reset();
-//                Wandmaker.Quest.reset();
-//                Blacksmith.Quest.reset();
-//                Imp.Quest.reset();
-//            }
-//
-//            Room.restoreRoomsFromBundle( bundle );
+            Bundle quests = bundle.getBundle( QUESTS );
+            if (!quests.isNull()) {
+                Ghost.Quest.restoreFromBundle( quests );
+                Wandmaker.Quest.restoreFromBundle( quests );
+                Blacksmith.Quest.restoreFromBundle( quests );
+                Imp.Quest.restoreFromBundle( quests );
+            } else {
+                Ghost.Quest.reset();
+                Wandmaker.Quest.reset();
+                Blacksmith.Quest.reset();
+                Imp.Quest.reset();
+            }
+
+            Room.restoreRoomsFromBundle( bundle );
         }
 //
 //        Bundle badges = bundle.getBundle( BADGES );

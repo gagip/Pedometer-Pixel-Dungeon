@@ -22,14 +22,19 @@ import com.example.pedometerpixeldungeon.mainsrc.Journal;
 import com.example.pedometerpixeldungeon.mainsrc.actors.Actor;
 import com.example.pedometerpixeldungeon.mainsrc.actors.Char;
 import com.example.pedometerpixeldungeon.mainsrc.actors.buffs.Buff;
+import com.example.pedometerpixeldungeon.mainsrc.actors.mobs.Golem;
 import com.example.pedometerpixeldungeon.mainsrc.actors.mobs.Mob;
+import com.example.pedometerpixeldungeon.mainsrc.actors.mobs.Monk;
 import com.example.pedometerpixeldungeon.mainsrc.items.Generator;
+import com.example.pedometerpixeldungeon.mainsrc.items.quests.DwarfToken;
 import com.example.pedometerpixeldungeon.mainsrc.items.rings.Ring;
 import com.example.pedometerpixeldungeon.mainsrc.levels.CityLevel;
 import com.example.pedometerpixeldungeon.mainsrc.levels.Room;
 import com.example.pedometerpixeldungeon.mainsrc.scenes.GameScene;
 import com.example.pedometerpixeldungeon.mainsrc.sprites.mobsprites.ImpSprite;
+import com.example.pedometerpixeldungeon.mainsrc.ui.WndQuest;
 import com.example.pedometerpixeldungeon.mainsrc.utils.Utils;
+import com.example.pedometerpixeldungeon.mainsrc.windows.WndImp;
 import com.example.pedometerpixeldungeon.utils.Bundle;
 import com.example.pedometerpixeldungeon.utils.Random;
 
@@ -111,28 +116,28 @@ public class Imp extends NPC {
 	@Override
 	public void interact() {
 		
-//		sprite.turnTo( pos, Dungeon.hero.pos );
-//		if (Quest.given) {
-//
-//			DwarfToken tokens = Dungeon.hero.belongings.getItem( DwarfToken.class );
-//			if (tokens != null && (tokens.quantity() >= 8 || (!Quest.alternative && tokens.quantity() >= 6))) {
-//				GameScene.show( new WndImp( this, tokens ) );
-//			} else {
-//				tell( Quest.alternative ? TXT_MONKS2 : TXT_GOLEMS2, Dungeon.hero.className() );
-//			}
-//
-//		} else {
-//			tell( Quest.alternative ? TXT_MONKS1 : TXT_GOLEMS1 );
-//			Quest.given = true;
-//			Quest.completed = false;
-//
-//			Journal.add( Journal.Feature.IMP );
-//		}
+		sprite.turnTo( pos, Dungeon.hero.pos );
+		if (Quest.given) {
+
+			DwarfToken tokens = Dungeon.hero.belongings.getItem( DwarfToken.class );
+			if (tokens != null && (tokens.quantity() >= 8 || (!Quest.alternative && tokens.quantity() >= 6))) {
+				GameScene.show( new WndImp( this, tokens ) );
+			} else {
+				tell( Quest.alternative ? TXT_MONKS2 : TXT_GOLEMS2, Dungeon.hero.className() );
+			}
+
+		} else {
+			tell( Quest.alternative ? TXT_MONKS1 : TXT_GOLEMS1 );
+			Quest.given = true;
+			Quest.completed = false;
+
+			Journal.add( Journal.Feature.IMP );
+		}
 	}
 	
 	private void tell( String format, Object...args ) {
-//		GameScene.show(
-//			new WndQuest( this, Utils.format( format, args ) ) );
+		GameScene.show(
+			new WndQuest( this, Utils.format( format, args ) ) );
 	}
 	
 	public void flee() {
@@ -228,13 +233,13 @@ public class Imp extends NPC {
 		}
 		
 		public static void process( Mob mob ) {
-//			if (spawned && given && !completed) {
-//				if ((alternative && mob instanceof Monk) ||
-//					(!alternative && mob instanceof Golem)) {
-//
-//					Dungeon.level.drop( new DwarfToken(), mob.pos ).sprite.drop();
-//				}
-//			}
+			if (spawned && given && !completed) {
+				if ((alternative && mob instanceof Monk) ||
+					(!alternative && mob instanceof Golem)) {
+
+					Dungeon.level.drop( new DwarfToken(), mob.pos ).sprite.drop();
+				}
+			}
 		}
 		
 		public static void complete() {

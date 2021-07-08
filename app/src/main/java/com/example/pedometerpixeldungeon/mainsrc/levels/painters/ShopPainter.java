@@ -1,7 +1,36 @@
 package com.example.pedometerpixeldungeon.mainsrc.levels.painters;
 
+import com.example.pedometerpixeldungeon.mainsrc.Dungeon;
+import com.example.pedometerpixeldungeon.mainsrc.actors.mobs.Mob;
+import com.example.pedometerpixeldungeon.mainsrc.actors.mobs.npcs.ImpShopkeeper;
+import com.example.pedometerpixeldungeon.mainsrc.actors.mobs.npcs.Shopkeeper;
+import com.example.pedometerpixeldungeon.mainsrc.items.Ankh;
+import com.example.pedometerpixeldungeon.mainsrc.items.Generator;
 import com.example.pedometerpixeldungeon.mainsrc.items.Heap;
 import com.example.pedometerpixeldungeon.mainsrc.items.Item;
+import com.example.pedometerpixeldungeon.mainsrc.items.Torch;
+import com.example.pedometerpixeldungeon.mainsrc.items.Weightstone;
+import com.example.pedometerpixeldungeon.mainsrc.items.armors.LeatherArmor;
+import com.example.pedometerpixeldungeon.mainsrc.items.armors.MailArmor;
+import com.example.pedometerpixeldungeon.mainsrc.items.armors.PlateArmor;
+import com.example.pedometerpixeldungeon.mainsrc.items.armors.ScaleArmor;
+import com.example.pedometerpixeldungeon.mainsrc.items.bags.ScrollHolder;
+import com.example.pedometerpixeldungeon.mainsrc.items.bags.SeedPouch;
+import com.example.pedometerpixeldungeon.mainsrc.items.bags.WandHolster;
+import com.example.pedometerpixeldungeon.mainsrc.items.foods.OverpricedRation;
+import com.example.pedometerpixeldungeon.mainsrc.items.potions.PotionOfHealing;
+import com.example.pedometerpixeldungeon.mainsrc.items.scrolls.ScrollOfIdentify;
+import com.example.pedometerpixeldungeon.mainsrc.items.scrolls.ScrollOfMagicMapping;
+import com.example.pedometerpixeldungeon.mainsrc.items.scrolls.ScrollOfRemoveCurse;
+import com.example.pedometerpixeldungeon.mainsrc.items.weapons.melee.BattleAxe;
+import com.example.pedometerpixeldungeon.mainsrc.items.weapons.melee.Glaive;
+import com.example.pedometerpixeldungeon.mainsrc.items.weapons.melee.Longsword;
+import com.example.pedometerpixeldungeon.mainsrc.items.weapons.melee.Mace;
+import com.example.pedometerpixeldungeon.mainsrc.items.weapons.melee.Quarterstaff;
+import com.example.pedometerpixeldungeon.mainsrc.items.weapons.melee.Spear;
+import com.example.pedometerpixeldungeon.mainsrc.items.weapons.melee.Sword;
+import com.example.pedometerpixeldungeon.mainsrc.items.weapons.melee.WarHammer;
+import com.example.pedometerpixeldungeon.mainsrc.levels.LastShopLevel;
 import com.example.pedometerpixeldungeon.mainsrc.levels.Level;
 import com.example.pedometerpixeldungeon.mainsrc.levels.Painter;
 import com.example.pedometerpixeldungeon.mainsrc.levels.Room;
@@ -55,60 +84,60 @@ public class ShopPainter extends Painter {
 
         ArrayList<Item> items = new ArrayList<Item>();
 
-//        switch (Dungeon.depth) {
-//
-//            case 6:
-//                items.add( (Random.Int( 2 ) == 0 ? new Quarterstaff() : new Spear()).identify() );
-//                items.add( new LeatherArmor().identify() );
-//                items.add( new SeedPouch() );
-//                items.add( new Weightstone() );
-//                break;
-//
-//            case 11:
-//                items.add( (Random.Int( 2 ) == 0 ? new Sword() : new Mace()).identify() );
-//                items.add( new MailArmor().identify() );
-//                items.add( new ScrollHolder() );
-//                items.add( new Weightstone() );
-//                break;
-//
-//            case 16:
-//                items.add( (Random.Int( 2 ) == 0 ? new Longsword() : new BattleAxe()).identify() );
-//                items.add( new ScaleArmor().identify() );
-//                items.add( new WandHolster() );
-//                items.add( new Weightstone() );
-//                break;
-//
-//            case 21:
-//                switch (Random.Int( 3 )) {
-//                    case 0:
-//                        items.add( new Glaive().identify() );
-//                        break;
-//                    case 1:
-//                        items.add( new WarHammer().identify() );
-//                        break;
-//                    case 2:
-//                        items.add( new PlateArmor().identify() );
-//                        break;
-//                }
-//                items.add( new Torch() );
-//                items.add( new Torch() );
-//                break;
-//        }
-//
-//        items.add( new PotionOfHealing() );
-//        for (int i=0; i < 3; i++) {
-//            items.add( Generator.random( Generator.Category.POTION ) );
-//        }
-//
-//        items.add( new ScrollOfIdentify() );
-//        items.add( new ScrollOfRemoveCurse() );
-//        items.add( new ScrollOfMagicMapping() );
-//        items.add( Generator.random( Generator.Category.SCROLL ) );
-//
-//        items.add( new OverpricedRation() );
-//        items.add( new OverpricedRation() );
-//
-//        items.add( new Ankh() );
+        switch (Dungeon.depth) {
+
+            case 6:
+                items.add( (Random.Int( 2 ) == 0 ? new Quarterstaff() : new Spear()).identify() );
+                items.add( new LeatherArmor().identify() );
+                items.add( new SeedPouch() );
+                items.add( new Weightstone() );
+                break;
+
+            case 11:
+                items.add( (Random.Int( 2 ) == 0 ? new Sword() : new Mace()).identify() );
+                items.add( new MailArmor().identify() );
+                items.add( new ScrollHolder() );
+                items.add( new Weightstone() );
+                break;
+
+            case 16:
+                items.add( (Random.Int( 2 ) == 0 ? new Longsword() : new BattleAxe()).identify() );
+                items.add( new ScaleArmor().identify() );
+                items.add( new WandHolster() );
+                items.add( new Weightstone() );
+                break;
+
+            case 21:
+                switch (Random.Int( 3 )) {
+                    case 0:
+                        items.add( new Glaive().identify() );
+                        break;
+                    case 1:
+                        items.add( new WarHammer().identify() );
+                        break;
+                    case 2:
+                        items.add( new PlateArmor().identify() );
+                        break;
+                }
+                items.add( new Torch() );
+                items.add( new Torch() );
+                break;
+        }
+
+        items.add( new PotionOfHealing() );
+        for (int i=0; i < 3; i++) {
+            items.add( Generator.random( Generator.Category.POTION ) );
+        }
+
+        items.add( new ScrollOfIdentify() );
+        items.add( new ScrollOfRemoveCurse() );
+        items.add( new ScrollOfMagicMapping() );
+        items.add( Generator.random( Generator.Category.SCROLL ) );
+
+        items.add( new OverpricedRation() );
+        items.add( new OverpricedRation() );
+
+        items.add( new Ankh() );
 
         Item[] range =items.toArray( new Item[0] );
         Random.shuffle( range );
@@ -118,23 +147,23 @@ public class ShopPainter extends Painter {
 
     private static void placeShopkeeper( Level level, Room room ) {
 
-//        int pos;
-//        do {
-//            pos = room.random();
-//        } while (level.heaps.get( pos ) != null);
-//
-//        Mob shopkeeper = level instanceof LastShopLevel ? new ImpShopkeeper() : new Shopkeeper();
-//        shopkeeper.pos = pos;
-//        level.mobs.add( shopkeeper );
-//
-//        if (level instanceof LastShopLevel) {
-//            for (int i=0; i < Level.NEIGHBOURS9.length; i++) {
-//                int p = shopkeeper.pos + Level.NEIGHBOURS9[i];
-//                if (level.map[p] == Terrain.EMPTY_SP) {
-//                    level.map[p] = Terrain.WATER;
-//                }
-//            }
-//        }
+        int pos;
+        do {
+            pos = room.random();
+        } while (level.heaps.get( pos ) != null);
+
+        Mob shopkeeper = level instanceof LastShopLevel ? new ImpShopkeeper() : new Shopkeeper();
+        shopkeeper.pos = pos;
+        level.mobs.add( shopkeeper );
+
+        if (level instanceof LastShopLevel) {
+            for (int i=0; i < Level.NEIGHBOURS9.length; i++) {
+                int p = shopkeeper.pos + Level.NEIGHBOURS9[i];
+                if (level.map[p] == Terrain.EMPTY_SP) {
+                    level.map[p] = Terrain.WATER;
+                }
+            }
+        }
     }
 
     private static int xy2p( Room room, Point xy ) {

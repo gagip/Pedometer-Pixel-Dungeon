@@ -1,5 +1,7 @@
 package com.example.pedometerpixeldungeon.mainsrc.levels.painters;
 
+import com.example.pedometerpixeldungeon.mainsrc.actors.Actor;
+import com.example.pedometerpixeldungeon.mainsrc.actors.mobs.npcs.Blacksmith;
 import com.example.pedometerpixeldungeon.mainsrc.items.Generator;
 import com.example.pedometerpixeldungeon.mainsrc.levels.Level;
 import com.example.pedometerpixeldungeon.mainsrc.levels.Painter;
@@ -31,11 +33,11 @@ public class BlacksmithPainter extends Painter {
             drawInside( level, room, door, 1, Terrain.EMPTY );
         }
 
-//        Blacksmith npc = new Blacksmith();
-//        do {
-//            npc.pos = room.random( 1 );
-//        } while (level.heaps.get( npc.pos ) != null);
-//        level.mobs.add( npc );
-//        Actor.occupyCell( npc );
+        Blacksmith npc = new Blacksmith();
+        do {
+            npc.pos = room.random( 1 );
+        } while (level.heaps.get( npc.pos ) != null);
+        level.mobs.add( npc );
+        Actor.occupyCell( npc );
     }
 }

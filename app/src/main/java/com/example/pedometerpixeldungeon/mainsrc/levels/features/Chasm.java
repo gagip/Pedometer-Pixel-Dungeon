@@ -54,7 +54,7 @@ public class Chasm {
 				protected void onSelect( int index ) {
 					if (index == 0) {
 						jumpConfirmed = true;
-//						hero.resume();
+						hero.resume();
 					}
 				};
 			}

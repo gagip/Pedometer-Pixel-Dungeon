@@ -24,6 +24,8 @@ import com.example.pedometerpixeldungeon.mainsrc.actors.Char;
 import com.example.pedometerpixeldungeon.mainsrc.actors.buffs.Buff;
 import com.example.pedometerpixeldungeon.mainsrc.items.Heap;
 import com.example.pedometerpixeldungeon.mainsrc.items.Item;
+import com.example.pedometerpixeldungeon.mainsrc.items.quests.CorpseDust;
+import com.example.pedometerpixeldungeon.mainsrc.items.quests.PhantomFish;
 import com.example.pedometerpixeldungeon.mainsrc.items.wands.Wand;
 import com.example.pedometerpixeldungeon.mainsrc.items.wands.WandOfAmok;
 import com.example.pedometerpixeldungeon.mainsrc.items.wands.WandOfAvalanche;
@@ -325,31 +327,30 @@ public class Wandmaker extends NPC {
 		
 		@Override
 		protected Item checkItem() {
-//			return Dungeon.hero.belongings.getItem( CorpseDust.class );
-			return null;
+			return Dungeon.hero.belongings.getItem( CorpseDust.class );
 		}
 
 		@Override
 		protected void placeItem() {
-//			ArrayList<Heap> candidates = new ArrayList<Heap>();
-//			for (Heap heap : Dungeon.level.heaps.values()) {
-//				if (heap.type == Heap.Type.SKELETON && !Dungeon.visible[heap.pos]) {
-//					candidates.add( heap );
-//				}
-//			}
-//
-//			if (candidates.size() > 0) {
-//				Random.element( candidates ).drop( new CorpseDust() );
-//			} else {
-//				int pos = Dungeon.level.randomRespawnCell();
-//				while (Dungeon.level.heaps.get( pos ) != null) {
-//					pos = Dungeon.level.randomRespawnCell();
-//				}
-//
-//				Heap heap = Dungeon.level.drop( new CorpseDust(), pos );
-//				heap.type = Heap.Type.SKELETON;
-//				heap.sprite.link();
-//			}
+			ArrayList<Heap> candidates = new ArrayList<Heap>();
+			for (Heap heap : Dungeon.level.heaps.values()) {
+				if (heap.type == Heap.Type.SKELETON && !Dungeon.visible[heap.pos]) {
+					candidates.add( heap );
+				}
+			}
+
+			if (candidates.size() > 0) {
+				Random.element( candidates ).drop( new CorpseDust() );
+			} else {
+				int pos = Dungeon.level.randomRespawnCell();
+				while (Dungeon.level.heaps.get( pos ) != null) {
+					pos = Dungeon.level.randomRespawnCell();
+				}
+
+				Heap heap = Dungeon.level.drop( new CorpseDust(), pos );
+				heap.type = Heap.Type.SKELETON;
+				heap.sprite.link();
+			}
 		}
 	};
 	
@@ -366,30 +367,29 @@ public class Wandmaker extends NPC {
 		
 		@Override
 		protected Item checkItem() {
-//			return Dungeon.hero.belongings.getItem( PhantomFish.class );
-			return null;
+			return Dungeon.hero.belongings.getItem( PhantomFish.class );
 		}
 
 		@Override
 		protected void placeItem() {
-//			Heap heap = null;
-//			for (int i=0; i < 100; i++) {
-//				int pos = Random.Int( Level.LENGTH );
-//				if (Level.water[pos]) {
-//					heap = Dungeon.level.drop( new PhantomFish(), pos );
-//					heap.type = Heap.Type.HIDDEN;
-//					heap.sprite.link();
-//					return;
-//				}
-//			}
-//			if (heap == null) {
-//				int pos = Dungeon.level.randomRespawnCell();
-//				while (Dungeon.level.heaps.get( pos ) != null) {
-//					pos = Dungeon.level.randomRespawnCell();
-//				}
-//
-//				Dungeon.level.drop( new PhantomFish(), pos );
-//			}
+			Heap heap = null;
+			for (int i=0; i < 100; i++) {
+				int pos = Random.Int( Level.LENGTH );
+				if (Level.water[pos]) {
+					heap = Dungeon.level.drop( new PhantomFish(), pos );
+					heap.type = Heap.Type.HIDDEN;
+					heap.sprite.link();
+					return;
+				}
+			}
+			if (heap == null) {
+				int pos = Dungeon.level.randomRespawnCell();
+				while (Dungeon.level.heaps.get( pos ) != null) {
+					pos = Dungeon.level.randomRespawnCell();
+				}
+
+				Dungeon.level.drop( new PhantomFish(), pos );
+			}
 		}
 	};
 }

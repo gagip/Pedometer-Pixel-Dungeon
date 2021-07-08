@@ -1,5 +1,7 @@
 package com.example.pedometerpixeldungeon.mainsrc.levels.painters;
 
+import com.example.pedometerpixeldungeon.mainsrc.actors.Actor;
+import com.example.pedometerpixeldungeon.mainsrc.actors.mobs.Statue;
 import com.example.pedometerpixeldungeon.mainsrc.items.keys.IronKey;
 import com.example.pedometerpixeldungeon.mainsrc.levels.Level;
 import com.example.pedometerpixeldungeon.mainsrc.levels.Painter;
@@ -45,9 +47,9 @@ public class StatuePainter extends Painter {
 
         }
 
-//        Statue statue = new Statue();
-//        statue.pos = cx + cy * Level.WIDTH;
-//        level.mobs.add( statue );
-//        Actor.occupyCell( statue );
+        Statue statue = new Statue();
+        statue.pos = cx + cy * Level.WIDTH;
+        level.mobs.add( statue );
+        Actor.occupyCell( statue );
     }
 }
