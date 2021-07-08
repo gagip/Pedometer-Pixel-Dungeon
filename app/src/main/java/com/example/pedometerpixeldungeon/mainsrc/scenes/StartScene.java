@@ -152,11 +152,11 @@ public class StartScene extends PixelScene {
                 shield.setRect( left + i * shieldW, top, shieldW, shieldH );
             }
 
-//            ChallengeButton challenge = new ChallengeButton();
-//            challenge.setPos(
-//                    w / 2 - challenge.width() / 2,
-//                    top + shieldH - challenge.height() / 2 );
-//            add( challenge );
+            ChallengeButton challenge = new ChallengeButton();
+            challenge.setPos(
+                    w / 2 - challenge.width() / 2,
+                    top + shieldH - challenge.height() / 2 );
+            add( challenge );
 
         } else {
             float shieldW = width / 2;
@@ -170,11 +170,11 @@ public class StartScene extends PixelScene {
                         shieldW, shieldH );
             }
 
-//            ChallengeButton challenge = new ChallengeButton();
-//            challenge.setPos(
-//                    w / 2 - challenge.width() / 2,
-//                    top + shieldH - challenge.height() / 2 );
-//            add( challenge );
+            ChallengeButton challenge = new ChallengeButton();
+            challenge.setPos(
+                    w / 2 - challenge.width() / 2,
+                    top + shieldH - challenge.height() / 2 );
+            add( challenge );
         }
 
 //        unlock = new Group();
@@ -469,8 +469,8 @@ public class StartScene extends PixelScene {
 
             super.createChildren();
 
-//            image = Icons.get( PixelDungeon.challenges() > 0 ? Icons.CHALLENGE_ON :Icons.CHALLENGE_OFF );
-//            add( image );
+            image = Icons.get( PedometerPixelDungeon.challenges() > 0 ? Icons.CHALLENGE_ON :Icons.CHALLENGE_OFF );
+            add( image );
         }
 
         @Override

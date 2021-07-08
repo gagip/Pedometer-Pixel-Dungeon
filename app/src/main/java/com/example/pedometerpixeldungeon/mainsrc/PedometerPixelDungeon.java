@@ -206,7 +206,7 @@ public class PedometerPixelDungeon extends PedometerGame {
     }
 
     public static boolean landscape() {
-        return width < height;
+        return width > height;
     }
 
     // *** IMMERSIVE MODE ****
