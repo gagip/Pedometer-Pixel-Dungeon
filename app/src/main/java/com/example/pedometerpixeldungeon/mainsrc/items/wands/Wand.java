@@ -13,6 +13,7 @@ import com.example.pedometerpixeldungeon.mainsrc.items.Item;
 import com.example.pedometerpixeldungeon.mainsrc.items.ItemStatusHandler;
 import com.example.pedometerpixeldungeon.mainsrc.items.KindOfWeapon;
 import com.example.pedometerpixeldungeon.mainsrc.items.bags.Bag;
+import com.example.pedometerpixeldungeon.mainsrc.items.rings.RingOfPower;
 import com.example.pedometerpixeldungeon.mainsrc.mechanics.Ballistica;
 import com.example.pedometerpixeldungeon.mainsrc.scenes.CellSelector;
 import com.example.pedometerpixeldungeon.mainsrc.scenes.GameScene;
@@ -190,13 +191,12 @@ public abstract class Wand extends KindOfWeapon {
 
     public int power() {
         int eLevel = effectiveLevel();
-//        if (charger != null) {
-//            Power power = charger.target.buff( Power.class );
-//            return power == null ? eLevel : Math.max( eLevel + power.level, 0 );
-//        } else {
-//            return eLevel;
-//        }
-        return eLevel;
+        if (charger != null) {
+            RingOfPower.Power power = charger.target.buff( RingOfPower.Power.class );
+            return power == null ? eLevel : Math.max( eLevel + power.level, 0 );
+        } else {
+            return eLevel;
+        }
     }
 
     protected boolean isKnown() {

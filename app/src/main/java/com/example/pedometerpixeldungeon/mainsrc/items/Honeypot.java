@@ -21,10 +21,14 @@ import com.example.pedometerpixeldungeon.mainsrc.Assets;
 import com.example.pedometerpixeldungeon.mainsrc.Dungeon;
 import com.example.pedometerpixeldungeon.mainsrc.actors.Actor;
 import com.example.pedometerpixeldungeon.mainsrc.actors.hero.Hero;
+import com.example.pedometerpixeldungeon.mainsrc.actors.mobs.npcs.Bee;
+import com.example.pedometerpixeldungeon.mainsrc.effects.Pushing;
 import com.example.pedometerpixeldungeon.mainsrc.effects.Splash;
 import com.example.pedometerpixeldungeon.mainsrc.levels.Level;
+import com.example.pedometerpixeldungeon.mainsrc.scenes.GameScene;
 import com.example.pedometerpixeldungeon.mainsrc.sprites.ItemSpriteSheet;
 import com.example.pedometerpixeldungeon.noosa.audio.Sample;
+import com.example.pedometerpixeldungeon.noosa.tweeners.AlphaTweener;
 import com.example.pedometerpixeldungeon.utils.Random;
 
 import java.util.ArrayList;
@@ -94,16 +98,16 @@ public class Honeypot extends Item {
 		}
 		
 		if (newPos != -1) {
-//			Bee bee = new Bee();
-//			bee.spawn( Dungeon.depth );
-//			bee.HP = bee.HT;
-//			bee.pos = newPos;
-//
-//			GameScene.add( bee );
-//			Actor.addDelayed( new Pushing( bee, pos, newPos ), -1 );
-//
-//			bee.sprite.alpha( 0 );
-//			bee.sprite.parent.add( new AlphaTweener( bee.sprite, 1, 0.15f ) );
+			Bee bee = new Bee();
+			bee.spawn( Dungeon.depth );
+			bee.HP = bee.HT;
+			bee.pos = newPos;
+
+			GameScene.add( bee );
+			Actor.addDelayed( new Pushing( bee, pos, newPos ), -1 );
+
+			bee.sprite.alpha( 0 );
+			bee.sprite.parent.add( new AlphaTweener( bee.sprite, 1, 0.15f ) );
 			
 			Sample.INSTANCE.play( Assets.SND_BEE );
 		}

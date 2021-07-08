@@ -5,6 +5,17 @@ import com.example.pedometerpixeldungeon.mainsrc.actors.Char;
 import com.example.pedometerpixeldungeon.mainsrc.actors.hero.Hero;
 import com.example.pedometerpixeldungeon.mainsrc.items.EquipableItem;
 import com.example.pedometerpixeldungeon.mainsrc.items.Item;
+import com.example.pedometerpixeldungeon.mainsrc.items.armors.glyphs.Affection;
+import com.example.pedometerpixeldungeon.mainsrc.items.armors.glyphs.AntiEntropy;
+import com.example.pedometerpixeldungeon.mainsrc.items.armors.glyphs.AutoRepair;
+import com.example.pedometerpixeldungeon.mainsrc.items.armors.glyphs.Bounce;
+import com.example.pedometerpixeldungeon.mainsrc.items.armors.glyphs.Displacement;
+import com.example.pedometerpixeldungeon.mainsrc.items.armors.glyphs.Entanglement;
+import com.example.pedometerpixeldungeon.mainsrc.items.armors.glyphs.Metabolism;
+import com.example.pedometerpixeldungeon.mainsrc.items.armors.glyphs.Multiplicity;
+import com.example.pedometerpixeldungeon.mainsrc.items.armors.glyphs.Potential;
+import com.example.pedometerpixeldungeon.mainsrc.items.armors.glyphs.Stench;
+import com.example.pedometerpixeldungeon.mainsrc.items.armors.glyphs.Viscosity;
 import com.example.pedometerpixeldungeon.mainsrc.sprites.HeroSprite;
 import com.example.pedometerpixeldungeon.mainsrc.sprites.ItemSprite;
 import com.example.pedometerpixeldungeon.mainsrc.utils.GLog;
@@ -311,9 +322,9 @@ public class Armor extends EquipableItem {
     public static abstract class Glyph implements Bundlable {
 
         private static final Class<?>[] glyphs = new Class<?>[]{
-//                Bounce.class, Affection.class, AntiEntropy.class, Multiplicity.class,
-//                Potential.class, Metabolism.class, Stench.class, Viscosity.class,
-//                Displacement.class, Entanglement.class, AutoRepair.class
+                Bounce.class, Affection.class, AntiEntropy.class, Multiplicity.class,
+                Potential.class, Metabolism.class, Stench.class, Viscosity.class,
+                Displacement.class, Entanglement.class, AutoRepair.class
         };
 
         private static final float[] chances= new float[]{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
@@ -339,7 +350,7 @@ public class Armor extends EquipableItem {
         public boolean checkOwner( Char owner ) {
             if (!owner.isAlive() && owner instanceof Hero) {
 
-//                ((Hero)owner).killerGlyph = this;
+                ((Hero)owner).killerGlyph = this;
 //                Badges.validateDeathFromGlyph();
                 return true;
 

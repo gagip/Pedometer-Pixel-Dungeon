@@ -3,7 +3,14 @@ package com.example.pedometerpixeldungeon.mainsrc.plants;
 import com.example.pedometerpixeldungeon.mainsrc.Assets;
 import com.example.pedometerpixeldungeon.mainsrc.Dungeon;
 import com.example.pedometerpixeldungeon.mainsrc.actors.Char;
+import com.example.pedometerpixeldungeon.mainsrc.actors.buffs.Barkskin;
+import com.example.pedometerpixeldungeon.mainsrc.actors.buffs.Buff;
 import com.example.pedometerpixeldungeon.mainsrc.actors.hero.Hero;
+import com.example.pedometerpixeldungeon.mainsrc.actors.hero.HeroSubClass;
+import com.example.pedometerpixeldungeon.mainsrc.effects.CellEmitter;
+import com.example.pedometerpixeldungeon.mainsrc.effects.particles.LeafParticle;
+import com.example.pedometerpixeldungeon.mainsrc.items.Dewdrop;
+import com.example.pedometerpixeldungeon.mainsrc.items.Generator;
 import com.example.pedometerpixeldungeon.mainsrc.items.Item;
 import com.example.pedometerpixeldungeon.mainsrc.levels.Level;
 import com.example.pedometerpixeldungeon.mainsrc.levels.Terrain;
@@ -12,6 +19,7 @@ import com.example.pedometerpixeldungeon.mainsrc.utils.Utils;
 import com.example.pedometerpixeldungeon.noosa.audio.Sample;
 import com.example.pedometerpixeldungeon.utils.Bundlable;
 import com.example.pedometerpixeldungeon.utils.Bundle;
+import com.example.pedometerpixeldungeon.utils.Random;
 
 import java.util.ArrayList;
 
@@ -25,9 +33,9 @@ public class Plant implements Bundlable {
 
     public void activate( Char ch ) {
 
-//        if (ch instanceof Hero && ((Hero)ch).subClass == HeroSubClass.WARDEN) {
-//            Buff.affect( ch, Barkskin.class ).level( ch.HT / 3 );
-//        }
+        if (ch instanceof Hero && ((Hero)ch).subClass == HeroSubClass.WARDEN) {
+            Buff.affect( ch, Barkskin.class ).level( ch.HT / 3 );
+        }
 
         wither();
     }
@@ -36,18 +44,18 @@ public class Plant implements Bundlable {
         Dungeon.level.uproot( pos );
 
         sprite.kill();
-//        if (Dungeon.visible[pos]) {
-//            CellEmitter.get( pos ).burst( LeafParticle.GENERAL, 6 );
-//        }
-//
-//        if (Dungeon.hero.subClass == HeroSubClass.WARDEN) {
-//            if (Random.Int( 5 ) == 0) {
-//                Dungeon.level.drop( Generator.random( Generator.Category.SEED ), pos ).sprite.drop();
-//            }
-//            if (Random.Int( 5 ) == 0) {
-//                Dungeon.level.drop( new Dewdrop(), pos ).sprite.drop();
-//            }
-//        }
+        if (Dungeon.visible[pos]) {
+            CellEmitter.get( pos ).burst( LeafParticle.GENERAL, 6 );
+        }
+
+        if (Dungeon.hero.subClass == HeroSubClass.WARDEN) {
+            if (Random.Int( 5 ) == 0) {
+                Dungeon.level.drop( Generator.random( Generator.Category.SEED ), pos ).sprite.drop();
+            }
+            if (Random.Int( 5 ) == 0) {
+                Dungeon.level.drop( new Dewdrop(), pos ).sprite.drop();
+            }
+        }
     }
 
     private static final String POS	= "pos";
@@ -104,9 +112,9 @@ public class Plant implements Bundlable {
         public void execute( Hero hero, String action ) {
             if (action.equals( AC_PLANT )) {
 
-//                hero.spend( TIME_TO_PLANT );
-//                hero.busy();
-//                ((Seed)detach( hero.belongings.backpack )).onThrow( hero.pos );
+                hero.spend( TIME_TO_PLANT );
+                hero.busy();
+                ((Seed)detach( hero.belongings.backpack )).onThrow( hero.pos );
 
                 hero.sprite.operate( hero.pos );
 

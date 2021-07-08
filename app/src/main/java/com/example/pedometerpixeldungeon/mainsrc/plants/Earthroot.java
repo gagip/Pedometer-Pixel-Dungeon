@@ -22,6 +22,7 @@ import com.example.pedometerpixeldungeon.mainsrc.actors.Char;
 import com.example.pedometerpixeldungeon.mainsrc.actors.buffs.Buff;
 import com.example.pedometerpixeldungeon.mainsrc.effects.CellEmitter;
 import com.example.pedometerpixeldungeon.mainsrc.effects.particles.EarthParticle;
+import com.example.pedometerpixeldungeon.mainsrc.items.potions.PotionOfParalyticGas;
 import com.example.pedometerpixeldungeon.mainsrc.sprites.ItemSpriteSheet;
 import com.example.pedometerpixeldungeon.mainsrc.ui.BuffIndicator;
 import com.example.pedometerpixeldungeon.noosa.Camera;
@@ -65,7 +66,7 @@ public class Earthroot extends Plant {
 			image = ItemSpriteSheet.SEED_EARTHROOT;
 			
 			plantClass = Earthroot.class;
-//			alchemyClass = PotionOfParalyticGas.class;
+			alchemyClass = PotionOfParalyticGas.class;
 		}
 		
 		@Override

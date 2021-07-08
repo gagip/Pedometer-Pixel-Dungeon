@@ -20,8 +20,12 @@ package com.example.pedometerpixeldungeon.mainsrc.items.armors.glyphs;
 
 import com.example.pedometerpixeldungeon.mainsrc.actors.Actor;
 import com.example.pedometerpixeldungeon.mainsrc.actors.Char;
+import com.example.pedometerpixeldungeon.mainsrc.actors.hero.Hero;
+import com.example.pedometerpixeldungeon.mainsrc.actors.mobs.npcs.MirrorImage;
 import com.example.pedometerpixeldungeon.mainsrc.items.armors.Armor;
+import com.example.pedometerpixeldungeon.mainsrc.items.wands.WandOfBlink;
 import com.example.pedometerpixeldungeon.mainsrc.levels.Level;
+import com.example.pedometerpixeldungeon.mainsrc.scenes.GameScene;
 import com.example.pedometerpixeldungeon.mainsrc.sprites.ItemSprite;
 import com.example.pedometerpixeldungeon.utils.Random;
 
@@ -50,10 +54,10 @@ public class Multiplicity extends Armor.Glyph {
 			}
 			
 			if (respawnPoints.size() > 0) {
-//				MirrorImage mob = new MirrorImage();
-//				mob.duplicate( (Hero)defender );
-//				GameScene.add( mob );
-//				WandOfBlink.appear( mob, Random.element( respawnPoints ) );
+				MirrorImage mob = new MirrorImage();
+				mob.duplicate( (Hero)defender );
+				GameScene.add( mob );
+				WandOfBlink.appear( mob, Random.element( respawnPoints ) );
 				
 				defender.damage( Random.IntRange( 1, defender.HT / 6 ), this );
 				checkOwner( defender );

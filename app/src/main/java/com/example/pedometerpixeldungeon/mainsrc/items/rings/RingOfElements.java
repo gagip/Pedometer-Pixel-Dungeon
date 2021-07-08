@@ -1,7 +1,12 @@
 package com.example.pedometerpixeldungeon.mainsrc.items.rings;
 
+import com.example.pedometerpixeldungeon.mainsrc.actors.Blobs.ToxicGas;
 import com.example.pedometerpixeldungeon.mainsrc.actors.buffs.Burning;
+import com.example.pedometerpixeldungeon.mainsrc.actors.buffs.Poison;
 import com.example.pedometerpixeldungeon.mainsrc.actors.mobs.Eye;
+import com.example.pedometerpixeldungeon.mainsrc.actors.mobs.Warlock;
+import com.example.pedometerpixeldungeon.mainsrc.actors.mobs.Yog;
+import com.example.pedometerpixeldungeon.mainsrc.levels.traps.LightningTrap;
 import com.example.pedometerpixeldungeon.utils.Random;
 
 import java.util.HashSet;
@@ -30,12 +35,12 @@ public class RingOfElements extends Ring {
     static {
         FULL = new HashSet<Class<?>>();
         FULL.add( Burning.class );
-//        FULL.add( ToxicGas.class );
-//        FULL.add( Poison.class );
-//        FULL.add( LightningTrap.Electricity.class );
-//        FULL.add( Warlock.class );
+        FULL.add( ToxicGas.class );
+        FULL.add( Poison.class );
+        FULL.add( LightningTrap.Electricity.class );
+        FULL.add( Warlock.class );
         FULL.add( Eye.class );
-//        FULL.add( Yog.BurningFist.class );
+        FULL.add( Yog.BurningFist.class );
     }
 
     public class Resistance extends RingBuff {

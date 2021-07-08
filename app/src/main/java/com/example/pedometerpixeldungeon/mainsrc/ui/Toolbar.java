@@ -17,6 +17,7 @@ import com.example.pedometerpixeldungeon.mainsrc.windows.WndCatalogus;
 import com.example.pedometerpixeldungeon.mainsrc.windows.WndHero;
 import com.example.pedometerpixeldungeon.mainsrc.windows.WndInfoCell;
 import com.example.pedometerpixeldungeon.mainsrc.windows.WndInfoItem;
+import com.example.pedometerpixeldungeon.mainsrc.windows.WndInfoPlant;
 import com.example.pedometerpixeldungeon.mainsrc.windows.WndMessage;
 import com.example.pedometerpixeldungeon.mainsrc.windows.WndTradeItem;
 import com.example.pedometerpixeldungeon.noosa.Game;
@@ -217,7 +218,7 @@ public class Toolbar extends Component {
 
             Plant plant = Dungeon.level.plants.get( cell );
             if (plant != null) {
-//                GameScene.show( new WndInfoPlant( plant ) );
+                GameScene.show( new WndInfoPlant( plant ) );
                 return;
             }
 

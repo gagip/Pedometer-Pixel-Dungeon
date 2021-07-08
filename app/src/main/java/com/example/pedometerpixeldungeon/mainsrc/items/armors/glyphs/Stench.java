@@ -18,9 +18,12 @@
 package com.example.pedometerpixeldungeon.mainsrc.items.armors.glyphs;
 
 
+import com.example.pedometerpixeldungeon.mainsrc.actors.Blobs.Blob;
+import com.example.pedometerpixeldungeon.mainsrc.actors.Blobs.ToxicGas;
 import com.example.pedometerpixeldungeon.mainsrc.actors.Char;
 import com.example.pedometerpixeldungeon.mainsrc.items.armors.Armor;
 import com.example.pedometerpixeldungeon.mainsrc.levels.Level;
+import com.example.pedometerpixeldungeon.mainsrc.scenes.GameScene;
 import com.example.pedometerpixeldungeon.mainsrc.sprites.ItemSprite;
 import com.example.pedometerpixeldungeon.utils.Random;
 
@@ -37,7 +40,7 @@ public class Stench extends Armor.Glyph {
 		
 		if (Level.adjacent( attacker.pos, defender.pos ) && Random.Int( level + 5 ) >= 4) {
 			
-//			GameScene.add( Blob.seed( attacker.pos, 20, ToxicGas.class ) );
+			GameScene.add( Blob.seed( attacker.pos, 20, ToxicGas.class ) );
 			
 		}
 		

@@ -23,6 +23,7 @@ import com.example.pedometerpixeldungeon.mainsrc.actors.Char;
 import com.example.pedometerpixeldungeon.mainsrc.effects.Lightning;
 import com.example.pedometerpixeldungeon.mainsrc.items.armors.Armor;
 import com.example.pedometerpixeldungeon.mainsrc.levels.Level;
+import com.example.pedometerpixeldungeon.mainsrc.levels.traps.LightningTrap;
 import com.example.pedometerpixeldungeon.mainsrc.sprites.ItemSprite;
 import com.example.pedometerpixeldungeon.noosa.Camera;
 import com.example.pedometerpixeldungeon.utils.Random;
@@ -41,9 +42,9 @@ public class Potential extends Armor.Glyph {
 		if (Level.adjacent( attacker.pos, defender.pos ) && Random.Int( level + 7 ) >= 6) {
 			
 			int dmg = Random.IntRange( 1, damage );
-//			attacker.damage( dmg, LightningTrap.LIGHTNING );
+			attacker.damage( dmg, LightningTrap.LIGHTNING );
 			dmg = Random.IntRange( 1, dmg );
-//			defender.damage( dmg, LightningTrap.LIGHTNING );
+			defender.damage( dmg, LightningTrap.LIGHTNING );
 			
 			checkOwner( defender );
 			if (defender == Dungeon.hero) {

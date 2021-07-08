@@ -3,11 +3,13 @@ package com.example.pedometerpixeldungeon.mainsrc.items.potions;
 import com.example.pedometerpixeldungeon.mainsrc.Assets;
 import com.example.pedometerpixeldungeon.mainsrc.Dungeon;
 import com.example.pedometerpixeldungeon.mainsrc.actors.hero.Hero;
+import com.example.pedometerpixeldungeon.mainsrc.effects.Splash;
 import com.example.pedometerpixeldungeon.mainsrc.items.Item;
 import com.example.pedometerpixeldungeon.mainsrc.items.ItemStatusHandler;
 import com.example.pedometerpixeldungeon.mainsrc.levels.Level;
 import com.example.pedometerpixeldungeon.mainsrc.levels.Terrain;
 import com.example.pedometerpixeldungeon.mainsrc.scenes.GameScene;
+import com.example.pedometerpixeldungeon.mainsrc.sprites.ItemSprite;
 import com.example.pedometerpixeldungeon.mainsrc.sprites.ItemSpriteSheet;
 import com.example.pedometerpixeldungeon.mainsrc.utils.GLog;
 import com.example.pedometerpixeldungeon.mainsrc.windows.WndOptions;
@@ -256,8 +258,8 @@ public class Potion extends Item {
     }
 
     protected void splash( int cell ) {
-//        final int color = ItemSprite.pick( image, 8, 10 );
-//        Splash.at( cell, color, 5 );
+        final int color = ItemSprite.pick( image, 8, 10 );
+        Splash.at( cell, color, 5 );
     }
 
     @Override

@@ -32,13 +32,13 @@ abstract public class ClassArmor extends Armor {
                 classArmor = new WarriorArmor();
                 break;
             case ROGUE:
-//                classArmor = new RogueArmor();
+                classArmor = new RogueArmor();
                 break;
             case MAGE:
-//                classArmor = new MageArmor();
+                classArmor = new MageArmor();
                 break;
             case HUNTRESS:
-//                classArmor = new HuntressArmor();
+                classArmor = new HuntressArmor();
                 break;
         }
 

@@ -44,7 +44,9 @@ import com.example.pedometerpixeldungeon.mainsrc.levels.Terrain;
 import com.example.pedometerpixeldungeon.mainsrc.plants.Rotberry;
 import com.example.pedometerpixeldungeon.mainsrc.scenes.GameScene;
 import com.example.pedometerpixeldungeon.mainsrc.sprites.mobsprites.WandmakerSprite;
+import com.example.pedometerpixeldungeon.mainsrc.ui.WndQuest;
 import com.example.pedometerpixeldungeon.mainsrc.utils.Utils;
+import com.example.pedometerpixeldungeon.mainsrc.windows.WndWandmaker;
 import com.example.pedometerpixeldungeon.utils.Bundle;
 import com.example.pedometerpixeldungeon.utils.Random;
 
@@ -93,7 +95,7 @@ public class Wandmaker extends NPC {
 	}
 	
 	private void tell( String format, Object...args ) {
-//		GameScene.show( new WndQuest( this, Utils.format( format, args ) ) );
+		GameScene.show( new WndQuest( this, Utils.format( format, args ) ) );
 	}
 	
 	@Override
@@ -269,7 +271,7 @@ public class Wandmaker extends NPC {
 				
 				Item item = checkItem();
 				if (item != null) {
-//					GameScene.show( new WndWandmaker( wandmaker, item ) );
+					GameScene.show( new WndWandmaker( wandmaker, item ) );
 				} else {
 					wandmaker.tell( txtQuest2, Dungeon.hero.className() );
 				}

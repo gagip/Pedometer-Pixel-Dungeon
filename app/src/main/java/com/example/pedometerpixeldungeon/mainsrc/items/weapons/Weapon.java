@@ -2,8 +2,21 @@ package com.example.pedometerpixeldungeon.mainsrc.items.weapons;
 
 import com.example.pedometerpixeldungeon.mainsrc.actors.Char;
 import com.example.pedometerpixeldungeon.mainsrc.actors.hero.Hero;
+import com.example.pedometerpixeldungeon.mainsrc.actors.hero.HeroClass;
 import com.example.pedometerpixeldungeon.mainsrc.items.Item;
 import com.example.pedometerpixeldungeon.mainsrc.items.KindOfWeapon;
+import com.example.pedometerpixeldungeon.mainsrc.items.weapons.enchantments.Death;
+import com.example.pedometerpixeldungeon.mainsrc.items.weapons.enchantments.Fire;
+import com.example.pedometerpixeldungeon.mainsrc.items.weapons.enchantments.Horror;
+import com.example.pedometerpixeldungeon.mainsrc.items.weapons.enchantments.Instability;
+import com.example.pedometerpixeldungeon.mainsrc.items.weapons.enchantments.Leech;
+import com.example.pedometerpixeldungeon.mainsrc.items.weapons.enchantments.Luck;
+import com.example.pedometerpixeldungeon.mainsrc.items.weapons.enchantments.Paralysis;
+import com.example.pedometerpixeldungeon.mainsrc.items.weapons.enchantments.Poison;
+import com.example.pedometerpixeldungeon.mainsrc.items.weapons.enchantments.Shock;
+import com.example.pedometerpixeldungeon.mainsrc.items.weapons.enchantments.Slow;
+import com.example.pedometerpixeldungeon.mainsrc.items.weapons.enchantments.Tempering;
+import com.example.pedometerpixeldungeon.mainsrc.items.weapons.missiles.MissileWeapon;
 import com.example.pedometerpixeldungeon.mainsrc.sprites.ItemSprite;
 import com.example.pedometerpixeldungeon.mainsrc.utils.GLog;
 import com.example.pedometerpixeldungeon.mainsrc.utils.Utils;
@@ -81,7 +94,7 @@ abstract public class Weapon extends KindOfWeapon {
 
         int encumbrance = STR - hero.STR();
 
-//        if (this instanceof MissileWeapon) {
+        if (this instanceof MissileWeapon) {
             switch (hero.heroClass) {
                 case WARRIOR:
                     encumbrance += 3;
@@ -90,7 +103,7 @@ abstract public class Weapon extends KindOfWeapon {
                     encumbrance -= 2;
                     break;
                 default:
-//            }
+            }
         }
 
         return
@@ -102,9 +115,9 @@ abstract public class Weapon extends KindOfWeapon {
     public float speedFactor( Hero hero ) {
 
         int encumrance = STR - hero.STR();
-//        if (this instanceof MissileWeapon && hero.heroClass == HeroClass.HUNTRESS) {
+        if (this instanceof MissileWeapon && hero.heroClass == HeroClass.HUNTRESS) {
             encumrance -= 2;
-//        }
+        }
 
         return
                 (encumrance > 0 ? (float)(DLY * Math.pow( 1.2, encumrance )) : DLY) *
@@ -116,12 +129,12 @@ abstract public class Weapon extends KindOfWeapon {
 
         int damage = super.damageRoll( hero );
 
-//        if ((hero.rangedWeapon != null) == (hero.heroClass == HeroClass.HUNTRESS)) {
+        if ((hero.rangedWeapon != null) == (hero.heroClass == HeroClass.HUNTRESS)) {
             int exStr = hero.STR() - STR;
             if (exStr > 0) {
                 damage += Random.IntRange( 0, exStr );
             }
-//        }
+        }
 
         return damage;
     }
@@ -204,9 +217,9 @@ abstract public class Weapon extends KindOfWeapon {
     public static abstract class Enchantment implements Bundlable {
 
         private static final Class<?>[] enchants = new Class<?>[]{
-//                Fire.class, Poison.class, Death.class, Paralysis.class, Leech.class,
-//                Slow.class, Shock.class, Instability.class, Horror.class, Luck.class,
-//                Tempering.class
+                Fire.class, Poison.class, Death.class, Paralysis.class, Leech.class,
+                Slow.class, Shock.class, Instability.class, Horror.class, Luck.class,
+                Tempering.class
         };
         private static final float[] chances= new float[]{ 10, 10, 1, 2, 1, 2, 6, 3, 2, 2, 3 };
 
