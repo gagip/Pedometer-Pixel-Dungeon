@@ -112,8 +112,8 @@ public class StatusPane extends Component {
 
         // footprint - 만보기 시스템으로 행동력 재화가 되는 발걸음 수
         footprintImg = new Image(Assets.FOOTPRINT);
-        footprintImg.scale.set(0.03f);
-        footprintImg.origin.set(34, 12);
+        footprintImg.scale.set(0.7f);
+        footprintImg.origin.set(107, 30);
         add(footprintImg);
 
         footprint = new BitmapText(Integer.toString(Hero.footprint), PixelScene.font15x);
