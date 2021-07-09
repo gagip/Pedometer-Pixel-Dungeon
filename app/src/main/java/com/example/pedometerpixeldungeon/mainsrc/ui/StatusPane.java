@@ -33,17 +33,18 @@ public class StatusPane extends Component {
 
     private Image hp;
     private Image exp;
-    private Image PD;
+    private Image footprintBg;
+    private Image footprintImg;
 
     private int lastLvl = -1;
     private int lastKeys = -1;
-    private int lastFootstep = -1;
+    private int lastFootprint = -1;
 
 
     private BitmapText level;
     private BitmapText depth;
     private BitmapText keys;
-    private BitmapText footstep;
+    private BitmapText footprint;
 
     private DangerIndicator danger;
     private LootIndicator loot;
@@ -91,8 +92,8 @@ public class StatusPane extends Component {
         hp = new Image(Assets.HP_BAR);
         add(hp);
 
-        PD = new Image(Assets.PD);
-        add(PD);
+        footprintBg = new Image(Assets.PD);
+        add(footprintBg);
 
         exp = new Image(Assets.XP_BAR);
         add(exp);
@@ -109,11 +110,19 @@ public class StatusPane extends Component {
 //        PD = new BitmapText( Integer.toString( // 기입 필요), PixelScene.font1x); 픽셀 폰트 받아서 데이터 호출 라인
 //        PD.hardlight( 0xCACFC2); - 폰트 색상
 
-        // footstep - 만보기 시스템으로 행동력 재화가 되는 발걸음 수
-        footstep = new BitmapText(Integer.toString(Hero.footprint), PixelScene.font2x);
-        footstep.hardlight(0xCACFC2);
-        footstep.measure();
-        add(footstep);
+        // footprint - 만보기 시스템으로 행동력 재화가 되는 발걸음 수
+        footprintImg = new Image(Assets.FOOTPRINT);
+        footprintImg.scale.set(0.03f);
+        footprintImg.origin.set(34, 12);
+        add(footprintImg);
+
+        footprint = new BitmapText(Integer.toString(Hero.footprint), PixelScene.font15x);
+        footprint.hardlight(0xCACFC2);
+        footprint.measure();
+        add(footprint);
+
+
+
 
 
         add(level);
@@ -153,16 +162,15 @@ public class StatusPane extends Component {
         hp.y = 3;
 
         // 발걸음 수 태두리 및 아이콘으로 쓸 사진 좌표
-        PD.x = 120;
-        PD.y = 4;
+        footprintBg.x = 120;
+        footprintBg.y = 4;
 
         depth.x = width - 24 - depth.width() - 18;
         depth.y = 6;
 
-        //걸음수 임시 표기
-
-        footstep.x = width - 50 - footstep.width() - 18;
-        footstep.y = 6;
+        // 발자국
+        footprint.x = 44;
+        footprint.y = 10;
 
         keys.y = 6;
 
@@ -257,10 +265,10 @@ public class StatusPane extends Component {
         }
 
         int f = Hero.footprint;
-        if (f != lastFootstep) {
-            lastFootstep = f;
-            footstep.text(Integer.toString(lastFootstep));
-            footstep.measure();
+        if (f != lastFootprint) {
+            lastFootprint = f;
+            footprint.text(Integer.toString(lastFootprint));
+            footprint.measure();
         }
     }
 
