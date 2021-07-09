@@ -33,15 +33,15 @@ private static final String LNK = "github.com/gagip/Pedometer-Pixel-Dungeon/rele
 public void create() {
         super.create();
 
-        BitmapTextMultiline text = createMultiline( TXT, 15);
-        text.maxWidth = Math.min( Camera.main.width, 120 );
+        BitmapTextMultiline text = createMultiline( TXT, 8);
+        text.maxWidth = Math.min( Camera.main.width, 100 );
         text.measure();
         add( text );
 
         text.x = align( (Camera.main.width - text.width()) / 2 );
         text.y = align( (Camera.main.height - text.height()) / 2 );
 
-        BitmapTextMultiline link = createMultiline( LNK, 8 );
+        BitmapTextMultiline link = createMultiline( LNK, 5 );
         link.maxWidth = Math.min( Camera.main.width, 120 );
         link.measure();
         link.hardlight( Window.TITLE_COLOR );

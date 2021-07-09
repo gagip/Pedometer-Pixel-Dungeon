@@ -33,7 +33,7 @@ public class StatusPane extends Component {
 
     private Image hp;
     private Image exp;
-    private Image PD;
+//    private Image PD;
 
     private int lastLvl = -1;
     private int lastKeys = -1;
@@ -91,8 +91,8 @@ public class StatusPane extends Component {
         hp = new Image(Assets.HP_BAR);
         add(hp);
 
-        PD = new Image(Assets.PD);
-        add(PD);
+//        PD = new Image(Assets.PD);
+//        add(PD);
 
         exp = new Image(Assets.XP_BAR);
         add(exp);
@@ -110,7 +110,7 @@ public class StatusPane extends Component {
 //        PD.hardlight( 0xCACFC2); - 폰트 색상
 
         // footstep - 만보기 시스템으로 행동력 재화가 되는 발걸음 수
-        footstep = new BitmapText(Integer.toString(Hero.footprint), PixelScene.font2x);
+        footstep = new BitmapText(Integer.toString(Hero.footprint), PixelScene.font1x);
         footstep.hardlight(0xCACFC2);
         footstep.measure();
         add(footstep);
@@ -153,8 +153,8 @@ public class StatusPane extends Component {
         hp.y = 3;
 
         // 발걸음 수 태두리 및 아이콘으로 쓸 사진 좌표
-        PD.x = 120;
-        PD.y = 4;
+//        PD.x = 120;
+//        PD.y = 4;
 
         depth.x = width - 24 - depth.width() - 18;
         depth.y = 6;
