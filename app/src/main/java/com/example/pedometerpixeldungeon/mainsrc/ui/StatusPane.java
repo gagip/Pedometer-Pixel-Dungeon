@@ -33,7 +33,7 @@ public class StatusPane extends Component {
 
     private Image hp;
     private Image exp;
-    private Image footprintBg;
+//    private Image footprintBg;
     private Image footprintImg;
 
     private int lastLvl = -1;
@@ -91,9 +91,9 @@ public class StatusPane extends Component {
 
         hp = new Image(Assets.HP_BAR);
         add(hp);
-
-        footprintBg = new Image(Assets.PD);
-        add(footprintBg);
+//
+//        footprintBg = new Image(Assets.PD);
+//        add(footprintBg);
 
         exp = new Image(Assets.XP_BAR);
         add(exp);
@@ -162,8 +162,8 @@ public class StatusPane extends Component {
         hp.y = 3;
 
         // 발걸음 수 태두리 및 아이콘으로 쓸 사진 좌표
-        footprintBg.x = 120;
-        footprintBg.y = 4;
+//        footprintBg.x = 120;
+//        footprintBg.y = 4;
 
         depth.x = width - 24 - depth.width() - 18;
         depth.y = 6;
