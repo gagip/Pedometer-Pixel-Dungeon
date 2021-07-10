@@ -33,7 +33,6 @@ public class StatusPane extends Component {
 
     private Image hp;
     private Image exp;
-//    private Image footprintBg;
     private Image footprintImg;
 
     private int lastLvl = -1;
@@ -91,9 +90,6 @@ public class StatusPane extends Component {
 
         hp = new Image(Assets.HP_BAR);
         add(hp);
-//
-//        footprintBg = new Image(Assets.PD);
-//        add(footprintBg);
 
         exp = new Image(Assets.XP_BAR);
         add(exp);
@@ -107,25 +103,16 @@ public class StatusPane extends Component {
         depth.measure();
         add(depth);
 
-//        PD = new BitmapText( Integer.toString( // 기입 필요), PixelScene.font1x); 픽셀 폰트 받아서 데이터 호출 라인
-//        PD.hardlight( 0xCACFC2); - 폰트 색상
-
         // footprint - 만보기 시스템으로 행동력 재화가 되는 발걸음 수
         footprintImg = new Image(Assets.FOOTPRINT);
-        footprintImg.scale.set(0.7f);
-        footprintImg.origin.set(107, 30);
+        footprintImg.scale.set(0.65f);
+        footprintImg.origin.set(92, 31);
         add(footprintImg);
 
         footprint = new BitmapText(Integer.toString(Hero.footprint), PixelScene.font15x);
         footprint.hardlight(0xCACFC2);
         footprint.measure();
         add(footprint);
-
-
-
-
-
-        add(level);
 
         Dungeon.hero.belongings.countIronKeys();
         keys = new BitmapText(PixelScene.font1x);
@@ -161,22 +148,18 @@ public class StatusPane extends Component {
         hp.x = 30;
         hp.y = 3;
 
-        // 발걸음 수 태두리 및 아이콘으로 쓸 사진 좌표
-//        footprintBg.x = 120;
-//        footprintBg.y = 4;
-
         depth.x = width - 24 - depth.width() - 18;
         depth.y = 6;
 
         // 발자국
         footprint.x = 44;
-        footprint.y = 10;
+        footprint.y = 11;
 
         keys.y = 6;
 
         layoutTags();
 
-        buffs.setPos(32, 11);
+        buffs.setPos(35, 27);
 
         btnMenu.setPos(width - btnMenu.width(), 1);
     }
