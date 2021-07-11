@@ -1427,9 +1427,9 @@ public class Hero extends Char {
     }
 
     /**
-     * 만보기 수에 따른 발자국 보상 받기
+     * 만보기 수에 따른 발자국 보상 계산
      */
-    public void getReward() {
+    public int calculateReward() {
         // 데이터 가져오기
         PedometerDAO dao = PedometerDAO.getInstance();
         Pedometer data = dao.selectLeastPedometer();
@@ -1444,14 +1444,21 @@ public class Hero extends Char {
             reward = curValue;
         }
 
+        return reward;
+    }
+
+    /**
+     * 보상 받기
+     * @param reward
+     */
+    public void acceptReward(int reward) {
         // 보상 받기
         if (reward > 0) {
             footprint += reward;
             GLog.i(String.format("You get %d footprints", reward));
 
             // DB 갱신
-            data.setPreCount(data.getCurCount());
-            dao.insertPedometer(data);
+            PedometerDAO.getInstance().insertPedometer();
         }
     }
 

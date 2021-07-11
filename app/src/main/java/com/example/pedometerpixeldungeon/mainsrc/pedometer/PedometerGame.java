@@ -32,7 +32,7 @@ public class PedometerGame extends Game implements SensorEventListener {
 
     // DB
     private static final String DB_NAME = "PedometerDB";
-    private static final int DB_VERSION = 1;
+    private static final int DB_VERSION = 2;
     private PedometerDAO dao;
     private DBOpenHelper openHelper;
 

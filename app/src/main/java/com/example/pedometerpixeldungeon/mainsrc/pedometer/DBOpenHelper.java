@@ -24,6 +24,11 @@ public class DBOpenHelper extends SQLiteOpenHelper {
                         "%s INTEGER, " +
                         "%s INTEGER); ",
                 TABLE_NAME, _ID, TIME, CUR_COUNT, PRE_COUNT));
+
+        db.execSQL(String.format(   "INSERT INTO %s (%s, %s, %s) " +
+                                    "VALUES (%d, 0, 0);",
+                                    TABLE_NAME, TIME, CUR_COUNT, PRE_COUNT,
+                                    System.currentTimeMillis()));
     }
 
 

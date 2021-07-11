@@ -33,6 +33,10 @@ public class PedometerDAO {
     }
 
 
+    /**
+     * 데이터 삽입
+     * @param pedometer
+     */
     public void insertPedometer(Pedometer pedometer) {
         SQLiteDatabase db = openHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -44,13 +48,17 @@ public class PedometerDAO {
         db.insertOrThrow(TABLE_NAME, null, values);
     }
 
+    /**
+     * 최신 데이터 추출
+     * @return
+     */
     public Pedometer selectLeastPedometer() {
         Pedometer pedometer = null;
 
         SQLiteDatabase db = openHelper.getReadableDatabase();
         String sql = String.format( "SELECT * FROM %s " +
-                                    "WHERE _id = (SELECT max(_id) -1 from %s);",
-                                    TABLE_NAME, TABLE_NAME);
+                                    "ORDER BY %s DESC LIMIT 1;",
+                                    TABLE_NAME, TIME);
         Cursor cursor = db.rawQuery(sql, null);
 
         if (cursor.moveToNext()) {
@@ -62,5 +70,15 @@ public class PedometerDAO {
         }
 
         return pedometer;
+    }
+
+    /**
+     * 최근 데이터 추출
+     */
+    public void insertPedometer() {
+        Pedometer pedometer = selectLeastPedometer();
+
+        pedometer.setPreCount(pedometer.getCurCount());
+        insertPedometer(pedometer);
     }
 }

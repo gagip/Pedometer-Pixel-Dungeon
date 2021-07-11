@@ -14,9 +14,11 @@ import com.example.pedometerpixeldungeon.mainsrc.scenes.GameScene;
 import com.example.pedometerpixeldungeon.mainsrc.sprites.ItemSprite;
 import com.example.pedometerpixeldungeon.mainsrc.windows.WndBag;
 import com.example.pedometerpixeldungeon.mainsrc.windows.WndCatalogus;
+import com.example.pedometerpixeldungeon.mainsrc.windows.WndFootprint;
 import com.example.pedometerpixeldungeon.mainsrc.windows.WndHero;
 import com.example.pedometerpixeldungeon.mainsrc.windows.WndInfoCell;
 import com.example.pedometerpixeldungeon.mainsrc.windows.WndInfoItem;
+import com.example.pedometerpixeldungeon.mainsrc.windows.WndInfoMob;
 import com.example.pedometerpixeldungeon.mainsrc.windows.WndInfoPlant;
 import com.example.pedometerpixeldungeon.mainsrc.windows.WndMessage;
 import com.example.pedometerpixeldungeon.mainsrc.windows.WndTradeItem;
@@ -32,7 +34,6 @@ public class Toolbar extends Component {
     private Tool btnInfo;
     private Tool btnInventory;
     private Tool btnPBox;
-    private Tool btnPBox2;
     private Tool btnQuick1;
     private Tool btnQuick2;
 
@@ -81,14 +82,8 @@ public class Toolbar extends Component {
         add( btnPBox = new Tool( 105, 7, 21, 25 ) {
             @Override
             protected void onClick() {
-                Dungeon.hero.getReward();
-            }
-        } );
-
-        add( btnPBox2 = new Tool( 127, 7, 21, 25 ) {
-            @Override
-            protected void onClick() {
-               // PBox2 와 연결 필요 부분
+//                Dungeon.hero.getReward();
+                GameScene.show(new WndFootprint());
             }
         } );
 
@@ -130,7 +125,6 @@ public class Toolbar extends Component {
         btnSearch.setPos( btnWait.right(), y );
         btnInfo.setPos( btnSearch.right(), y );
         btnPBox.setPos( btnInfo.right(), y);
-        btnPBox2.setPos( btnPBox.right(), y);
 
         btnQuick1.setPos( width - btnQuick1.width(), y );
         if (btnQuick2.visible) {
@@ -202,7 +196,7 @@ public class Toolbar extends Component {
 
             Mob mob = (Mob) Actor.findChar( cell );
             if (mob != null) {
-//                GameScene.show( new WndInfoMob( mob ) );
+                GameScene.show( new WndInfoMob( mob ) );
                 return;
             }
 
