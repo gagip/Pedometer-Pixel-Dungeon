@@ -2,6 +2,7 @@ package com.example.pedometerpixeldungeon.mainsrc.windows;
 
 import com.example.pedometerpixeldungeon.mainsrc.Dungeon;
 import com.example.pedometerpixeldungeon.mainsrc.actors.hero.Hero;
+import com.example.pedometerpixeldungeon.mainsrc.actors.mobs.npcs.Shopkeeper;
 import com.example.pedometerpixeldungeon.mainsrc.items.EquipableItem;
 import com.example.pedometerpixeldungeon.mainsrc.items.Gold;
 import com.example.pedometerpixeldungeon.mainsrc.items.Heap;
@@ -140,10 +141,10 @@ public class WndTradeItem extends Window {
 
         super.hide();
 
-//        if (owner != null) {
-//            owner.hide();
-//            Shopkeeper.sell();
-//        }
+        if (owner != null) {
+            owner.hide();
+            Shopkeeper.sell();
+        }
     }
 
     private float createDescription( Item item, boolean forSale ) {

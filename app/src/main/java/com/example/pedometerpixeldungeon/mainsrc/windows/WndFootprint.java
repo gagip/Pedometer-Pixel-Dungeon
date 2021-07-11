@@ -2,7 +2,10 @@ package com.example.pedometerpixeldungeon.mainsrc.windows;
 
 import com.example.pedometerpixeldungeon.mainsrc.Dungeon;
 import com.example.pedometerpixeldungeon.mainsrc.actors.hero.Hero;
+import com.example.pedometerpixeldungeon.mainsrc.items.Gold;
+import com.example.pedometerpixeldungeon.mainsrc.items.Item;
 import com.example.pedometerpixeldungeon.mainsrc.scenes.PixelScene;
+import com.example.pedometerpixeldungeon.mainsrc.sprites.ItemSprite;
 import com.example.pedometerpixeldungeon.mainsrc.ui.RedButton;
 import com.example.pedometerpixeldungeon.mainsrc.utils.Utils;
 import com.example.pedometerpixeldungeon.noosa.BitmapText;
@@ -18,13 +21,13 @@ import java.util.Locale;
 public class WndFootprint extends WndTabbed {
 
     private static final String TXT_REWARD = "reward";
-    private static final String TXT_CURRENT = "current";
+    private static final String TXT_SHOP = "shop";
 
     private static final int WIDTH = 100;
     private static final int TAB_WIDTH = 40;
 
     RewardTab rewardTab;
-    CurrentTab currentTab;
+    ShopTab shopTab;
 
     public WndFootprint() {
         super();
@@ -33,8 +36,8 @@ public class WndFootprint extends WndTabbed {
         // 탭 생성
         rewardTab = new RewardTab();
         add(rewardTab);
-        currentTab = new CurrentTab();
-        add(currentTab);
+        shopTab = new ShopTab();
+        add(shopTab);
 
         // 탭 등록
         add(new LabeledTab(TXT_REWARD) {
@@ -44,11 +47,11 @@ public class WndFootprint extends WndTabbed {
                 rewardTab.visible = rewardTab.active = selected;
             }
         });
-        add(new LabeledTab(TXT_CURRENT){
+        add(new LabeledTab(TXT_SHOP){
             @Override
             protected void select(boolean value) {
                 super.select(value);
-                currentTab.visible = currentTab.active = selected;
+                shopTab.visible = shopTab.active = selected;
             }
         });
 
@@ -57,7 +60,7 @@ public class WndFootprint extends WndTabbed {
             tab.setSize(TAB_WIDTH, tabHeight());
         }
 
-        resize( WIDTH, (int)Math.max( currentTab.height(), rewardTab.height() ) );
+        resize( WIDTH, (int)Math.max( shopTab.height(), rewardTab.height() ) );
 
         // 기본 설정 탭
         select(0);
@@ -116,16 +119,23 @@ public class WndFootprint extends WndTabbed {
     }
 
 
-    private class CurrentTab extends Group {
+    private class ShopTab extends Group {
+
+
 
         private float pos;
 
-        public CurrentTab() {
+        public ShopTab() {
+            createItemInfo(new Gold(), 100);
 
         }
 
         public float height() {
             return pos;
+        }
+
+        public void createItemInfo(Item item, int price) {
+            Image
         }
     }
 }
