@@ -121,6 +121,9 @@ public class WndFootprint extends WndTabbed {
             add(viewAdBtn);
 
             pos += rewardBtn.bottom() + GAP;
+
+            // 여기에 추가
+
         }
 
         public float height() {
