@@ -1,15 +1,25 @@
 package com.example.pedometerpixeldungeon.mainsrc.windows;
 
 import com.example.pedometerpixeldungeon.mainsrc.Dungeon;
+import com.example.pedometerpixeldungeon.mainsrc.PedometerPixelDungeon;
 import com.example.pedometerpixeldungeon.mainsrc.actors.hero.Hero;
 import com.example.pedometerpixeldungeon.mainsrc.items.Gold;
 import com.example.pedometerpixeldungeon.mainsrc.items.Item;
+import com.example.pedometerpixeldungeon.mainsrc.items.foods.ChargrilledMeat;
+import com.example.pedometerpixeldungeon.mainsrc.items.keys.IronKey;
 import com.example.pedometerpixeldungeon.mainsrc.scenes.PixelScene;
 import com.example.pedometerpixeldungeon.mainsrc.sprites.ItemSprite;
+import com.example.pedometerpixeldungeon.mainsrc.sprites.ItemSpriteSheet;
+import com.example.pedometerpixeldungeon.mainsrc.ui.Icons;
+import com.example.pedometerpixeldungeon.mainsrc.ui.ItemSlot;
 import com.example.pedometerpixeldungeon.mainsrc.ui.RedButton;
+import com.example.pedometerpixeldungeon.mainsrc.utils.GLog;
 import com.example.pedometerpixeldungeon.mainsrc.utils.Utils;
 import com.example.pedometerpixeldungeon.noosa.BitmapText;
 import com.example.pedometerpixeldungeon.noosa.Group;
+import com.example.pedometerpixeldungeon.noosa.Image;
+import com.example.pedometerpixeldungeon.noosa.ui.Button;
+import com.example.pedometerpixeldungeon.utils.Callback;
 
 import java.util.Locale;
 
@@ -121,21 +131,60 @@ public class WndFootprint extends WndTabbed {
 
     private class ShopTab extends Group {
 
+        private static final String TXT_SHOP = "Take a Look";
 
+        private static final int GAP = 5;
 
         private float pos;
 
         public ShopTab() {
-            createItemInfo(new Gold(), 100);
+            BitmapText title = PixelScene.createText(TXT_SHOP, 9 );
+            title.hardlight( TITLE_COLOR );
+            title.measure();
+            add( title );
+            pos += title.height();
 
+            Hero hero = Dungeon.hero;
+
+            createItemInfo(new Gold(), 100, () -> {
+                if (hero.spendFootprint(100)) {
+                    new Gold(100).doPickUp(hero);
+                }
+            });
+            createItemInfo(new ChargrilledMeat(), 200, () -> {
+                if (hero.spendFootprint(200)){
+                    new ChargrilledMeat().doPickUp(hero);
+                }
+            });
+            createItemInfo(new IronKey(), 300, () -> {
+                if (hero.spendFootprint(300)) {
+                    new IronKey().doPickUp(hero);
+                }
+            });
         }
 
         public float height() {
             return pos;
         }
 
-        public void createItemInfo(Item item, int price) {
-            Image
+        public void createItemInfo(Item item, int price, Callback callback) {
+            ItemSlot shopSlot = new ItemSlot(item) {
+                @Override
+                protected void onClick() {
+                    super.onClick();
+                    callback.call();
+                }
+            };
+            shopSlot.setRect(pos,20, 15, 15);
+            add(shopSlot);
+
+            BitmapText priceTxt = PixelScene.createText(String.valueOf(price),6);
+            priceTxt.measure();
+            priceTxt.x = pos;
+            priceTxt.y = 30;
+            add(priceTxt);
+
+            pos += shopSlot.height() + GAP;
         }
     }
 }

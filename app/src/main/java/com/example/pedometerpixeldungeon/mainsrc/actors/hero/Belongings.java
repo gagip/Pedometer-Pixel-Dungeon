@@ -8,6 +8,7 @@ import com.example.pedometerpixeldungeon.mainsrc.items.bags.Bag;
 import com.example.pedometerpixeldungeon.mainsrc.items.keys.IronKey;
 import com.example.pedometerpixeldungeon.mainsrc.items.keys.Key;
 import com.example.pedometerpixeldungeon.mainsrc.items.rings.Ring;
+import com.example.pedometerpixeldungeon.mainsrc.items.scrolls.ScrollOfRemoveCurse;
 import com.example.pedometerpixeldungeon.mainsrc.items.wands.Wand;
 import com.example.pedometerpixeldungeon.utils.Bundle;
 import com.example.pedometerpixeldungeon.utils.Random;
@@ -139,7 +140,7 @@ public class Belongings implements Iterable<Item>{
     }
 
     public void uncurseEquipped() {
-//        ScrollOfRemoveCurse.uncurse( owner, armor, weapon, ring1, ring2 );
+        ScrollOfRemoveCurse.uncurse( owner, armor, weapon, ring1, ring2 );
     }
 
     public Item randomUnequipped() {
