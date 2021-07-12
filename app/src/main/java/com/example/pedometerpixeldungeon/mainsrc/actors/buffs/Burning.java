@@ -6,8 +6,12 @@ import com.example.pedometerpixeldungeon.mainsrc.actors.Blobs.Blob;
 import com.example.pedometerpixeldungeon.mainsrc.actors.Blobs.Fire;
 import com.example.pedometerpixeldungeon.mainsrc.actors.Char;
 import com.example.pedometerpixeldungeon.mainsrc.actors.hero.Hero;
+import com.example.pedometerpixeldungeon.mainsrc.actors.mobs.Thief;
+import com.example.pedometerpixeldungeon.mainsrc.effects.particles.ElmoParticle;
 import com.example.pedometerpixeldungeon.mainsrc.items.Heap;
 import com.example.pedometerpixeldungeon.mainsrc.items.Item;
+import com.example.pedometerpixeldungeon.mainsrc.items.foods.ChargrilledMeat;
+import com.example.pedometerpixeldungeon.mainsrc.items.foods.MysteryMeat;
 import com.example.pedometerpixeldungeon.mainsrc.items.rings.RingOfElements.Resistance;
 import com.example.pedometerpixeldungeon.mainsrc.items.scrolls.Scroll;
 import com.example.pedometerpixeldungeon.mainsrc.levels.Level;
@@ -63,25 +67,25 @@ public class Burning extends Buff implements Hero.Doom {
                     Heap.burnFX( target.pos );
 
                 }
-//                else if (item instanceof MysteryMeat) {
-//
-//                    item = item.detach( ((Hero)target).belongings.backpack );
-//                    ChargrilledMeat steak = new ChargrilledMeat();
-//                    if (!steak.collect( ((Hero)target).belongings.backpack )) {
-//                        Dungeon.level.drop( steak, target.pos ).sprite.drop();
-//                    }
-//                    GLog.w( TXT_BURNS_UP, item.toString() );
-//
-//                    Heap.burnFX( target.pos );
-//
-//                }
+                else if (item instanceof MysteryMeat) {
+
+                    item = item.detach( ((Hero)target).belongings.backpack );
+                    ChargrilledMeat steak = new ChargrilledMeat();
+                    if (!steak.collect( ((Hero)target).belongings.backpack )) {
+                        Dungeon.level.drop( steak, target.pos ).sprite.drop();
+                    }
+                    GLog.w( TXT_BURNS_UP, item.toString() );
+
+                    Heap.burnFX( target.pos );
+
+                }
 
             }
-//            else if (target instanceof Thief && ((Thief)target).item instanceof Scroll) {
-//
-//                ((Thief)target).item = null;
-//                target.sprite.emitter().burst( ElmoParticle.FACTORY, 6 );
-//            }
+            else if (target instanceof Thief && ((Thief)target).item instanceof Scroll) {
+
+                ((Thief)target).item = null;
+                target.sprite.emitter().burst( ElmoParticle.FACTORY, 6 );
+            }
 
         } else {
             detach();

@@ -33,6 +33,7 @@ import com.example.pedometerpixeldungeon.mainsrc.actors.mobs.npcs.NPC;
 import com.example.pedometerpixeldungeon.mainsrc.effects.CheckedCell;
 import com.example.pedometerpixeldungeon.mainsrc.effects.Flare;
 import com.example.pedometerpixeldungeon.mainsrc.effects.Speck;
+import com.example.pedometerpixeldungeon.mainsrc.elements.Fire;
 import com.example.pedometerpixeldungeon.mainsrc.items.Amulet;
 import com.example.pedometerpixeldungeon.mainsrc.items.Ankh;
 import com.example.pedometerpixeldungeon.mainsrc.items.DewVial;
@@ -150,6 +151,10 @@ public class Hero extends Char {
     public static int footprint;
 
     private ArrayList<Mob> visibleEnemies;
+
+    {
+        element = new Fire();
+    }
 
     public Hero() {
         super();

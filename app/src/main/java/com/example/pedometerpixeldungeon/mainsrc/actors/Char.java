@@ -28,6 +28,8 @@ import com.example.pedometerpixeldungeon.mainsrc.actors.hero.HeroSubClass;
 import com.example.pedometerpixeldungeon.mainsrc.actors.mobs.Bestiary;
 import com.example.pedometerpixeldungeon.mainsrc.effects.CellEmitter;
 import com.example.pedometerpixeldungeon.mainsrc.effects.particles.PoisonParticle;
+import com.example.pedometerpixeldungeon.mainsrc.elements.Element;
+import com.example.pedometerpixeldungeon.mainsrc.elements.None;
 import com.example.pedometerpixeldungeon.mainsrc.levels.Level;
 import com.example.pedometerpixeldungeon.mainsrc.levels.Terrain;
 import com.example.pedometerpixeldungeon.mainsrc.levels.features.Door;
@@ -73,6 +75,8 @@ public abstract class Char extends Actor {
     public int viewDistance	= 8;
 
     private HashSet<Buff> buffs = new HashSet<Buff>();
+
+    public Element element = new None();
 
     @Override
     protected boolean act() {
@@ -131,6 +135,8 @@ public abstract class Char extends Actor {
 
             effectiveDamage = attackProc( enemy, effectiveDamage );
             effectiveDamage = enemy.defenseProc( this, effectiveDamage );
+            effectiveDamage = (int) (effectiveDamage * element.attackCorrection(this.element.type, enemy.element.type));
+            this.element.effect(enemy.element.type);
             enemy.damage( effectiveDamage, this );
 
             if (visibleFight) {
@@ -171,6 +177,7 @@ public abstract class Char extends Actor {
                     GLog.i( TXT_DEFEAT, name, enemy.name );
                 }
             }
+
 
             return true;
 
@@ -254,6 +261,7 @@ public abstract class Char extends Actor {
                 }
             }
         }
+
 
         HP -= dmg;
         if (dmg > 0 || src instanceof Char) {
