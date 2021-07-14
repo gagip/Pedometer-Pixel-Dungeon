@@ -19,6 +19,7 @@ package com.example.pedometerpixeldungeon.mainsrc.actors.mobs;
 
 import com.example.pedometerpixeldungeon.mainsrc.actors.Char;
 import com.example.pedometerpixeldungeon.mainsrc.actors.mobs.npcs.Ghost;
+import com.example.pedometerpixeldungeon.mainsrc.elements.Water;
 import com.example.pedometerpixeldungeon.mainsrc.items.foods.MysteryMeat;
 import com.example.pedometerpixeldungeon.mainsrc.sprites.mobsprites.CrabSprite;
 import com.example.pedometerpixeldungeon.utils.Random;
@@ -38,6 +39,8 @@ public class Crab extends Mob {
 		
 		loot = new MysteryMeat();
 		lootChance = 0.167f;
+
+		element = new Water();
 	}
 	
 	@Override

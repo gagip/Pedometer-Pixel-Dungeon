@@ -2,17 +2,23 @@ package com.example.pedometerpixeldungeon.mainsrc.elements;
 
 import java.util.ArrayList;
 
-public class Element {
+/**
+ * 원소 시스템
+ * @author gagip
+ */
+public abstract class Element {
 
+    // 원소 종류
     public enum Type {
         NONE,
         FIRE,
         WATER,
         GRASS,
         LIGHT,
-        DARKNESS
+        DARK
     }
 
+    // 상성 결과
     public enum Matchup {
         STRONG,
         NORMAL,
@@ -21,39 +27,29 @@ public class Element {
 
     public Type type = Type.NONE;
 
-    public Matchup compareCounter(Type type1, Type type2) {
-        ArrayList<Type> strong = new ArrayList<Type>();
-        ArrayList<Type> week = new ArrayList<Type>();
+    protected ArrayList<Type> strong = new ArrayList<Type>();
+    protected ArrayList<Type> week = new ArrayList<Type>();
 
-        switch (type1) {
-            case FIRE:
-                strong.add(Type.GRASS);
-                week.add(Type.WATER);
-                break;
-            case WATER:
-                strong.add(Type.FIRE);
-                week.add(Type.GRASS);
-                break;
-            case GRASS:
-                strong.add(Type.WATER);
-                week.add(Type.FIRE);
-                break;
-            case LIGHT:
-                strong.add(Type.DARKNESS);
-                break;
-            case DARKNESS:
-                week.add(Type.LIGHT);
-                break;
-        }
-
-        if (strong.contains(type2))
+    /**
+     * 상성 비교 메소드
+     * @param type
+     * @return type1이 type2에 대한 상성 관계
+     */
+    public Matchup compareCounter(Type type) {
+        if (strong.contains(type))
             return Matchup.STRONG;
-        else if (week.contains(type2))
+        else if (week.contains(type))
             return Matchup.WEEK;
         else
             return Matchup.NORMAL;
     }
 
+
+    /**
+     * 상성 관계에 따른 데미지 보정 수치
+     * @param matchup
+     * @return
+     */
     public float attackCorrection(Matchup matchup) {
         switch (matchup) {
             case NORMAL:
@@ -66,12 +62,27 @@ public class Element {
         return 1f;
     }
 
-    public float attackCorrection(Type type1, Type type2) {
-        return attackCorrection(compareCounter(type1, type2));
-    }
+    public abstract void effect(Type enemyType);
 
-    public void effect(Type enemyType) {
-        if (compareCounter(type, enemyType) == Matchup.WEEK)
-            return;
+
+    /**
+     * 상성 시스템 실행
+     * @param damage
+     * @param enemyType
+     * @return
+     */
+    public int execute(int damage, Type enemyType) {
+        // 상성 관계 파악
+        Matchup matchup = compareCounter(enemyType);
+
+        // 데미지 보정
+        int resultDamage = (int) (damage * attackCorrection(matchup));
+
+        // 상성 유리할 시 특수스킬 발동
+        if (compareCounter(enemyType) == Matchup.STRONG){
+            effect(enemyType);
+        }
+
+        return resultDamage;
     }
 }

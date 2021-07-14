@@ -1,11 +1,10 @@
 package com.example.pedometerpixeldungeon.mainsrc.elements;
 
-public class Grass extends Element {
+public class Dark extends Element {
 
     {
-        type = Type.GRASS;
-        strong.add(Type.WATER);
-        week.add(Type.FIRE);
+        type = Type.DARK;
+        strong.add(Type.LIGHT);
     }
 
     @Override

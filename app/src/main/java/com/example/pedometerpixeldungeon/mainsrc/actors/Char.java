@@ -135,8 +135,7 @@ public abstract class Char extends Actor {
 
             effectiveDamage = attackProc( enemy, effectiveDamage );
             effectiveDamage = enemy.defenseProc( this, effectiveDamage );
-            effectiveDamage = (int) (effectiveDamage * element.attackCorrection(this.element.type, enemy.element.type));
-            this.element.effect(enemy.element.type);
+            effectiveDamage = element.execute(effectiveDamage, enemy.element.type);
             enemy.damage( effectiveDamage, this );
 
             if (visibleFight) {
